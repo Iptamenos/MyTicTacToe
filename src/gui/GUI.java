@@ -479,9 +479,9 @@ public class GUI extends JFrame {
 	
 	public static void main(String[] args) {
 		GUI gui = new GUI();
+		
 		game_params = new GameParameters(3, Constants.BLUE, Constants.RED, Constants.HumanVsAi);
-//		game_params = new GameParameters(3, Constants.BLUE, Constants.RED, Constants.HumanVsHuman);
-//		game_params = new GameParameters(3, Constants.BLUE, Constants.RED, Constants.AiVsAi);
+
 		if (game_params.getGameMode() == Constants.HumanVsAi)
 			gui.createHumanVsAiNewGame();
 		else if (game_params.getGameMode() == Constants.HumanVsHuman)
