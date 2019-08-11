@@ -62,12 +62,15 @@ public class PreferencesWindow extends JFrame {
 		game_mode_drop_down = new JComboBox<String>();
 		game_mode_drop_down.addItem("Human Vs AI");
 		game_mode_drop_down.addItem("Human Vs Human");
-		
+		game_mode_drop_down.addItem("AI Vs AI");
+
 		int selectedMode = game_params.getGameMode();
 		if (selectedMode == Constants.HumanVsAi)
-			game_mode_drop_down.setSelectedIndex(0);
+			game_mode_drop_down.setSelectedIndex(Constants.HumanVsAi - 1);
 		else if (selectedMode == Constants.HumanVsHuman)
-			game_mode_drop_down.setSelectedIndex(1);
+			game_mode_drop_down.setSelectedIndex(Constants.HumanVsHuman - 1);
+		else if (selectedMode == Constants.AiVsAi)
+			game_mode_drop_down.setSelectedIndex(Constants.AiVsAi - 1);
 		
 		max_depth_drop_down = new JComboBox<Integer>();
 		max_depth_drop_down.addItem(1);
@@ -79,56 +82,55 @@ public class PreferencesWindow extends JFrame {
 		int index = game_params.getMaxDepth() - 1;
 		max_depth_drop_down.setSelectedIndex(index);
 		
-		
 		player1_color_drop_down = new JComboBox<String>();
-		player1_color_drop_down.addItem("BLUE");
-		player1_color_drop_down.addItem("RED");
-		player1_color_drop_down.addItem("BLACK");
-		player1_color_drop_down.addItem("GREEN");
-		player1_color_drop_down.addItem("ORANGE");
-		player1_color_drop_down.addItem("PURPLE");
-		player1_color_drop_down.addItem("YELLOW");
+		player1_color_drop_down.addItem(Constants.getColorNameByNumber(Constants.BLUE));
+		player1_color_drop_down.addItem(Constants.getColorNameByNumber(Constants.RED));
+		player1_color_drop_down.addItem(Constants.getColorNameByNumber(Constants.BLACK));
+		player1_color_drop_down.addItem(Constants.getColorNameByNumber(Constants.GREEN));
+		player1_color_drop_down.addItem(Constants.getColorNameByNumber(Constants.ORANGE));
+		player1_color_drop_down.addItem(Constants.getColorNameByNumber(Constants.PURPLE));
+		player1_color_drop_down.addItem(Constants.getColorNameByNumber(Constants.YELLOW));
 		
-		String selectedPlayer1Color = game_params.getPlayer1Color();
-		if (selectedPlayer1Color.equals("BLUE"))
-			player1_color_drop_down.setSelectedIndex(0);
-		else if (selectedPlayer1Color.equals("RED"))
-			player1_color_drop_down.setSelectedIndex(1);
-		else if (selectedPlayer1Color.equals("BLACK"))
-			player1_color_drop_down.setSelectedIndex(2);
-		else if (selectedPlayer1Color.equals("BLACK"))
-			player1_color_drop_down.setSelectedIndex(3);
-		else if (selectedPlayer1Color.equals("GREEN"))
-			player1_color_drop_down.setSelectedIndex(4);
-		else if (selectedPlayer1Color.equals("PURPLE"))
-			player1_color_drop_down.setSelectedIndex(5);
-		else if (selectedPlayer1Color.equals("YELLOW"))
-			player1_color_drop_down.setSelectedIndex(5);
+		int selectedPlayer1Color = game_params.getPlayer1Color();
+		if (selectedPlayer1Color == Constants.BLUE)
+			player1_color_drop_down.setSelectedIndex(Constants.BLUE-1);
+		else if (selectedPlayer1Color == Constants.RED)
+			player1_color_drop_down.setSelectedIndex(Constants.RED-1);
+		else if (selectedPlayer1Color == Constants.BLACK)
+			player1_color_drop_down.setSelectedIndex(Constants.BLACK-1);
+		else if (selectedPlayer1Color == Constants.GREEN)
+			player1_color_drop_down.setSelectedIndex(Constants.GREEN-1);
+		else if (selectedPlayer1Color == Constants.ORANGE)
+			player1_color_drop_down.setSelectedIndex(Constants.ORANGE-1);
+		else if (selectedPlayer1Color == Constants.PURPLE)
+			player1_color_drop_down.setSelectedIndex(Constants.PURPLE-1);
+		else if (selectedPlayer1Color == Constants.YELLOW)
+			player1_color_drop_down.setSelectedIndex(Constants.YELLOW-1);
 		
 		player2_color_drop_down = new JComboBox<String>();
-		player2_color_drop_down.addItem("BLUE");
-		player2_color_drop_down.addItem("RED");
-		player2_color_drop_down.addItem("BLACK");
-		player2_color_drop_down.addItem("GREEN");
-		player2_color_drop_down.addItem("ORANGE");
-		player2_color_drop_down.addItem("PURPLE");
-		player2_color_drop_down.addItem("YELLOW");
+		player2_color_drop_down.addItem(Constants.getColorNameByNumber(Constants.BLUE));
+		player2_color_drop_down.addItem(Constants.getColorNameByNumber(Constants.RED));
+		player2_color_drop_down.addItem(Constants.getColorNameByNumber(Constants.BLACK));
+		player2_color_drop_down.addItem(Constants.getColorNameByNumber(Constants.GREEN));
+		player2_color_drop_down.addItem(Constants.getColorNameByNumber(Constants.ORANGE));
+		player2_color_drop_down.addItem(Constants.getColorNameByNumber(Constants.PURPLE));
+		player2_color_drop_down.addItem(Constants.getColorNameByNumber(Constants.YELLOW));
 		
-		String selectedPlayer2Color = game_params.getPlayer2Color();
-		if (selectedPlayer2Color.equals("BLUE"))
-			player2_color_drop_down.setSelectedIndex(0);
-		else if (selectedPlayer2Color.equals("RED"))
-			player2_color_drop_down.setSelectedIndex(1);
-		else if (selectedPlayer2Color.equals("BLACK"))
-			player2_color_drop_down.setSelectedIndex(2);
-		else if (selectedPlayer2Color.equals("GREEN"))
-			player2_color_drop_down.setSelectedIndex(3);
-		else if (selectedPlayer2Color.equals("ORANGE"))
-			player2_color_drop_down.setSelectedIndex(4);
-		else if (selectedPlayer2Color.equals("PURPLE"))
-			player2_color_drop_down.setSelectedIndex(5);
-		else if (selectedPlayer2Color.equals("YELLOW"))
-			player2_color_drop_down.setSelectedIndex(5);
+		int selectedPlayer2Color = game_params.getPlayer2Color();
+		if (selectedPlayer2Color == Constants.BLUE)
+			player2_color_drop_down.setSelectedIndex(Constants.BLUE-1);
+		else if (selectedPlayer2Color == Constants.RED)
+			player2_color_drop_down.setSelectedIndex(Constants.RED-1);
+		else if (selectedPlayer2Color == Constants.BLACK)
+			player2_color_drop_down.setSelectedIndex(Constants.BLACK-1);
+		else if (selectedPlayer2Color == Constants.GREEN)
+			player2_color_drop_down.setSelectedIndex(Constants.GREEN-1);
+		else if (selectedPlayer2Color == Constants.ORANGE)
+			player2_color_drop_down.setSelectedIndex(Constants.ORANGE-1);
+		else if (selectedPlayer2Color == Constants.ORANGE)
+			player2_color_drop_down.setSelectedIndex(Constants.PURPLE-1);
+		else if (selectedPlayer2Color == Constants.YELLOW)
+			player2_color_drop_down.setSelectedIndex(Constants.YELLOW-1);
 		
 		add(game_mode_drop_down);
 		add(max_depth_drop_down);
@@ -163,14 +165,12 @@ public class PreferencesWindow extends JFrame {
 			else if(ev.getSource() == apply) {
 				try {
 					
-					String game_mode_string = (String)game_mode_drop_down.getSelectedItem();
+					int game_mode = game_mode_drop_down.getSelectedIndex() + 1;
 					int depth = (int) max_depth_drop_down.getSelectedItem();
-					String player1_color = (String) player1_color_drop_down.getSelectedItem();
-					String player2_color = (String) player2_color_drop_down.getSelectedItem();
+					int player1_color = player1_color_drop_down.getSelectedIndex() + 1;
+					int player2_color = player2_color_drop_down.getSelectedIndex() + 1;
 					
-					int game_mode = (game_mode_string.equals("Human Vs AI")) ? Constants.HumanVsAi : Constants.HumanVsHuman;
-					
-					if(player1_color == player2_color) {
+					if (player1_color == player2_color) {
 						JOptionPane.showMessageDialog(null , "Player 1 and Player 2 cannot have the same color for their checkers!!" , "ERROR" , JOptionPane.ERROR_MESSAGE);
 						return;
 					}
@@ -189,10 +189,10 @@ public class PreferencesWindow extends JFrame {
 					System.err.println("ERROR : " + e.getMessage());
 				}
 				
-			} //else if.
+			} // else if.
 			
-		} //action performed.
+		} // action performed.
 		
-	} //inner class.
+	} // inner class.
 	
-} //class end.
+} // class end.

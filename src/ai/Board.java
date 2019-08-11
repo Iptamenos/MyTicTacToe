@@ -266,15 +266,11 @@ public class Board
         // Checking if there is a diagonal tic-tac-toe
         if ((gameBoard[0][0] == gameBoard[1][1]) && (gameBoard[1][1] == gameBoard[2][2]) && (gameBoard[1][1] != Constants.EMPTY))
 		{
-        	System.out.println("DIAGONAL");
-        	System.out.println(gameBoard[0][0]);
 			setWinner(gameBoard[0][0]);
             return true;
         }
         if ((gameBoard[0][2] == gameBoard[1][1]) && (gameBoard[1][1] == gameBoard[2][0]) && (gameBoard[1][1] != Constants.EMPTY))
 		{
-        	System.out.println("DIAGONAL");
-        	System.out.println(gameBoard[0][2]);
 			setWinner(gameBoard[0][2]);
             return true;
         }

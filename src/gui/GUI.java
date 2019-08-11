@@ -22,6 +22,7 @@ import ai.Board;
 import ai.Constants;
 import ai.GameParameters;
 import ai.MiniMaxAi;
+import ai.Move;
 
 
 public class GUI extends JFrame {
@@ -33,11 +34,14 @@ public class GUI extends JFrame {
 	
 	public static JPanel panel;
 	public static GridLayout layout;
-	public static GameParameters game_params = new GameParameters();
+	public static GameParameters game_params;
 
 	private HumanVsHumanButton[] humanVsHumanButtons;
 	private HumanVsAiButton[] humanVsAiButtons;
+	private AiVsAiButton[] aiVsAiButtons;
+
 	private Board board;
+	
 	private int turn;
 	private int winner;
 	
@@ -102,6 +106,14 @@ public class GUI extends JFrame {
 		this.humanVsAiButtons = humanVsAiButtons;
 	}
 
+	public AiVsAiButton[] getAiVsAiButtons() {
+		return aiVsAiButtons;
+	}
+
+	public void setAiVsAiButtons(AiVsAiButton[] aiVsAiButtons) {
+		this.aiVsAiButtons = aiVsAiButtons;
+	}
+
 	public void setBoard(Board board) {
 		this.board = board;
 	}
@@ -153,6 +165,8 @@ public class GUI extends JFrame {
 					createHumanVsHumanNewGame();
 				else if (game_params.getGameMode() == Constants.HumanVsAi)
 					createHumanVsAiNewGame();
+				else if (game_params.getGameMode() == Constants.AiVsAi)
+					createAiVsAiNewGame();
 			}
 		});
 
@@ -284,13 +298,198 @@ public class GUI extends JFrame {
 
 		setVisible(true);
 	}
+	
+	public void createAiVsAiNewGame() {
+		MiniMaxAi ai1Player = new MiniMaxAi(game_params.getMaxDepth(), Constants.X);
+		MiniMaxAi ai2Player = new MiniMaxAi(game_params.getMaxDepth(), Constants.O);
 
+		if (panel != null) {
+			remove(panel);
+			revalidate();
+			repaint();
+		}
+		
+		panel = new JPanel();
+		add(panel);
+
+		layout = new GridLayout(3, 3);
+		panel.setLayout(layout);
+		
+		board = new Board();
+		turn = Constants.X;
+		winner = Constants.EMPTY;
+		
+		aiVsAiButtons = new AiVsAiButton[9];
+
+		panel.removeAll();
+		panel.revalidate();
+		panel.repaint();
+		for (int i=0; i<9; i++) {
+			aiVsAiButtons[i] = new AiVsAiButton(i, ai1Player, ai2Player);
+			panel.add(aiVsAiButtons[i]);
+		}
+		
+		setVisible(true);
+		
+		playAiVsAi(ai1Player, ai2Player);
+	}
+	
+	
+	private void playAiVsAi(MiniMaxAi ai1Player, MiniMaxAi ai2Player) {
+		
+		while (!this.board.isTerminal()) {
+
+			// AI 1 Move
+			Move ai1Move = ai1Player.miniMax(this.board);
+			this.board.makeMove(ai1Move.getRow(), ai1Move.getCol(), Constants.X);
+			getBoard().copyBoard(this.board);
+			
+			int ai1MoveButtonId = GUI.getIdByBoardCell(ai1Move.getRow(), ai1Move.getCol());
+			for (AiVsAiButton button: getAiVsAiButtons()) {
+				if (button.id == ai1MoveButtonId) {
+					button.setIcon(button.X);
+					button.removeActionListener(button);
+				}
+			}
+	
+			getBoard().printBoard();
+			
+			// change turn
+			if (getTurn() == Constants.X) {
+				setTurn(Constants.O);
+			} else if (getTurn() == Constants.O) {
+				setTurn(Constants.X);
+			}
+						
+			if (!this.board.isTerminal()) {
+				
+				// AI 2 Move
+				Move ai2Move = ai2Player.miniMax(this.board);
+				this.board.makeMove(ai2Move.getRow(), ai2Move.getCol(), Constants.O);
+				getBoard().copyBoard(this.board);
+				
+				int ai2MoveButtonId = GUI.getIdByBoardCell(ai2Move.getRow(), ai2Move.getCol());
+				for (AiVsAiButton button: getAiVsAiButtons()) {
+					if (button.id == ai2MoveButtonId) {
+						button.setIcon(button.O);
+						button.removeActionListener(button);
+					}
+				}
+	
+				getBoard().printBoard();
+				
+				// change turn
+				if (getTurn() == Constants.X) {
+					setTurn(Constants.O);
+				} else if (getTurn() == Constants.O) {
+					setTurn(Constants.X);
+				}
+				
+			}
+			
+		}
+		
+		checkGameOver(null);
+		
+	}
+
+
+	public boolean checkGameOver(XOButton XOButton) {
+
+		// check if the game is over
+		if (this.board.isTerminal()) {
+			setWinner(this.board.getWinner());
+			if (getWinner() == Constants.X) {
+				System.out.println("Player 1 with \"X\" wins!");
+				int input = JOptionPane.showOptionDialog(null, "Player 1 with \"X\" wins!\nPlay again?", "Game Over", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+				if (input == JOptionPane.OK_OPTION) {
+					if (game_params.getGameMode() == Constants.HumanVsAi) {
+						createHumanVsAiNewGame();
+					} else if (game_params.getGameMode() == Constants.HumanVsHuman) {
+						createHumanVsHumanNewGame();
+					} else if (game_params.getGameMode() == Constants.AiVsAi) {
+						createAiVsAiNewGame();
+					}
+				} else if (input == JOptionPane.CANCEL_OPTION) {
+					if (game_params.getGameMode() == Constants.HumanVsAi) {
+						for (HumanVsAiButton button: getHumanVsAiButtons()) {
+							button.removeActionListener(button);
+						}
+					} else if (game_params.getGameMode() == Constants.HumanVsHuman) {
+						for (HumanVsHumanButton button: getHumanVsHumanButtons()) {
+							button.removeActionListener(button);
+						}
+					}
+				}
+			} else if (getWinner() == Constants.O) {
+				System.out.println("Player 2 with \"O\" wins!");
+				int input = JOptionPane.showOptionDialog(null, "Player 2 with \"O\" wins!\nPlay again?", "Game Over", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+				if (input == JOptionPane.OK_OPTION) {
+					if (game_params.getGameMode() == Constants.HumanVsAi) {
+						createHumanVsAiNewGame();
+					} else if (game_params.getGameMode() == Constants.HumanVsHuman) {
+						createHumanVsHumanNewGame();
+					} else if (game_params.getGameMode() == Constants.AiVsAi) {
+						createAiVsAiNewGame();
+					}
+				} else if (input == JOptionPane.CANCEL_OPTION) {
+					if (game_params.getGameMode() == Constants.HumanVsAi) {
+						for (HumanVsAiButton button: getHumanVsAiButtons()) {
+							button.removeActionListener(button);
+						}
+					} else if (game_params.getGameMode() == Constants.HumanVsHuman) {
+						for (HumanVsHumanButton button: getHumanVsHumanButtons()) {
+							button.removeActionListener(button);
+						}
+					}
+				}
+			} else if (getWinner() == Constants.EMPTY) {
+				System.out.println("It is a draw!");
+				int input = JOptionPane.showOptionDialog(null, "It is a draw!\nPlay again?", "Game Over", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+				if (input == JOptionPane.OK_OPTION) {
+					if (game_params.getGameMode() == Constants.HumanVsAi) {
+						createHumanVsAiNewGame();
+					} else if (game_params.getGameMode() == Constants.HumanVsHuman) {
+						createHumanVsHumanNewGame();
+					} else if (game_params.getGameMode() == Constants.AiVsAi) {
+						createAiVsAiNewGame();
+					}
+				} else if (input == JOptionPane.CANCEL_OPTION) {
+					if (game_params.getGameMode() == Constants.HumanVsAi) {
+						for (HumanVsAiButton button: getHumanVsAiButtons()) {
+							button.removeActionListener(button);
+						}
+					} else if (game_params.getGameMode() == Constants.HumanVsHuman) {
+						for (HumanVsHumanButton button: getHumanVsHumanButtons()) {
+							button.removeActionListener(button);
+						}
+					}
+				}
+			}
+			return true;
+		}
+		else {
+			try {
+				XOButton.removeActionListener(XOButton);
+			} catch (NullPointerException e) {
+				// Do nothing
+			}
+			return false;
+		}
+		
+	}
+	
 	public static void main(String[] args) {
 		GUI gui = new GUI();
+		game_params = new GameParameters(3, Constants.BLUE, Constants.RED, Constants.HumanVsAi);
+//		game_params = new GameParameters(3, Constants.BLUE, Constants.RED, Constants.HumanVsHuman);
+//		game_params = new GameParameters(3, Constants.BLUE, Constants.RED, Constants.AiVsAi);
 		if (game_params.getGameMode() == Constants.HumanVsAi)
 			gui.createHumanVsAiNewGame();
 		else if (game_params.getGameMode() == Constants.HumanVsHuman)
 			gui.createHumanVsHumanNewGame();
+		else if (game_params.getGameMode() == Constants.AiVsAi)
+			gui.createAiVsAiNewGame();
 	}
 	
 }
