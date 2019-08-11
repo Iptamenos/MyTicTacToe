@@ -89,13 +89,6 @@ public class Board
 		this.winner = winner;
 	}
 	
-	public void copyBoard(Board otherBoard) {
-		setLastMove(otherBoard.getLastMove());
-		setTurnLetter(otherBoard.getTurnLetter());
-		setGameBoard(otherBoard.getGameBoard());
-		setWinner(otherBoard.getWinner());
-	}
-
     // Make a move; it places a letter in the board
 	public void makeMove(int row, int col, int turnLetter)
 	{

@@ -342,7 +342,6 @@ public class GUI extends JFrame {
 			// AI 1 Move
 			Move ai1Move = ai1Player.miniMax(this.board);
 			this.board.makeMove(ai1Move.getRow(), ai1Move.getCol(), Constants.X);
-			getBoard().copyBoard(this.board);
 			
 			int ai1MoveButtonId = GUI.getIdByBoardCell(ai1Move.getRow(), ai1Move.getCol());
 			for (AiVsAiButton button: getAiVsAiButtons()) {
@@ -366,7 +365,6 @@ public class GUI extends JFrame {
 				// AI 2 Move
 				Move ai2Move = ai2Player.miniMax(this.board);
 				this.board.makeMove(ai2Move.getRow(), ai2Move.getCol(), Constants.O);
-				getBoard().copyBoard(this.board);
 				
 				int ai2MoveButtonId = GUI.getIdByBoardCell(ai2Move.getRow(), ai2Move.getCol());
 				for (AiVsAiButton button: getAiVsAiButtons()) {

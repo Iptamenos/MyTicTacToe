@@ -55,7 +55,6 @@ public class HumanVsAiButton extends XOButton {
 				// AI Move
 				Move aiMove = aiPlayer.miniMax(gui.getBoard());
 				gui.getBoard().makeMove(aiMove.getRow(), aiMove.getCol(), Constants.O);
-				this.gui.getBoard().copyBoard(gui.getBoard());
 				
 				int aiMoveButtonId = GUI.getIdByBoardCell(aiMove.getRow(), aiMove.getCol());
 				for (HumanVsAiButton button: gui.getHumanVsAiButtons()) {
