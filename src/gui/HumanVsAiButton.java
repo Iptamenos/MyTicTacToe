@@ -28,8 +28,8 @@ public class HumanVsAiButton extends XOButton {
 	
 	public HumanVsAiButton(int id, GUI gui, MiniMaxAi aiPlayer) {
 		this.id = id;
-		this.gui = gui;
 		this.game_params = GUI.game_params;
+		this.gui = gui;
 		String player1Color = Constants.getColorNameByNumber(this.game_params.getPlayer1Color());
 		String player2Color = Constants.getColorNameByNumber(this.game_params.getPlayer2Color());
 		X = new ImageIcon(this.getClass().getResource("/img/X/" + player1Color + ".png"));
@@ -41,23 +41,27 @@ public class HumanVsAiButton extends XOButton {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		GUI.undoItem.setEnabled(true);
+
 		setIcon(X);
 		
 		// get cell coordinates by id
-		List<Integer> cell = gui.getBoardCellById(id);
+		List<Integer> cell = GUI.getBoardCellById(id);
 		
 		if (cell != null) {
-			gui.getBoard().makeMove(cell.get(0), cell.get(1), Constants.X);
+			GUI.board.makeMove(cell.get(0), cell.get(1), Constants.X);
 //			gui.getBoard().printBoard();
+			
+			GUI.saveUndoMove();
 
 			if (!gui.checkGameOver(this)) {
 
 				// AI Move
-				Move aiMove = aiPlayer.miniMax(gui.getBoard());
-				gui.getBoard().makeMove(aiMove.getRow(), aiMove.getCol(), Constants.O);
+				Move aiMove = aiPlayer.miniMax(GUI.board);
+				GUI.board.makeMove(aiMove.getRow(), aiMove.getCol(), Constants.O);
 				
 				int aiMoveButtonId = GUI.getIdByBoardCell(aiMove.getRow(), aiMove.getCol());
-				for (HumanVsAiButton button: gui.getHumanVsAiButtons()) {
+				for (HumanVsAiButton button: GUI.humanVsAiButtons) {
 					button.aiPlayer = this.aiPlayer;
 					if (button.id == aiMoveButtonId) {
 						button.setIcon(O);
@@ -65,14 +69,7 @@ public class HumanVsAiButton extends XOButton {
 					}
 				}
 
-				gui.getBoard().printBoard();
-				
-				// change turn
-				if (gui.getTurn() == Constants.X) {
-					gui.setTurn(Constants.O);
-				} else if (gui.getTurn() == Constants.O) {
-					gui.setTurn(Constants.X);
-				}
+				GUI.board.printBoard();
 				
 				gui.checkGameOver(this);
 			}

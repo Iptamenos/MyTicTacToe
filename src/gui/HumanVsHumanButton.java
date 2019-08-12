@@ -25,8 +25,8 @@ public class HumanVsHumanButton extends XOButton {
 
 	public HumanVsHumanButton(int id, GUI gui) {
 		this.id = id;
-		this.gui = gui;
 		this.game_params = GUI.game_params;
+		this.gui = gui;
 		String player1Color = Constants.getColorNameByNumber(this.game_params.getPlayer1Color());
 		String player2Color = Constants.getColorNameByNumber(this.game_params.getPlayer2Color());
 		X = new ImageIcon(this.getClass().getResource("/img/X/" + player1Color + ".png"));
@@ -37,33 +37,27 @@ public class HumanVsHumanButton extends XOButton {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("Touched Human vs Human button");
+		GUI.undoItem.setEnabled(true);
 
 		// add X or O on the board GUI
-		if (gui.getTurn() == Constants.EMPTY) {
+		if (GUI.board.getTurn() == Constants.EMPTY) {
 			setIcon(null);
-		} else if (gui.getTurn() == Constants.X) {
+		} else if (GUI.board.getTurn() == Constants.X) {
 			setIcon(X);
-		} else if (gui.getTurn() == Constants.O) {
+		} else if (GUI.board.getTurn() == Constants.O) {
 			setIcon(O);
 		}
 			
 		// get cell coordinates by id
-		List<Integer> cell = gui.getBoardCellById(id);
+		List<Integer> cell = GUI.getBoardCellById(id);
 		if (cell != null)
-			gui.getBoard().getGameBoard()[cell.get(0)][cell.get(1)] = gui.getTurn();
-		gui.getBoard().printBoard();
-		
-		// change turn
-		if (gui.getTurn() == Constants.X) {
-			gui.setTurn(Constants.O);
-		} else if (gui.getTurn() == Constants.O) {
-			gui.setTurn(Constants.X);
-		}
+			GUI.board.makeMove(cell.get(0), cell.get(1), GUI.board.getTurn());
+		GUI.board.printBoard();
 		
 		// check if the game is over
 		gui.checkGameOver(this);
 		
+		GUI.saveUndoMove();
 	}
 	
 }

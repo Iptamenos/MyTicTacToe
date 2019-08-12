@@ -1,7 +1,5 @@
 package gui;
 
-import java.awt.event.ActionEvent;
-
 import javax.swing.ImageIcon;
 
 import ai.Constants;
@@ -31,11 +29,6 @@ public class AiVsAiButton extends XOButton {
 		O = new ImageIcon(this.getClass().getResource("/img/O/" + player2Color + ".png"));
 //		this.addActionListener(this);
 		setIcon(null);
-	}
-	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		
 	}
 	
 }

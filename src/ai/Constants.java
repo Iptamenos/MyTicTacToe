@@ -16,6 +16,7 @@ public class Constants {
 	public static final int PURPLE = 6;
 	public static final int YELLOW = 7;
 	
+	// Game mode
 	public static final int HumanVsAi = 1;
 	public static final int HumanVsHuman = 2;
 	public static final int AiVsAi = 3;

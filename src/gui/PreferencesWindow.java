@@ -11,8 +11,10 @@ import java.awt.event.ActionListener;
 
 public class PreferencesWindow extends JFrame {
 	
-	
-	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4435307947189338751L;
 	
 	private JLabel gameModeLabel;
 	private JLabel maxDepthLabel;
@@ -50,10 +52,12 @@ public class PreferencesWindow extends JFrame {
 		maxDepthLabel = new JLabel("Minimax AI search depth: ");
 		player1ColorLabel = new JLabel("Player 1 \"X\" symbol color: ");
 		player2ColorLabel = new JLabel("Player 2 \"O\" symbol color: ");
+		
 		add(gameModeLabel);
 		add(maxDepthLabel);
 		add(player1ColorLabel);
 		add(player2ColorLabel);
+		
 		gameModeLabel.setBounds(20, 25, 175, 20);
 		maxDepthLabel.setBounds(20, 75, 175, 20);
 		player1ColorLabel.setBounds(20, 125, 175, 20);
@@ -154,15 +158,14 @@ public class PreferencesWindow extends JFrame {
 
 	private class EventHandler implements ActionListener {
 		
-		
 		@Override
 		public void actionPerformed(ActionEvent ev) {
 			
-			if(ev.getSource() == cancel) {
+			if (ev.getSource() == cancel) {
 				dispose();
 			}
 			
-			else if(ev.getSource() == apply) {
+			else if (ev.getSource() == apply) {
 				try {
 					
 					int game_mode = game_mode_drop_down.getSelectedIndex() + 1;
@@ -171,7 +174,9 @@ public class PreferencesWindow extends JFrame {
 					int player2_color = player2_color_drop_down.getSelectedIndex() + 1;
 					
 					if (player1_color == player2_color) {
-						JOptionPane.showMessageDialog(null , "Player 1 and Player 2 cannot have the same color for their checkers!!" , "ERROR" , JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null,
+								"Player 1 and Player 2 cannot have the same color for their checkers!!",
+								"ERROR", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
 					
@@ -181,7 +186,9 @@ public class PreferencesWindow extends JFrame {
 					game_params.setPlayer1Color(player1_color);
 					game_params.setPlayer2Color(player2_color);
 					
-					JOptionPane.showMessageDialog(null , "Game settings have been changed.\nThe changes will be applied in the next game." , "" , JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null,
+							"Game settings have been changed.\nThe changes will be applied in the next game.",
+							"", JOptionPane.INFORMATION_MESSAGE);
 					dispose();
 				}
 				
