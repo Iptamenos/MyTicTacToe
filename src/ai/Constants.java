@@ -6,6 +6,11 @@ public class Constants {
 	public static final int EMPTY = 0;
 	public static final int X = 1;
 	public static final int O = 2;
+
+	// GUI styles
+	public static final int SystemStyle = 1;
+	public static final int CrossPlatformStyle = 2;
+	public static final int NimbusStyle = 3;
 	
 	// Colors
 	public static final int BLUE = 1;
@@ -20,7 +25,8 @@ public class Constants {
 	public static final int HumanVsAi = 1;
 	public static final int HumanVsHuman = 2;
 	public static final int AiVsAi = 3;
-	
+	public static final int ClientServer = 4;
+
 	public static final String getColorNameByNumber(int number) {
 		switch (number) {
 			case 1:

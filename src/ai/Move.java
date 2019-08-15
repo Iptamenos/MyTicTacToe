@@ -1,11 +1,18 @@
 package ai;
 
+import java.io.Serializable;
+
 /* A class describing a move in the board
  * Every produced child corresponds to a move
  * and we need to keep the moves as well as the states.
  */
-public class Move
-{
+public class Move implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3166547244121566931L;
+	
 	private int row;
 	private int col;
 	private int value;

@@ -79,12 +79,16 @@ public class Board {
 	public void makeMove(int row, int col, int turnLetter) {
 		this.gameBoard[row][col] = turnLetter;
 		this.lastMove = new Move(row, col);
+		changeTurn();
+	}
+
+	public void changeTurn() {
 		if (this.turn == Constants.X)
 			this.turn = Constants.O;
 		else if (this.turn == Constants.O)
 			this.turn = Constants.X;
 	}
-
+	
     // Checks whether a move is valid; whether a square is empty
 	public boolean isValidMove(int row, int col) {
 		if ((row == -1) || (col == -1) || (row > 2) || (col > 2)) {

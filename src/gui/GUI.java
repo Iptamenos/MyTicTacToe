@@ -16,13 +16,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import ai.Board;
 import ai.Constants;
 import ai.GameParameters;
 import ai.MiniMaxAi;
 import ai.Move;
+import client_server.Server;
 
 
 public class GUI extends JFrame {
@@ -39,6 +39,7 @@ public class GUI extends JFrame {
 	public static HumanVsHumanButton[] humanVsHumanButtons;
 	public static HumanVsAiButton[] humanVsAiButtons;
 	public static AiVsAiButton[] aiVsAiButtons;
+	public static ClientServerButton[] clientServerButtons;
 
 	public static Board board;
 	
@@ -59,38 +60,22 @@ public class GUI extends JFrame {
 	public static int humanPlayerUndoCol;
 	public static int humanPlayerUndoSymbol;
 	
-	public GUI() {
+	public int clientServerSymbol;
+	public int serverPort;
+	public String clientIP;
+	public int clientPort;
+		
+	public GUI(String title) {
 		super();
 		
-		try {
-			// Option 1
-//			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		
-
-			// Option 2 (Default)
-//			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-		
-			// Option 3
-		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-		        if ("Nimbus".equals(info.getName())) {
-		            UIManager.setLookAndFeel(info.getClassName());
-		            break;
-		        }
-		    }
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
-		}
+		configureGuiStyle();
 		
 		setSize(500, 500);
 		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setTitle("My TicTacToe");
+		setTitle(title);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation((int) (screenSize.getWidth() - getWidth()) / 2, (int) (screenSize.getHeight() - getHeight()) / 2);
-		
-		if (menuBar == null)
-			addMenus(this);
 	}
 
 	private void addMenus(GUI gui) {
@@ -168,7 +153,7 @@ public class GUI extends JFrame {
 		setJMenuBar(menuBar);
 	}
 	
-	// TODO
+
 	private static void undo() {
 		System.out.println("undo");
 		// This is the undo implementation for Human VS Human mode.
@@ -294,8 +279,53 @@ public class GUI extends JFrame {
 	public static int getIdByBoardCell(int row, int col) {
 		return row * 3 + col;
 	}
-    
+
+	public void createClientServerNewGame() {
+//		System.out.println("Client-Server new game!")
+		
+		configureGuiStyle();
+
+		if (menuBar == null)
+			addMenus(this);
+		
+		Server server = new Server(this, this.serverPort);
+		server.start();
+
+		if (panel != null) {
+			remove(panel);
+			revalidate();
+			repaint();
+		}
+		
+		panel = new JPanel();
+		add(panel);
+
+		layout = new GridLayout(3, 3);
+		panel.setLayout(layout);
+		
+		board = new Board();
+
+		clientServerButtons = new ClientServerButton[9];
+		
+		panel.removeAll();
+		panel.revalidate();
+		panel.repaint();
+		for (int i=0; i<9; i++) {
+			clientServerButtons[i] = new ClientServerButton(i, this, this.clientIP, 
+					this.clientPort, this.clientServerSymbol);
+			panel.add(clientServerButtons[i]);
+		}
+
+		setVisible(true);
+	}
+	
 	public void createHumanVsHumanNewGame() {
+		
+		configureGuiStyle();
+
+		if (menuBar == null)
+			addMenus(this);
+		
 		if (panel != null) {
 			remove(panel);
 			revalidate();
@@ -324,7 +354,13 @@ public class GUI extends JFrame {
 	}
 	
 	public void createHumanVsAiNewGame() {
-		MiniMaxAi aiPlayer = new MiniMaxAi(game_params.getMaxDepth(), Constants.O);
+		
+		configureGuiStyle();
+
+		if (menuBar == null)
+			addMenus(this);
+		
+		MiniMaxAi aiPlayer = new MiniMaxAi(game_params.getMaxDepth1(), Constants.O);
 		
 		if (panel != null) {
 			remove(panel);
@@ -354,8 +390,14 @@ public class GUI extends JFrame {
 	}
 	
 	public void createAiVsAiNewGame() {
-		MiniMaxAi ai1Player = new MiniMaxAi(game_params.getMaxDepth(), Constants.X);
-		MiniMaxAi ai2Player = new MiniMaxAi(game_params.getMaxDepth(), Constants.O);
+
+		configureGuiStyle();
+		
+		if (menuBar == null)
+			addMenus(this);
+		
+		MiniMaxAi ai1Player = new MiniMaxAi(game_params.getMaxDepth1(), Constants.X);
+		MiniMaxAi ai2Player = new MiniMaxAi(game_params.getMaxDepth2(), Constants.O);
 
 		if (panel != null) {
 			remove(panel);
@@ -443,8 +485,32 @@ public class GUI extends JFrame {
 		
 	}
 
-
+	
+	private static void configureGuiStyle() {
+		try {
+			if (game_params.getGuiStyle() == Constants.SystemStyle) {
+				// Option 1
+				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			} else if (game_params.getGuiStyle() == Constants.CrossPlatformStyle) {
+				// Option 2
+				UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+			} else if (game_params.getGuiStyle() == Constants.NimbusStyle) {
+				// Option 3
+			    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+			        if ("Nimbus".equals(info.getName())) {
+			            UIManager.setLookAndFeel(info.getClassName());
+			            break;
+			        }
+			    }
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	public boolean checkGameOver(XOButton XOButton) {
+//		System.out.println("Game Over!");
 
 		// check if the game is over
 		if (GUI.board.isTerminal()) {
@@ -460,6 +526,8 @@ public class GUI extends JFrame {
 						createHumanVsHumanNewGame();
 					} else if (game_params.getGameMode() == Constants.AiVsAi) {
 						createAiVsAiNewGame();
+					} else if (game_params.getGameMode() == Constants.ClientServer) {
+						createClientServerNewGame();
 					}
 				} else if (input == JOptionPane.NO_OPTION 
 						|| input == JOptionPane.CLOSED_OPTION) {
@@ -469,6 +537,10 @@ public class GUI extends JFrame {
 						}
 					} else if (game_params.getGameMode() == Constants.HumanVsHuman) {
 						for (HumanVsHumanButton button: humanVsHumanButtons) {
+							button.removeActionListener(button);
+						}
+					} else if (game_params.getGameMode() == Constants.ClientServer) {
+						for (ClientServerButton button: clientServerButtons) {
 							button.removeActionListener(button);
 						}
 					}
@@ -485,6 +557,8 @@ public class GUI extends JFrame {
 						createHumanVsHumanNewGame();
 					} else if (game_params.getGameMode() == Constants.AiVsAi) {
 						createAiVsAiNewGame();
+					} else if (game_params.getGameMode() == Constants.ClientServer) {
+						createClientServerNewGame();
 					}
 				} else if (input == JOptionPane.NO_OPTION 
 						|| input == JOptionPane.CLOSED_OPTION) {
@@ -494,6 +568,10 @@ public class GUI extends JFrame {
 						}
 					} else if (game_params.getGameMode() == Constants.HumanVsHuman) {
 						for (HumanVsHumanButton button: humanVsHumanButtons) {
+							button.removeActionListener(button);
+						}
+					} else if (game_params.getGameMode() == Constants.ClientServer) {
+						for (ClientServerButton button: clientServerButtons) {
 							button.removeActionListener(button);
 						}
 					}
@@ -510,6 +588,8 @@ public class GUI extends JFrame {
 						createHumanVsHumanNewGame();
 					} else if (game_params.getGameMode() == Constants.AiVsAi) {
 						createAiVsAiNewGame();
+					} else if (game_params.getGameMode() == Constants.ClientServer) {
+						createClientServerNewGame();
 					}
 				} else if (input == JOptionPane.NO_OPTION 
 						|| input == JOptionPane.CLOSED_OPTION) {
@@ -519,6 +599,10 @@ public class GUI extends JFrame {
 						}
 					} else if (game_params.getGameMode() == Constants.HumanVsHuman) {
 						for (HumanVsHumanButton button: humanVsHumanButtons) {
+							button.removeActionListener(button);
+						}
+					} else if (game_params.getGameMode() == Constants.ClientServer) {
+						for (ClientServerButton button: clientServerButtons) {
 							button.removeActionListener(button);
 						}
 					}
@@ -538,9 +622,13 @@ public class GUI extends JFrame {
 	}
 	
 	public static void main(String[] args) {
-		GUI gui = new GUI();
-		
-		game_params = new GameParameters(3, Constants.BLUE, Constants.RED, Constants.HumanVsAi);
+		game_params = new GameParameters(Constants.SystemStyle, 3, 3, Constants.BLUE, Constants.RED, Constants.HumanVsAi,
+										 Constants.X, 4000, "127.0.0.1", 4001);
+		GUI gui = new GUI("My TicTacToe");
+		gui.clientServerSymbol = Constants.X;
+		gui.serverPort = 4000;
+		gui.clientIP = "127.0.0.1";
+		gui.clientPort = 4001;
 		
 		if (game_params.getGameMode() == Constants.HumanVsAi)
 			gui.createHumanVsAiNewGame();
@@ -548,6 +636,8 @@ public class GUI extends JFrame {
 			gui.createHumanVsHumanNewGame();
 		else if (game_params.getGameMode() == Constants.AiVsAi)
 			gui.createAiVsAiNewGame();
+		else if (game_params.getGameMode() == Constants.ClientServer)
+			gui.createClientServerNewGame();
 	}
 	
 }

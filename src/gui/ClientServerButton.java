@@ -1,15 +1,17 @@
 package gui;
 
 import java.awt.event.ActionEvent;
+import java.io.Serializable;
 import java.util.List;
 
 import javax.swing.ImageIcon;
 
 import ai.Constants;
 import ai.GameParameters;
+import client_server.Client;
 
 
-public class HumanVsHumanButton extends XOButton {
+public class ClientServerButton extends XOButton implements Serializable {
 
 	/**
 	 * 
@@ -22,8 +24,29 @@ public class HumanVsHumanButton extends XOButton {
 	ImageIcon X;
 	ImageIcon O;
 	GameParameters game_params;
+	String serverIP;
+	int serverPort;
+	Client client;
+	int playerSymbol;
+	boolean programmaticallyPressed = false;
+	
+	public int getId() {
+		return id;
+	}
 
-	public HumanVsHumanButton(int id, GUI gui) {
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public boolean isProgrammaticallyPressed() {
+		return programmaticallyPressed;
+	}
+
+	public void setProgrammaticallyPressed(boolean programmaticallyPressed) {
+		this.programmaticallyPressed = programmaticallyPressed;
+	}
+
+	public ClientServerButton(int id, GUI gui, String serverIP, int serverPort, int playerSymbol) {
 		this.id = id;
 		this.game_params = GUI.game_params;
 		this.gui = gui;
@@ -33,12 +56,23 @@ public class HumanVsHumanButton extends XOButton {
 		this.O = new ImageIcon(this.getClass().getResource("/img/O/" + player2Color + ".png"));
 		this.addActionListener(this);
 		setIcon(null);
+		this.serverIP = serverIP;
+		this.serverPort = serverPort;
+		this.client = new Client(gui, serverIP, serverPort, playerSymbol);
+		this.playerSymbol = playerSymbol;
 	}
-
+	
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		GUI.undoItem.setEnabled(true);
-
+		// GUI.undoItem.setEnabled(false);  // uncomment only if needed
+		if (GUI.board.getTurn() != playerSymbol)
+			return;
+		
+		if (programmaticallyPressed) {
+			GUI.board.changeTurn();
+		}
+		
 		// add X or O on the board GUI
 		if (GUI.board.getTurn() == Constants.EMPTY) {
 			setIcon(null);
@@ -54,10 +88,17 @@ public class HumanVsHumanButton extends XOButton {
 			GUI.board.makeMove(cell.get(0), cell.get(1), GUI.board.getTurn());
 		GUI.board.printBoard();
 		
-		// check if the game is over
-		gui.checkGameOver(this);
+		if (!programmaticallyPressed) {
+			this.client = new Client(gui, serverIP, serverPort, playerSymbol);
+			this.client.run();
+		}
 		
-		GUI.saveUndoMove();
+		// check if the game is over
+		if (GUI.board.isTerminal()) {
+			gui.checkGameOver(null);
+		}
+		GUI.clientServerButtons[id] = this;
 	}
+	
 	
 }
