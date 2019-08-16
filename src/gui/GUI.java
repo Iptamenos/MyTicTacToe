@@ -127,8 +127,8 @@ public class GUI extends JFrame {
 
 		settingsItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SettingsWindow prefs = new SettingsWindow(game_params);
-				prefs.setVisible(true);
+				SettingsWindow settings = new SettingsWindow(game_params);
+				settings.setVisible(true);
 			}
 		});
 		
