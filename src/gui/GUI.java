@@ -5,6 +5,8 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +50,7 @@ public class GUI extends JFrame {
 	public static JMenu fileMenu;
 	public static JMenuItem newGameItem;
 	public static JMenuItem undoItem;
-	public static JMenuItem preferencesItem;
+	public static JMenuItem settingsItem;
 	public static JMenuItem exitItem;
 	
 	public static JMenu helpMenu;
@@ -85,12 +87,12 @@ public class GUI extends JFrame {
 		fileMenu = new JMenu("File");
 		newGameItem = new JMenuItem("New Game");
 		undoItem = new JMenuItem("Undo    Ctrl+Z");
-		preferencesItem = new JMenuItem("Preferences");
+		settingsItem = new JMenuItem("Settings");
 		exitItem = new JMenuItem("Exit");
 		
 		fileMenu.add(newGameItem);
 		fileMenu.add(undoItem);
-		fileMenu.add(preferencesItem);
+		fileMenu.add(settingsItem);
 		fileMenu.add(exitItem);
 		
 		undoItem.setEnabled(false);
@@ -112,6 +114,8 @@ public class GUI extends JFrame {
 					gui.createHumanVsAiNewGame();
 				else if (game_params.getGameMode() == Constants.AiVsAi)
 					gui.createAiVsAiNewGame();
+				else if (game_params.getGameMode() == Constants.ClientServer)
+					gui.createClientServerNewGame();
 			}
 		});
 		
@@ -121,9 +125,9 @@ public class GUI extends JFrame {
 			}
 		});
 
-		preferencesItem.addActionListener(new ActionListener() {
+		settingsItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PreferencesWindow prefs = new PreferencesWindow(game_params);
+				SettingsWindow prefs = new SettingsWindow(game_params);
 				prefs.setVisible(true);
 			}
 		});
@@ -137,7 +141,8 @@ public class GUI extends JFrame {
 		howToPlayItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null,
-						"Click on the buttons insert a new symbol.\nTo win you must place 3 symbols in an row, horizontally, vertically or diagonally.",
+						"Click on the buttons or press 1-9 on your keyboard to insert a new symbol."
+						+ "\nTo win you must place 3 symbols in an row, horizontally, vertically or diagonally.",
 						"How to Play", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
@@ -280,8 +285,11 @@ public class GUI extends JFrame {
 		return row * 3 + col;
 	}
 
-	public void createClientServerNewGame() {
-//		System.out.println("Client-Server new game!")
+	public void createClientServerNewGame() {		
+		clientServerSymbol = game_params.getClientServerSymbol();
+		serverPort = game_params.getServerPort();
+		clientIP = game_params.getClientIP();
+		clientPort = game_params.getClientPort();
 		
 		configureGuiStyle();
 
@@ -315,7 +323,10 @@ public class GUI extends JFrame {
 					this.clientPort, this.clientServerSymbol);
 			panel.add(clientServerButtons[i]);
 		}
-
+		
+		addKeyListener(gameKeyListener);
+		setFocusable(true);
+		
 		setVisible(true);
 	}
 	
@@ -350,6 +361,9 @@ public class GUI extends JFrame {
 			panel.add(humanVsHumanButtons[i]);
 		}
 
+		addKeyListener(gameKeyListener);
+		setFocusable(true);
+		
 		setVisible(true);
 	}
 	
@@ -386,6 +400,9 @@ public class GUI extends JFrame {
 			panel.add(humanVsAiButtons[i]);
 		}
 
+		addKeyListener(gameKeyListener);
+		setFocusable(true);
+		
 		setVisible(true);
 	}
 	
@@ -620,6 +637,91 @@ public class GUI extends JFrame {
 		}
 		
 	}
+	
+	public static KeyListener gameKeyListener = new KeyListener() {
+		@Override
+		public void keyTyped(KeyEvent e) {
+			
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			// System.out.println("keyPressed = " + KeyEvent.getKeyText(e.getKeyCode()));
+			String button = KeyEvent.getKeyText(e.getKeyCode());
+			
+			if (button.equals("1")) {
+				if (game_params.getGameMode() == Constants.HumanVsAi)
+					humanVsAiButtons[0].doClick();
+				if (game_params.getGameMode() == Constants.HumanVsHuman)
+					humanVsHumanButtons[0].doClick();
+				if (game_params.getGameMode() == Constants.ClientServer)
+					clientServerButtons[0].doClick();
+			} else if (button.equals("2")) {
+				if (game_params.getGameMode() == Constants.HumanVsAi)
+					humanVsAiButtons[1].doClick();
+				if (game_params.getGameMode() == Constants.HumanVsHuman)
+					humanVsHumanButtons[1].doClick();
+				if (game_params.getGameMode() == Constants.ClientServer)
+					clientServerButtons[1].doClick();
+			} else if (button.equals("3")) {
+				if (game_params.getGameMode() == Constants.HumanVsAi)
+					humanVsAiButtons[2].doClick();
+				if (game_params.getGameMode() == Constants.HumanVsHuman)
+					humanVsHumanButtons[2].doClick();
+				if (game_params.getGameMode() == Constants.ClientServer)
+					clientServerButtons[2].doClick();
+			} else if (button.equals("4")) {
+				if (game_params.getGameMode() == Constants.HumanVsAi)
+					humanVsAiButtons[3].doClick();
+				if (game_params.getGameMode() == Constants.HumanVsHuman)
+					humanVsHumanButtons[3].doClick();
+				if (game_params.getGameMode() == Constants.ClientServer)
+					clientServerButtons[3].doClick();
+			} else if (button.equals("5")) {
+				if (game_params.getGameMode() == Constants.HumanVsAi)
+					humanVsAiButtons[4].doClick();
+				if (game_params.getGameMode() == Constants.HumanVsHuman)
+					humanVsHumanButtons[4].doClick();
+				if (game_params.getGameMode() == Constants.ClientServer)
+					clientServerButtons[4].doClick();
+			} else if (button.equals("6")) {
+				if (game_params.getGameMode() == Constants.HumanVsAi)
+					humanVsAiButtons[5].doClick();
+				if (game_params.getGameMode() == Constants.HumanVsHuman)
+					humanVsHumanButtons[5].doClick();
+				if (game_params.getGameMode() == Constants.ClientServer)
+					clientServerButtons[5].doClick();
+			} else if (button.equals("7")) {
+				if (game_params.getGameMode() == Constants.HumanVsAi)
+					humanVsAiButtons[6].doClick();
+				if (game_params.getGameMode() == Constants.HumanVsHuman)
+					humanVsHumanButtons[6].doClick();
+				if (game_params.getGameMode() == Constants.ClientServer)
+					clientServerButtons[6].doClick();
+			} else if (button.equals("8")) {
+				if (game_params.getGameMode() == Constants.HumanVsAi)
+					humanVsAiButtons[7].doClick();
+				if (game_params.getGameMode() == Constants.HumanVsHuman)
+					humanVsHumanButtons[7].doClick();
+				if (game_params.getGameMode() == Constants.ClientServer)
+					clientServerButtons[7].doClick();
+			} else if (button.equals("9")) {
+				if (game_params.getGameMode() == Constants.HumanVsAi)
+					humanVsAiButtons[8].doClick();
+				if (game_params.getGameMode() == Constants.HumanVsHuman)
+					humanVsHumanButtons[8].doClick();
+				if (game_params.getGameMode() == Constants.ClientServer)
+					clientServerButtons[8].doClick();
+			}
+			
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// System.out.println("keyReleased = " + KeyEvent.getKeyText(e.getKeyCode()));
+		}
+	};
+	
 	
 	public static void main(String[] args) {
 		game_params = new GameParameters(Constants.SystemStyle, 3, 3, Constants.BLUE, Constants.RED, Constants.HumanVsAi,

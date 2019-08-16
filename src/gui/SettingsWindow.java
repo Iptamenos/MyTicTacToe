@@ -14,7 +14,7 @@ import ai.Constants;
 import ai.GameParameters;
 
 
-public class PreferencesWindow extends JFrame {
+public class SettingsWindow extends JFrame {
 	
 	/**
 	 * 
@@ -51,15 +51,15 @@ public class PreferencesWindow extends JFrame {
 	private GameParameters game_params; 
 	
 	
-	public PreferencesWindow(GameParameters gp) {
-		super("Preferences");
+	public SettingsWindow(GameParameters gp) {
+		super("Settings");
 		
 		// copy passed argument object to class object
 		this.game_params = gp; 
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLayout(null);
-		setSize(450, 650);
+		setSize(460, 650);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		
@@ -68,7 +68,7 @@ public class PreferencesWindow extends JFrame {
 		guiStyleLabel = new JLabel("GUI style: ");
 		gameModeLabel = new JLabel("Game mode: ");
 		maxDepth1Label = new JLabel("Minimax AI 1 search depth: ");
-		maxDepth2Label = new JLabel("Minimax AI 2 search depth: ");
+		maxDepth2Label = new JLabel("Minimax AI 2 search depth (AiVsAi mode): ");
 		player1ColorLabel = new JLabel("Player 1 \"X\" symbol color: ");
 		player2ColorLabel = new JLabel("Player 2 \"O\" symbol color: ");
 		clientServerSymbolLabel = new JLabel("Client-Server symbol: ");
@@ -87,16 +87,16 @@ public class PreferencesWindow extends JFrame {
 		add(clientIpLabel);
 		add(clientPortLabel);
 		
-		guiStyleLabel.setBounds(20, 25, 175, 20);
-		gameModeLabel.setBounds(20, 75, 175, 20);
-		maxDepth1Label.setBounds(20, 125, 175, 20);
-		maxDepth2Label.setBounds(20, 175, 175, 20);
-		player1ColorLabel.setBounds(20, 225, 175, 20);
-		player2ColorLabel.setBounds(20, 275, 175, 20);
-		clientServerSymbolLabel.setBounds(20, 325, 175, 20);
-		serverPortLabel.setBounds(20, 375, 175, 20);
-		clientIpLabel.setBounds(20, 425, 175, 20);
-		clientPortLabel.setBounds(20, 475, 175, 20);
+		guiStyleLabel.setBounds(20, 25, 250, 20);
+		gameModeLabel.setBounds(20, 75, 250, 20);
+		maxDepth1Label.setBounds(20, 125, 250, 20);
+		maxDepth2Label.setBounds(20, 175, 250, 20);
+		player1ColorLabel.setBounds(20, 225, 250, 20);
+		player2ColorLabel.setBounds(20, 275, 250, 20);
+		clientServerSymbolLabel.setBounds(20, 325, 250, 20);
+		serverPortLabel.setBounds(20, 375, 250, 20);
+		clientIpLabel.setBounds(20, 425, 250, 20);
+		clientPortLabel.setBounds(20, 475, 250, 20);
 		
 		gui_style_drop_down = new JComboBox<String>();
 		gui_style_drop_down.addItem("System style");
@@ -227,17 +227,17 @@ public class PreferencesWindow extends JFrame {
 		add(client_ip_text_field);
 		add(client_port_text_field);
 		
-		gui_style_drop_down.setBounds(220, 25, 160, 20);
-		game_mode_drop_down.setBounds(220, 75, 160, 20);
-		max_depth1_drop_down.setBounds(220, 125, 160, 20);
-		max_depth2_drop_down.setBounds(220, 175, 160, 20);
-		player1_color_drop_down.setBounds(220, 225, 160, 20);
-		player2_color_drop_down.setBounds(220, 275, 160, 20);
-		client_server_symbol_drop_down.setBounds(220, 325, 160, 25);
-		server_port_text_field.setBounds(220, 375, 160, 25);
-		client_ip_text_field.setBounds(220, 425, 160, 25);
-		client_port_text_field.setBounds(220, 475, 160, 25);
-		
+		gui_style_drop_down.setBounds(260, 25, 160, 20);
+		game_mode_drop_down.setBounds(260, 75, 160, 20);
+		max_depth1_drop_down.setBounds(260, 125, 160, 20);
+		max_depth2_drop_down.setBounds(260, 175, 160, 20);
+		player1_color_drop_down.setBounds(260, 225, 160, 20);
+		player2_color_drop_down.setBounds(260, 275, 160, 20);
+		client_server_symbol_drop_down.setBounds(260, 325, 160, 25);
+		server_port_text_field.setBounds(260, 375, 160, 25);
+		client_ip_text_field.setBounds(260, 425, 160, 25);
+		client_port_text_field.setBounds(260, 475, 160, 25);
+				
 		apply = new JButton("Apply");
 		cancel = new JButton("Cancel");
 		add(apply);
@@ -306,5 +306,6 @@ public class PreferencesWindow extends JFrame {
 		} // action performed.
 		
 	} // inner class.
+	
 	
 } // class end.
