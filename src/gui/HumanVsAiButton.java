@@ -53,9 +53,11 @@ public class HumanVsAiButton extends XOButton {
 //			gui.getBoard().printBoard();
 			
 			GUI.saveUndoMove();
-
-			if (!gui.checkGameOver(this)) {
-
+			
+			if (!GUI.board.isTerminal()) {
+				if (!guiMatchesWithGameBoard())
+					return;
+				
 				// AI Move
 				Move aiMove = aiPlayer.miniMax(GUI.board);
 				GUI.board.makeMove(aiMove.getRow(), aiMove.getCol(), Constants.O);
@@ -71,11 +73,39 @@ public class HumanVsAiButton extends XOButton {
 
 				GUI.board.printBoard();
 				
-				gui.checkGameOver(this);
+				// check if the game is over
+				if (GUI.board.isTerminal()) {
+					gui.gameOver();
+				} else {
+					try {
+						this.removeActionListener(this);
+					} catch (NullPointerException ex) {
+						// Do nothing
+					}
+				}
+			} else {
+				gui.gameOver();
 			}
 			
 		}
 		
 	}
+	
+
+	private boolean guiMatchesWithGameBoard() {
+		for (HumanVsAiButton button: GUI.humanVsAiButtons) {
+			int id = button.id;
+			List<Integer> cell = GUI.getBoardCellById(id); 
+			int row = cell.get(0);
+			int col = cell.get(1);
+			if (GUI.board.getGameBoard()[row][col] != Constants.EMPTY
+					&& button.getIcon() == null) {
+				GUI.board.getGameBoard()[row][col] = Constants.EMPTY;
+				return false;
+			}
+		}
+		return true;
+	}
+
 	
 }

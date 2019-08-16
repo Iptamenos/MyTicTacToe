@@ -93,9 +93,17 @@ public class ClientServerButton extends XOButton implements Serializable {
 			this.client.run();
 		}
 		
-		// check if the game is over
-		if (!programmaticallyPressed && GUI.board.isTerminal()) {
-			gui.checkGameOver(null);
+		if (!programmaticallyPressed) {
+			// check if the game is over
+			if (GUI.board.isTerminal()) {
+				gui.gameOver();
+			} else {
+				try {
+					this.removeActionListener(this);
+				} catch (NullPointerException ex) {
+					// Do nothing
+				}
+			}
 		}
 		GUI.clientServerButtons[id] = this;
 	}

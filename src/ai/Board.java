@@ -238,7 +238,7 @@ public class Board {
     }
     
     
-	// Checking if there is at least one empty tile
+	// Checking if there is at least one empty cell.
     public boolean isGameBoardFull() {
         for (int row=0; row<3; row++) {
 			for (int col=0; col<3; col++) {
@@ -249,10 +249,22 @@ public class Board {
         }
         return true;
     }
+    
+	// Checking if the board is empty.
+    public boolean isGameBoardEmpty() {
+        for (int row=0; row<3; row++) {
+			for (int col=0; col<3; col++) {
+				if (gameBoard[row][col] != Constants.EMPTY) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
 	// Makes the specified cell in the border empty.
 	public void undoMove(int row, int col, int symbol) {
-		this.gameBoard[row][col] = 0;
+		this.gameBoard[row][col] = Constants.EMPTY;
 		// change turn
 		if (symbol == Constants.O) {
 			this.turn = Constants.X;

@@ -55,7 +55,15 @@ public class HumanVsHumanButton extends XOButton {
 		GUI.board.printBoard();
 		
 		// check if the game is over
-		gui.checkGameOver(this);
+		if (GUI.board.isTerminal()) {
+			gui.gameOver();
+		} else {
+			try {
+				this.removeActionListener(this);
+			} catch (NullPointerException ex) {
+				// Do nothing
+			}
+		}
 		
 		GUI.saveUndoMove();
 	}
