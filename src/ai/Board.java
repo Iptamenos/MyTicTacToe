@@ -195,7 +195,7 @@ public class Board {
 
     /*
      * A state is terminal if there is a tic-tac-toe
-     * or no empty tiles are available
+     * or no empty tiles are available.
      */
     public boolean isTerminal() {
         // Checking if there is a horizontal tic-tac-toe
@@ -233,34 +233,10 @@ public class Board {
         }
 
 		setWinner(Constants.EMPTY);
-        return isGameBoardFull();
+        return Board.isGameBoardFull(this.gameBoard);
         
     }
     
-    
-	// Checking if there is at least one empty cell.
-    public boolean isGameBoardFull() {
-        for (int row=0; row<3; row++) {
-			for (int col=0; col<3; col++) {
-				if (gameBoard[row][col] == Constants.EMPTY) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-    
-	// Checking if the board is empty.
-    public boolean isGameBoardEmpty() {
-        for (int row=0; row<3; row++) {
-			for (int col=0; col<3; col++) {
-				if (gameBoard[row][col] != Constants.EMPTY) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
 
 	// Makes the specified cell in the border empty.
 	public void undoMove(int row, int col, int symbol) {
@@ -273,8 +249,48 @@ public class Board {
 		}
 	}
 	
+	
+	// Checking if there is at least one empty cell.
+    public static boolean isGameBoardFull(int[][] gameBoard) {
+        for (int row=0; row<3; row++) {
+			for (int col=0; col<3; col++) {
+				if (gameBoard[row][col] == Constants.EMPTY) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    
+    
+	// Checking if the board is empty.
+    public static boolean isGameBoardEmpty(int[][] gameBoard) {
+        for (int row=0; row<3; row++) {
+			for (int col=0; col<3; col++) {
+				if (gameBoard[row][col] != Constants.EMPTY) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+
+	public static int getNumberOfEmptyCells(int[][] gameBoard) {
+		int number_of_empty_cells = 0;
+		for (int row=0; row<3; row++) {
+			for (int col=0; col<3; col++) {
+				if (gameBoard[row][col] == Constants.EMPTY) {
+					number_of_empty_cells++;
+                }
+            }
+        }
+        return number_of_empty_cells;
+	}
+	
+	
     // Prints the board, using "X", "O" and 1-9 for ids
-	public void printBoard() {
+	public static void printBoard(int[][] gameBoard) {
 		System.out.println("*********");
 		int counter = 1;
 		for(int row=0; row<3; row++) {
@@ -302,7 +318,7 @@ public class Board {
 
     // Prints the board, using 1, 2 and 0
     /*
-	public void printBoard() {
+	public static void printBoard(int[][] gameBoard) {
 		for (int i=0; i<3; i++) {
 			System.out.print("|");
 			for (int j=0; j<3; j++) {
@@ -313,5 +329,6 @@ public class Board {
 		System.out.println("**********");
 	}
 	*/
+	
 	
 }

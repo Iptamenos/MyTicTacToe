@@ -34,8 +34,8 @@ public class SettingsWindow extends JFrame {
 	
 	private JComboBox<String> gui_style_drop_down;
 	private JComboBox<String> game_mode_drop_down;
-	private JComboBox<Integer> max_depth1_drop_down;
-	private JComboBox<Integer> max_depth2_drop_down;
+	private JComboBox<String> max_depth1_drop_down;
+	private JComboBox<String> max_depth2_drop_down;
 	private JComboBox<String> player1_color_drop_down;
 	private JComboBox<String> player2_color_drop_down;
 	private JComboBox<String> client_server_symbol_drop_down;
@@ -127,24 +127,28 @@ public class SettingsWindow extends JFrame {
 		else if (selectedMode == Constants.ClientServer)
 			game_mode_drop_down.setSelectedIndex(Constants.ClientServer - 1);
 		
-		max_depth1_drop_down = new JComboBox<Integer>();
-		max_depth1_drop_down.addItem(1);
-		max_depth1_drop_down.addItem(2);
-		max_depth1_drop_down.addItem(3);
-		max_depth1_drop_down.addItem(4);
-		max_depth1_drop_down.addItem(5);
+		max_depth1_drop_down = new JComboBox<String>();
+		max_depth1_drop_down.addItem("1");
+		max_depth1_drop_down.addItem("2");
+		max_depth1_drop_down.addItem("3");
+		max_depth1_drop_down.addItem("4");
+		max_depth1_drop_down.addItem("5");
+		max_depth1_drop_down.addItem("Best Response");
 
-		int index = game_params.getMaxDepth1() - 1;
+		int index = game_params.getMaxDepth1();
+		index = (index == Constants.BestResponse) ? 5 : index-1; 
 		max_depth1_drop_down.setSelectedIndex(index);
 		
-		max_depth2_drop_down = new JComboBox<Integer>();
-		max_depth2_drop_down.addItem(1);
-		max_depth2_drop_down.addItem(2);
-		max_depth2_drop_down.addItem(3);
-		max_depth2_drop_down.addItem(4);
-		max_depth2_drop_down.addItem(5);
+		max_depth2_drop_down = new JComboBox<String>();
+		max_depth2_drop_down.addItem("1");
+		max_depth2_drop_down.addItem("2");
+		max_depth2_drop_down.addItem("3");
+		max_depth2_drop_down.addItem("4");
+		max_depth2_drop_down.addItem("5");
+		max_depth2_drop_down.addItem("Best Response");
 
-		index = game_params.getMaxDepth2() - 1;
+		index = game_params.getMaxDepth2();
+		index = (index == Constants.BestResponse) ? 5 : index-1; 
 		max_depth2_drop_down.setSelectedIndex(index);
 		
 		player1_color_drop_down = new JComboBox<String>();
@@ -263,8 +267,8 @@ public class SettingsWindow extends JFrame {
 					
 					int guiStyle = gui_style_drop_down.getSelectedIndex() + 1;
 					int gameMode = game_mode_drop_down.getSelectedIndex() + 1;
-					int maxDepth1 = (int) max_depth1_drop_down.getSelectedItem();
-					int maxDepth2 = (int) max_depth2_drop_down.getSelectedItem();
+					String maxDepth1String = (String) max_depth1_drop_down.getSelectedItem();
+					String maxDepth2String = (String) max_depth2_drop_down.getSelectedItem();
 					int player1Color = player1_color_drop_down.getSelectedIndex() + 1;
 					int player2Color = player2_color_drop_down.getSelectedIndex() + 1;
 					int clientServerSymbol = client_server_symbol_drop_down.getSelectedIndex() + 1;
@@ -277,6 +281,22 @@ public class SettingsWindow extends JFrame {
 								"Player 1 and Player 2 cannot have the same color of symbols!",
 								"ERROR", JOptionPane.ERROR_MESSAGE);
 						return;
+					}
+					
+					int maxDepth1;
+					try {
+						maxDepth1 = Integer.parseInt(maxDepth1String);
+					} catch (NumberFormatException e) {
+						// e.printStackTrace();
+						maxDepth1 = Constants.BestResponse;
+					}
+					
+					int maxDepth2;
+					try {
+						maxDepth2 = Integer.parseInt(maxDepth2String);
+					} catch (NumberFormatException e) {
+						// e.printStackTrace();
+						maxDepth2 = Constants.BestResponse;
 					}
 					
 					// Change game parameters based on settings.

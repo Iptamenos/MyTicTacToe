@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
+import ai.BestResponse;
 import ai.Board;
 import ai.Constants;
 import ai.GameParameters;
@@ -451,7 +452,15 @@ public class GUI extends JFrame {
 		while (!GUI.board.isTerminal()) {
 
 			// AI 1 Move
-			Move ai1Move = ai1Player.miniMax(GUI.board);
+			Move ai1Move;
+			if (ai1Player.getMaxDepth() == Constants.BestResponse) {
+				// Best Response Move
+				BestResponse bestResponse = new BestResponse(GUI.board.getGameBoard());
+				ai1Move = bestResponse.findBestResponse();
+			} else {
+				// MiniMax AI Move
+				ai1Move = ai1Player.miniMax(GUI.board);
+			}
 			GUI.board.makeMove(ai1Move.getRow(), ai1Move.getCol(), Constants.X);
 			
 			int ai1MoveButtonId = GUI.getIdByBoardCell(ai1Move.getRow(), ai1Move.getCol());
@@ -462,7 +471,7 @@ public class GUI extends JFrame {
 				}
 			}
 	
-			board.printBoard();
+			Board.printBoard(board.getGameBoard());
 			
 			// change turn
 			if (board.getTurn() == Constants.X) {
@@ -474,7 +483,15 @@ public class GUI extends JFrame {
 			if (!GUI.board.isTerminal()) {
 				
 				// AI 2 Move
-				Move ai2Move = ai2Player.miniMax(GUI.board);
+				Move ai2Move;
+				if (ai1Player.getMaxDepth() == Constants.BestResponse) {
+					// Best Response Move
+					BestResponse bestResponse = new BestResponse(GUI.board.getGameBoard());
+					ai2Move = bestResponse.findBestResponse();
+				} else {
+					// MiniMax AI Move
+					ai2Move = ai1Player.miniMax(GUI.board);
+				}
 				GUI.board.makeMove(ai2Move.getRow(), ai2Move.getCol(), Constants.O);
 				
 				int ai2MoveButtonId = GUI.getIdByBoardCell(ai2Move.getRow(), ai2Move.getCol());
@@ -485,7 +502,7 @@ public class GUI extends JFrame {
 					}
 				}
 	
-				board.printBoard();
+				Board.printBoard(board.getGameBoard());
 				
 				// change turn
 				if (board.getTurn() == Constants.X) {
@@ -713,8 +730,10 @@ public class GUI extends JFrame {
 	
 	
 	public static void main(String[] args) {
-		game_params = new GameParameters(Constants.SystemStyle, 3, 3, Constants.BLUE, Constants.RED, Constants.HumanVsAi,
-										 Constants.X, 4000, "127.0.0.1", 4001);
+		game_params = new 
+			GameParameters(Constants.SystemStyle, Constants.BestResponse, Constants.BestResponse,
+			Constants.BLUE, Constants.RED, Constants.HumanVsAi,
+			Constants.X, 4000, "127.0.0.1", 4001);
 		GUI gui = new GUI("My TicTacToe");
 		gui.clientServerSymbol = Constants.X;
 		gui.serverPort = 4000;

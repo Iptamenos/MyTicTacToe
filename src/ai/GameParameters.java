@@ -23,8 +23,8 @@ public class GameParameters implements Serializable {
 	// Default values
 	public GameParameters() {
 		this.guiStyle = Constants.SystemStyle;
-		this.maxDepth1 = 3;
-		this.maxDepth2 = 3;
+		this.maxDepth1 = Constants.BestResponse;
+		this.maxDepth2 = Constants.BestResponse;
 		this.player1Color = Constants.BLUE;
 		this.player2Color = Constants.RED;
 		this.gameMode = Constants.HumanVsAi;

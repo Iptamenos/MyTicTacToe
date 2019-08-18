@@ -26,6 +26,9 @@ public class Constants {
 	public static final int HumanVsHuman = 2;
 	public static final int AiVsAi = 3;
 	public static final int ClientServer = 4;
+	
+	// AI BestResponse mode
+	public static final int BestResponse = -1;
 
 	public static final String getColorNameByNumber(int number) {
 		switch (number) {

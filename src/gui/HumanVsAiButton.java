@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
+import ai.BestResponse;
+import ai.Board;
 import ai.Constants;
 import ai.GameParameters;
 import ai.MiniMaxAi;
@@ -55,14 +57,26 @@ public class HumanVsAiButton extends XOButton {
 			GUI.saveUndoMove();
 			
 			if (!GUI.board.isTerminal()) {
+				
+				// TODO: Find a way to get rid of this function!
 				if (!guiMatchesWithGameBoard())
 					return;
 				
-				// AI Move
-				Move aiMove = aiPlayer.miniMax(GUI.board);
+				Move aiMove;
+				if (this.aiPlayer.getMaxDepth() == Constants.BestResponse) {
+					// Best Response Move
+					BestResponse bestResponse = new BestResponse(GUI.board.getGameBoard());
+					aiMove = bestResponse.findBestResponse();
+				} else {
+					// MiniMax AI Move
+					aiMove = this.aiPlayer.miniMax(GUI.board);
+				}
+				
 				GUI.board.makeMove(aiMove.getRow(), aiMove.getCol(), Constants.O);
 				
 				int aiMoveButtonId = GUI.getIdByBoardCell(aiMove.getRow(), aiMove.getCol());
+//				System.out.println("AI Move [" + aiMove.getRow() + "]" + "[" + aiMove.getCol() +"]");
+
 				for (HumanVsAiButton button: GUI.humanVsAiButtons) {
 					button.aiPlayer = this.aiPlayer;
 					if (button.id == aiMoveButtonId) {
@@ -71,7 +85,7 @@ public class HumanVsAiButton extends XOButton {
 					}
 				}
 
-				GUI.board.printBoard();
+				Board.printBoard(GUI.board.getGameBoard());
 				
 				// check if the game is over
 				if (GUI.board.isTerminal()) {
@@ -92,6 +106,10 @@ public class HumanVsAiButton extends XOButton {
 	}
 	
 
+	// This function resolves an "Undo" operation bug. 
+	// Bug description:
+	// In the "Human Vs Ai" mode, when the game ended with an "Undo" click,
+	// the new game started with a symbol on the GUI board, instead of being empty.
 	private boolean guiMatchesWithGameBoard() {
 		for (HumanVsAiButton button: GUI.humanVsAiButtons) {
 			int id = button.id;

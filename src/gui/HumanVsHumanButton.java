@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
+import ai.Board;
 import ai.Constants;
 import ai.GameParameters;
 
@@ -52,7 +53,7 @@ public class HumanVsHumanButton extends XOButton {
 		List<Integer> cell = GUI.getBoardCellById(id);
 		if (cell != null)
 			GUI.board.makeMove(cell.get(0), cell.get(1), GUI.board.getTurn());
-		GUI.board.printBoard();
+		Board.printBoard(GUI.board.getGameBoard());
 		
 		// check if the game is over
 		if (GUI.board.isTerminal()) {
