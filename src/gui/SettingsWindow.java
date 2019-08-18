@@ -132,11 +132,10 @@ public class SettingsWindow extends JFrame {
 		max_depth1_drop_down.addItem("2");
 		max_depth1_drop_down.addItem("3");
 		max_depth1_drop_down.addItem("4");
-		max_depth1_drop_down.addItem("5");
 		max_depth1_drop_down.addItem("Best Response");
 
 		int index = game_params.getMaxDepth1();
-		index = (index == Constants.BestResponse) ? 5 : index-1; 
+		index = (index == Constants.BestResponse) ? 4 : index-1; 
 		max_depth1_drop_down.setSelectedIndex(index);
 		
 		max_depth2_drop_down = new JComboBox<String>();
@@ -144,11 +143,10 @@ public class SettingsWindow extends JFrame {
 		max_depth2_drop_down.addItem("2");
 		max_depth2_drop_down.addItem("3");
 		max_depth2_drop_down.addItem("4");
-		max_depth2_drop_down.addItem("5");
 		max_depth2_drop_down.addItem("Best Response");
 
 		index = game_params.getMaxDepth2();
-		index = (index == Constants.BestResponse) ? 5 : index-1; 
+		index = (index == Constants.BestResponse) ? 4 : index-1; 
 		max_depth2_drop_down.setSelectedIndex(index);
 		
 		player1_color_drop_down = new JComboBox<String>();

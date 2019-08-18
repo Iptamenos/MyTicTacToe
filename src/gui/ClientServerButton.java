@@ -67,26 +67,34 @@ public class ClientServerButton extends XOButton implements Serializable {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// GUI.undoItem.setEnabled(false);  // uncomment only if needed
-		if (GUI.board.getTurn() != playerSymbol)
+		
+		int turn = Constants.EMPTY;
+		if (GUI.board.getLastSymbolPlayed() == Constants.X)
+			turn = Constants.O;
+		else if (GUI.board.getLastSymbolPlayed() == Constants.O)
+			turn = Constants.X;
+		
+		if (turn != playerSymbol)
 			return;
 		
 		if (programmaticallyPressed) {
-			GUI.board.changeTurn();
+			turn = GUI.board.getLastSymbolPlayed(); 
+			GUI.board.changeLastSymbolPlayed();
 		}
 		
 		// add X or O on the board GUI
-		if (GUI.board.getTurn() == Constants.EMPTY) {
+		if (turn == Constants.EMPTY) {
 			setIcon(null);
-		} else if (GUI.board.getTurn() == Constants.X) {
+		} else if (turn == Constants.X) {
 			setIcon(X);
-		} else if (GUI.board.getTurn() == Constants.O) {
+		} else if (turn == Constants.O) {
 			setIcon(O);
 		}
 			
 		// get cell coordinates by id
 		List<Integer> cell = GUI.getBoardCellById(id);
 		if (cell != null)
-			GUI.board.makeMove(cell.get(0), cell.get(1), GUI.board.getTurn());
+			GUI.board.makeMove(cell.get(0), cell.get(1), turn);
 		Board.printBoard(GUI.board.getGameBoard());
 		
 		if (!programmaticallyPressed) {
@@ -98,13 +106,12 @@ public class ClientServerButton extends XOButton implements Serializable {
 			// check if the game is over
 			if (GUI.board.isTerminal()) {
 				gui.gameOver();
-			} else {
-				try {
-					this.removeActionListener(this);
-				} catch (NullPointerException ex) {
-					// Do nothing
-				}
 			}
+		}
+		try {
+			this.removeActionListener(this);
+		} catch (NullPointerException ex) {
+			// Do nothing
 		}
 		GUI.clientServerButtons[id] = this;
 	}

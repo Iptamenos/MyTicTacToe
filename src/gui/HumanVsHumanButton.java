@@ -39,31 +39,36 @@ public class HumanVsHumanButton extends XOButton {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		GUI.undoItem.setEnabled(true);
-
+		
+		int turn = Constants.EMPTY;
+		if (GUI.board.getLastSymbolPlayed() == Constants.X)
+			turn = Constants.O;
+		else if (GUI.board.getLastSymbolPlayed() == Constants.O)
+			turn = Constants.X;
+		
 		// add X or O on the board GUI
-		if (GUI.board.getTurn() == Constants.EMPTY) {
+		if (turn == Constants.EMPTY) {
 			setIcon(null);
-		} else if (GUI.board.getTurn() == Constants.X) {
+		} else if (turn == Constants.X) {
 			setIcon(X);
-		} else if (GUI.board.getTurn() == Constants.O) {
+		} else if (turn == Constants.O) {
 			setIcon(O);
 		}
 			
 		// get cell coordinates by id
 		List<Integer> cell = GUI.getBoardCellById(id);
 		if (cell != null)
-			GUI.board.makeMove(cell.get(0), cell.get(1), GUI.board.getTurn());
+			GUI.board.makeMove(cell.get(0), cell.get(1), turn);
 		Board.printBoard(GUI.board.getGameBoard());
 		
 		// check if the game is over
-		if (GUI.board.isTerminal()) {
+		if (GUI.board.isTerminal())
 			gui.gameOver();
-		} else {
-			try {
-				this.removeActionListener(this);
-			} catch (NullPointerException ex) {
-				// Do nothing
-			}
+		
+		try {
+			this.removeActionListener(this);
+		} catch (NullPointerException ex) {
+			// Do nothing
 		}
 		
 		GUI.saveUndoMove();

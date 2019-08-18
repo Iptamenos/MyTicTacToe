@@ -62,7 +62,7 @@ public class GUI extends JFrame {
 	public static int humanPlayerUndoRow;
 	public static int humanPlayerUndoCol;
 	public static int humanPlayerUndoSymbol;
-	
+		
 	public int clientServerSymbol;
 	public int serverPort;
 	public String clientIP;
@@ -161,6 +161,7 @@ public class GUI extends JFrame {
 	
 
 	private static void undo() {
+
 //		System.out.println("undo");
 		// This is the undo implementation for Human VS Human mode.
 		if (game_params.getGameMode() == Constants.HumanVsHuman) {
@@ -286,7 +287,8 @@ public class GUI extends JFrame {
 		return row * 3 + col;
 	}
 
-	public void createClientServerNewGame() {		
+	public void createClientServerNewGame() {
+		
 		clientServerSymbol = game_params.getClientServerSymbol();
 		serverPort = game_params.getServerPort();
 		clientIP = game_params.getClientIP();
@@ -332,7 +334,7 @@ public class GUI extends JFrame {
 	}
 	
 	public void createHumanVsHumanNewGame() {
-		
+
 		configureGuiStyle();
 
 		if (menuBar == null)
@@ -369,7 +371,7 @@ public class GUI extends JFrame {
 	}
 	
 	public void createHumanVsAiNewGame() {
-		
+
 		configureGuiStyle();
 
 		if (menuBar == null)
@@ -473,12 +475,8 @@ public class GUI extends JFrame {
 	
 			Board.printBoard(board.getGameBoard());
 			
-			// change turn
-			if (board.getTurn() == Constants.X) {
-				board.setTurn(Constants.O);
-			} else if (board.getTurn() == Constants.O) {
-				board.setTurn(Constants.X);
-			}
+			// change last symbol played
+			board.changeLastSymbolPlayed();
 						
 			if (!GUI.board.isTerminal()) {
 				
@@ -504,12 +502,8 @@ public class GUI extends JFrame {
 	
 				Board.printBoard(board.getGameBoard());
 				
-				// change turn
-				if (board.getTurn() == Constants.X) {
-					board.setTurn(Constants.O);
-				} else if (board.getTurn() == Constants.O) {
-					board.setTurn(Constants.X);
-				}
+				// change last symbol played
+				board.changeLastSymbolPlayed();
 				
 			}
 			
@@ -543,8 +537,8 @@ public class GUI extends JFrame {
 	}
 	
 	
-	public boolean gameOver() {
-//		System.out.println("Game Over!");
+	public void gameOver() {
+		// System.out.println("Game Over function called!");
 
 		if (board.getWinner() == Constants.X) {
 			System.out.println("Player 1 with \"X\" wins!");
@@ -640,8 +634,6 @@ public class GUI extends JFrame {
 				}
 			}
 		}
-		return true;
-		
 	}
 	
 	public static KeyListener gameKeyListener = new KeyListener() {
@@ -732,7 +724,9 @@ public class GUI extends JFrame {
 	public static void main(String[] args) {
 		game_params = new 
 			GameParameters(Constants.SystemStyle, Constants.BestResponse, Constants.BestResponse,
+			// GameParameters(Constants.SystemStyle, 3, Constants.BestResponse,
 			Constants.BLUE, Constants.RED, Constants.HumanVsAi,
+			// Constants.BLUE, Constants.RED, Constants.AiVsAi,
 			Constants.X, 4000, "127.0.0.1", 4001);
 		GUI gui = new GUI("My TicTacToe");
 		gui.clientServerSymbol = Constants.X;

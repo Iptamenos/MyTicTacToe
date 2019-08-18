@@ -3,46 +3,48 @@ package ai;
 import java.util.ArrayList;
 
 public class Board {
-	
-    // Immediate move that led to this board.
+
+    //Immediate move that lead to this board
     private Move lastMove;
 
-    // Variable containing who plays now.
-	private int turn;
+    /* Variable containing who played last; whose turn resulted in this board
+     * Even a new Board has lastLetterPlayed value; it denotes which player will play first
+     */
+	private int lastSymbolPlayed;
+
 	private int [][] gameBoard;
 	private int winner;
-	
+
 	public Board() {
-		this.lastMove = new Move();
-		this.turn = Constants.X;
-		this.gameBoard = new int[3][3];
-		this.winner = Constants.EMPTY;
-		for (int i=0; i<3; i++) {
-			for (int j=0; j<3; j++) {
+		lastMove = new Move();
+		lastSymbolPlayed = Constants.O;
+		gameBoard = new int[3][3];
+		for(int i=0; i<3; i++) {
+			for(int j=0; j<3; j++) {
 				gameBoard[i][j] = Constants.EMPTY;
 			}
 		}
+		winner = Constants.EMPTY;
 	}
 	
 	public Board(Board board) {
-		this.lastMove = board.getLastMove();
-		this.turn = board.getTurn();
-		this.gameBoard = new int[3][3];
-		this.winner = board.getWinner();
-		
-		for (int i=0; i<3; i++){
-			for (int j=0; j<3; j++) {
+		lastMove = board.lastMove;
+		lastSymbolPlayed = board.lastSymbolPlayed;
+		gameBoard = new int[3][3];
+		for(int i=0; i<3; i++) {
+			for(int j=0; j<3; j++) {
 				gameBoard[i][j] = board.gameBoard[i][j];
 			}
 		}
+		winner = Constants.EMPTY;
 	}
 		
 	public Move getLastMove() {
 		return lastMove;
 	}
 	
-	public int getTurn() {
-		return turn;
+	public int getLastSymbolPlayed() {
+		return lastSymbolPlayed;
 	}
 	
 	public int[][] getGameBoard() {
@@ -54,18 +56,18 @@ public class Board {
 	}
 
 	public void setLastMove(Move lastMove) {
-		this.lastMove = lastMove;
+		this.lastMove.setRow(lastMove.getRow());
 		this.lastMove.setCol(lastMove.getCol());
 		this.lastMove.setValue(lastMove.getValue());
 	}
 	
-	public void setTurn(int turn) {
-		this.turn = turn;
+	public void setLastSymbolPlayed(int lastSymbolPlayed) {
+		this.lastSymbolPlayed = lastSymbolPlayed;
 	}
 	
 	public void setGameBoard(int[][] gameBoard) {
-		for (int i=0; i<3; i++) {
-			for (int j=0; j<3; j++) {
+		for(int i=0; i<3; i++) {
+			for(int j=0; j<3; j++) {
 				this.gameBoard[i][j] = gameBoard[i][j];
 			}
 		}
@@ -74,27 +76,20 @@ public class Board {
 	public void setWinner(int winner) {
 		this.winner = winner;
 	}
-	
-    // Make a move; it places a letter in the board
-	public void makeMove(int row, int col, int turnLetter) {
-		this.gameBoard[row][col] = turnLetter;
-		this.lastMove = new Move(row, col);
-		changeTurn();
+
+    // Make a move; it places a symbol in the board
+	public void makeMove(int row, int col, int symbol) {
+		gameBoard[row][col] = symbol;
+		lastMove = new Move(row, col);
+		lastSymbolPlayed = symbol;
 	}
 
-	public void changeTurn() {
-		if (this.turn == Constants.X)
-			this.turn = Constants.O;
-		else if (this.turn == Constants.O)
-			this.turn = Constants.X;
-	}
-	
     // Checks whether a move is valid; whether a square is empty
 	public boolean isValidMove(int row, int col) {
 		if ((row == -1) || (col == -1) || (row > 2) || (col > 2)) {
 			return false;
 		}
-		if(gameBoard[row][col] != Constants.EMPTY) {
+		if (gameBoard[row][col] != Constants.EMPTY) {
 			return false;
 		}
 		return true;
@@ -103,13 +98,13 @@ public class Board {
     /* Generates the children of the state
      * Any square in the board that is empty results to a child
      */
-	public ArrayList<Board> getChildren(int letter) {
+	public ArrayList<Board> getChildren(int symbol) {
 		ArrayList<Board> children = new ArrayList<Board>();
 		for(int row=0; row<3; row++) {
 			for(int col=0; col<3; col++) {
 				if(isValidMove(row, col)) {
 					Board child = new Board(this);
-					child.makeMove(row, col, letter);
+					child.makeMove(row, col, symbol);
 					children.add(child);
 				}
 			}
@@ -119,9 +114,9 @@ public class Board {
 
 	/*
      * The heuristic we use to evaluate is
-     * the number our almost complete tic-tac-toes (having 2 letter in a row, column or diagonal)
-     * minus the number of the opponent's almost complete tic-tac-toes
-     * Special case: if a complete tic-tac-toe is present it counts as ten
+     * the number our almost complete TicTacToes (having 2 symbols in a row, column or diagonal)
+     * minus the number of the opponent's almost complete TicTacToes.
+     * Special case: if a complete TicTacToe is present it counts as ten.
      */
 	public int evaluate() {
 		int Xlines = 0;
@@ -129,18 +124,18 @@ public class Board {
         int sum;
 
         // Checking rows
-		for(int row=0; row<3; row++) {
+		for (int row=0; row<3; row++) {
             sum = gameBoard[row][0] + gameBoard[row][1] + gameBoard[row][2];
-            if(sum == 3) {
+            if (sum == 3) {
                 Xlines = Xlines + 10;
 			}
-            else if(sum == 2) {
+            else if (sum == 2) {
                 Xlines++;
 			}
-            else if(sum == -3) {
+            else if (sum == -3) {
                 Olines = Olines + 10;
 			}
-            else if(sum == -2) {
+            else if (sum == -2) {
                 Olines++;
 			}
 		}
@@ -194,75 +189,82 @@ public class Board {
 	}
 
     /*
-     * A state is terminal if there is a tic-tac-toe
-     * or no empty tiles are available.
+     * A state is terminal if there is a TicTacToe
+     * or no empty tiles are available
      */
     public boolean isTerminal() {
-        // Checking if there is a horizontal tic-tac-toe
-		for (int row=0; row<3; row++) {
-    		if ((gameBoard[row][0] == gameBoard[row][1]) 
-    				&& (gameBoard[row][1] == gameBoard[row][2]) 
-    				&& (gameBoard[row][0] != Constants.EMPTY)) {
+        // Checking if there is a horizontal TicTacToe
+		for(int row=0; row<3; row++) {
+    		if ((gameBoard[row][0] == gameBoard[row][1]) && (gameBoard[row][1] == gameBoard[row][2]) && (gameBoard[row][0] != Constants.EMPTY)) {
     			setWinner(gameBoard[row][0]);
                 return true;
 			}
 		}
 
-        // Checking if there is a vertical tic-tac-toe
+        // Checking if there is a vertical TicTacToe
 		for (int col=0; col<3; col++) {
-    		if ((gameBoard[0][col] == gameBoard[1][col]) 
-    				&& (gameBoard[1][col] == gameBoard[2][col]) 
-    				&& (gameBoard[0][col] != Constants.EMPTY)) {
+    		if((gameBoard[0][col] == gameBoard[1][col]) && (gameBoard[1][col] == gameBoard[2][col]) && (gameBoard[0][col] != Constants.EMPTY)) {
     			setWinner(gameBoard[0][col]);
                 return true;
 			}
 		}
 
-        // Checking if there is a diagonal tic-tac-toe
-        if ((gameBoard[0][0] == gameBoard[1][1]) 
-        		&& (gameBoard[1][1] == gameBoard[2][2]) 
-        		&& (gameBoard[1][1] != Constants.EMPTY)) {
+        // Checking if there is a diagonal TicTacToe
+        if ((gameBoard[0][0] == gameBoard[1][1]) && (gameBoard[1][1] == gameBoard[2][2]) && (gameBoard[1][1] != Constants.EMPTY)) {
 			setWinner(gameBoard[0][0]);
             return true;
         }
-        if ((gameBoard[0][2] == gameBoard[1][1]) 
-        		&& (gameBoard[1][1] == gameBoard[2][0]) 
-        		&& (gameBoard[1][1] != Constants.EMPTY)) {
+        if ((gameBoard[0][2] == gameBoard[1][1]) && (gameBoard[1][1] == gameBoard[2][0]) && (gameBoard[1][1] != Constants.EMPTY)) {
 			setWinner(gameBoard[0][2]);
             return true;
         }
 
-		setWinner(Constants.EMPTY);
-        return Board.isGameBoardFull(this.gameBoard);
-        
+        // Checking if there is at least one empty tile
+        return(Board.isGameBoardFull(gameBoard));
     }
-    
 
+	public void changeLastSymbolPlayed() {
+		if (this.lastSymbolPlayed == Constants.X)
+			this.lastSymbolPlayed = Constants.O;
+		else if (this.lastSymbolPlayed == Constants.O)
+			this.lastSymbolPlayed = Constants.X;
+	}
+	
 	// Makes the specified cell in the border empty.
 	public void undoMove(int row, int col, int symbol) {
 		this.gameBoard[row][col] = Constants.EMPTY;
-		// change turn
-		if (symbol == Constants.O) {
-			this.turn = Constants.X;
-		} else if (symbol == Constants.X) {
-			this.turn = Constants.O;
-		}
+		this.lastSymbolPlayed = symbol;
 	}
 	
+    //Prints the board
+    /*
+	public void print() {
+		System.out.println("*********");
+		int counter = 1;
+		for(int row=0; row<3; row++) {
+			System.out.print("* ");
+			for(int col=0; col<3; col++) {
+				switch (gameBoard[row][col]) {
+					case Constants.X:
+						System.out.print("X ");
+						break;
+					case Constants.O:
+						System.out.print("O ");
+						break;
+					case Constants.EMPTY:
+						System.out.print(counter + " ");
+						break;
+					default:
+						break;
+				}
+				counter++;
+			}
+			System.out.println("*");
+		}
+		System.out.println("*********");
+	}
+	*/
 	
-	// Checking if there is at least one empty cell.
-    public static boolean isGameBoardFull(int[][] gameBoard) {
-        for (int row=0; row<3; row++) {
-			for (int col=0; col<3; col++) {
-				if (gameBoard[row][col] == Constants.EMPTY) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-    
-    
 	// Checking if the board is empty.
     public static boolean isGameBoardEmpty(int[][] gameBoard) {
         for (int row=0; row<3; row++) {
@@ -272,10 +274,24 @@ public class Board {
                 }
             }
         }
+        // System.out.println("Game board is empty!");
         return true;
     }
-
-
+    
+	// Checking if the board is full.
+	// Checking if there is at least one empty tile.
+    public static boolean isGameBoardFull(int[][] gameBoard) {
+        for (int row=0; row<3; row++) {
+			for (int col=0; col<3; col++) {
+				if (gameBoard[row][col] == Constants.EMPTY) {
+                    return false;
+                }
+            }
+        }
+    	// System.out.println("Game board is full!");
+        return true;
+    }
+    
 	public static int getNumberOfEmptyCells(int[][] gameBoard) {
 		int number_of_empty_cells = 0;
 		for (int row=0; row<3; row++) {
@@ -315,20 +331,5 @@ public class Board {
 		}
 		System.out.println("*********");
 	}
-
-    // Prints the board, using 1, 2 and 0
-    /*
-	public static void printBoard(int[][] gameBoard) {
-		for (int i=0; i<3; i++) {
-			System.out.print("|");
-			for (int j=0; j<3; j++) {
-				System.out.print(this.gameBoard[i][j] + "|");
-			}
-			System.out.println();
-		}
-		System.out.println("**********");
-	}
-	*/
-	
 	
 }

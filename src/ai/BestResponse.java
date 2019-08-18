@@ -489,7 +489,7 @@ public class BestResponse {
 	
 	
 	private Move casesThatSuggestWinOrLose(int number_of_empty_cells, int given_number_of_empty_cells) {
-		System.out.println("Inside cases that suggest win or lose, empty cells: " + number_of_empty_cells);
+		// System.out.println("Inside cases that suggest win or lose, empty cells: " + number_of_empty_cells);
 		int currentPlayer, otherPlayer = Constants.EMPTY;
 		
 		if (number_of_empty_cells % 2 == 1) {

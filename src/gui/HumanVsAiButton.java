@@ -58,10 +58,6 @@ public class HumanVsAiButton extends XOButton {
 			
 			if (!GUI.board.isTerminal()) {
 				
-				// TODO: Find a way to get rid of this function!
-				if (!guiMatchesWithGameBoard())
-					return;
-				
 				Move aiMove;
 				if (this.aiPlayer.getMaxDepth() == Constants.BestResponse) {
 					// Best Response Move
@@ -97,33 +93,11 @@ public class HumanVsAiButton extends XOButton {
 						// Do nothing
 					}
 				}
-			} else {
-				gui.gameOver();
 			}
 			
 		}
-		
+		if (GUI.board.isTerminal())
+			gui.gameOver();
 	}
-	
-
-	// This function resolves an "Undo" operation bug. 
-	// Bug description:
-	// In the "Human Vs Ai" mode, when the game ended with an "Undo" click,
-	// the new game started with a symbol on the GUI board, instead of being empty.
-	private boolean guiMatchesWithGameBoard() {
-		for (HumanVsAiButton button: GUI.humanVsAiButtons) {
-			int id = button.id;
-			List<Integer> cell = GUI.getBoardCellById(id); 
-			int row = cell.get(0);
-			int col = cell.get(1);
-			if (GUI.board.getGameBoard()[row][col] != Constants.EMPTY
-					&& button.getIcon() == null) {
-				GUI.board.getGameBoard()[row][col] = Constants.EMPTY;
-				return false;
-			}
-		}
-		return true;
-	}
-
 	
 }

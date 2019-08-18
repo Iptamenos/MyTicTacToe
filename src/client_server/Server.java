@@ -5,7 +5,6 @@ import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import ai.Constants;
 import ai.Move;
 import gui.ClientServerButton;
 import gui.GUI;
@@ -43,15 +42,11 @@ public class Server extends Thread {
 				
 				Move lastMove = (Move) in.readObject();
 				int id = GUI.getIdByBoardCell(lastMove.getRow(), lastMove.getCol());
-//				System.out.println(id);
+				// System.out.println(id);
 				
 				int oppossingPlayerSymbol = in.readInt();
-				int turn = Constants.EMPTY;
-				if (oppossingPlayerSymbol == Constants.O)
-					turn = Constants.X;
-				else if (oppossingPlayerSymbol == Constants.X)
-					turn = Constants.O;
-				GUI.board.setTurn(turn);
+				
+				GUI.board.setLastSymbolPlayed(oppossingPlayerSymbol);
 				
 				for (ClientServerButton button: GUI.clientServerButtons) {
 					if (button.getId() == id) {
@@ -61,7 +56,7 @@ public class Server extends Thread {
 						button.setProgrammaticallyPressed(false);
 					}
 				}
-//				GUI.board.printBoard();
+				// GUI.board.printBoard();
 
 				if (GUI.board.isTerminal()) {
 					break;
