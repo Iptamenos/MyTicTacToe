@@ -50,7 +50,7 @@ public class HumanVsAiButton extends XOButton {
 		
 		if (cell != null) {
 			GUI.board.makeMove(cell.get(0), cell.get(1), Constants.X);
-//			gui.getBoard().printBoard();
+			// gui.getBoard().printBoard();
 			
 			GUI.saveUndoMove();
 			
@@ -69,7 +69,7 @@ public class HumanVsAiButton extends XOButton {
 				GUI.board.makeMove(aiMove.getRow(), aiMove.getCol(), Constants.O);
 				
 				int aiMoveButtonId = GUI.getIdByBoardCell(aiMove.getRow(), aiMove.getCol());
-//				System.out.println("AI Move [" + aiMove.getRow() + "]" + "[" + aiMove.getCol() +"]");
+				// System.out.println("AI Move [" + aiMove.getRow() + "]" + "[" + aiMove.getCol() +"]");
 
 				for (HumanVsAiButton button: GUI.humanVsAiButtons) {
 					button.aiPlayer = this.aiPlayer;
