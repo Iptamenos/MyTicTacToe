@@ -22,14 +22,12 @@ public class HumanVsHumanButton extends XOButton {
 	GUI gui;
 	ImageIcon X;
 	ImageIcon O;
-	GameParameters game_params;
 
 	public HumanVsHumanButton(int id, GUI gui) {
 		this.id = id;
-		this.game_params = GUI.game_params;
 		this.gui = gui;
-		String player1Color = Constants.getColorNameByNumber(this.game_params.getPlayer1Color());
-		String player2Color = Constants.getColorNameByNumber(this.game_params.getPlayer2Color());
+		String player1Color = Constants.getColorNameByNumber(GameParameters.player1Color);
+		String player2Color = Constants.getColorNameByNumber(GameParameters.player2Color);
 		this.X = new ImageIcon(this.getClass().getResource("/img/X/" + player1Color + ".png"));
 		this.O = new ImageIcon(this.getClass().getResource("/img/O/" + player2Color + ".png"));
 		this.addActionListener(this);

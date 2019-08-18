@@ -47,16 +47,11 @@ public class SettingsWindow extends JFrame {
 	private JButton cancel;
 	
 	private EventHandler handler;
+		
 	
-	private GameParameters game_params; 
-	
-	
-	public SettingsWindow(GameParameters gp) {
+	public SettingsWindow() {
 		super("Settings");
-		
-		// copy passed argument object to class object
-		this.game_params = gp; 
-		
+				
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLayout(null);
 		setSize(460, 650);
@@ -64,7 +59,18 @@ public class SettingsWindow extends JFrame {
 		setResizable(false);
 		
 		handler = new EventHandler();
-		
+
+		int selectedGuiStyle = GameParameters.guiStyle;
+		int selectedMode = GameParameters.gameMode;
+		int maxDepth1 = GameParameters.maxDepth1;
+		int maxDepth2 = GameParameters.maxDepth2;
+		int selectedPlayer1Color = GameParameters.player1Color;
+		int selectedPlayer2Color = GameParameters.player2Color;
+		int selectedClientServerSymbol = GameParameters.clientServerSymbol;
+		int serverPort = GameParameters.serverPort;
+		String clientIP = GameParameters.clientIP;
+		int clientPort = GameParameters.clientPort;
+
 		guiStyleLabel = new JLabel("GUI style: ");
 		gameModeLabel = new JLabel("Game mode: ");
 		maxDepth1Label = new JLabel("Minimax AI 1 search depth: ");
@@ -103,7 +109,6 @@ public class SettingsWindow extends JFrame {
 		gui_style_drop_down.addItem("Cross-Platform style");
 		gui_style_drop_down.addItem("Nimbus style");
 		
-		int selectedGuiStyle = game_params.getGuiStyle();
 		if (selectedGuiStyle == Constants.SystemStyle)
 			gui_style_drop_down.setSelectedIndex(Constants.SystemStyle - 1);
 		else if (selectedGuiStyle == Constants.CrossPlatformStyle)
@@ -117,7 +122,6 @@ public class SettingsWindow extends JFrame {
 		game_mode_drop_down.addItem("AI Vs AI");
 		game_mode_drop_down.addItem("Client-Server");
 
-		int selectedMode = game_params.getGameMode();
 		if (selectedMode == Constants.HumanVsAi)
 			game_mode_drop_down.setSelectedIndex(Constants.HumanVsAi - 1);
 		else if (selectedMode == Constants.HumanVsHuman)
@@ -134,9 +138,8 @@ public class SettingsWindow extends JFrame {
 		max_depth1_drop_down.addItem("4");
 		max_depth1_drop_down.addItem("Best Response");
 
-		int index = game_params.getMaxDepth1();
-		index = (index == Constants.BestResponse) ? 4 : index-1; 
-		max_depth1_drop_down.setSelectedIndex(index);
+		maxDepth1 = (maxDepth1 == Constants.BestResponse) ? 4 : maxDepth1-1; 
+		max_depth1_drop_down.setSelectedIndex(maxDepth1);
 		
 		max_depth2_drop_down = new JComboBox<String>();
 		max_depth2_drop_down.addItem("1");
@@ -145,9 +148,8 @@ public class SettingsWindow extends JFrame {
 		max_depth2_drop_down.addItem("4");
 		max_depth2_drop_down.addItem("Best Response");
 
-		index = game_params.getMaxDepth2();
-		index = (index == Constants.BestResponse) ? 4 : index-1; 
-		max_depth2_drop_down.setSelectedIndex(index);
+		maxDepth2 = (maxDepth2 == Constants.BestResponse) ? 4 : maxDepth2-1; 
+		max_depth2_drop_down.setSelectedIndex(maxDepth2);
 		
 		player1_color_drop_down = new JComboBox<String>();
 		player1_color_drop_down.addItem(Constants.getColorNameByNumber(Constants.BLUE));
@@ -158,7 +160,6 @@ public class SettingsWindow extends JFrame {
 		player1_color_drop_down.addItem(Constants.getColorNameByNumber(Constants.PURPLE));
 		player1_color_drop_down.addItem(Constants.getColorNameByNumber(Constants.YELLOW));
 		
-		int selectedPlayer1Color = game_params.getPlayer1Color();
 		if (selectedPlayer1Color == Constants.BLUE)
 			player1_color_drop_down.setSelectedIndex(Constants.BLUE-1);
 		else if (selectedPlayer1Color == Constants.RED)
@@ -183,7 +184,6 @@ public class SettingsWindow extends JFrame {
 		player2_color_drop_down.addItem(Constants.getColorNameByNumber(Constants.PURPLE));
 		player2_color_drop_down.addItem(Constants.getColorNameByNumber(Constants.YELLOW));
 		
-		int selectedPlayer2Color = game_params.getPlayer2Color();
 		if (selectedPlayer2Color == Constants.BLUE)
 			player2_color_drop_down.setSelectedIndex(Constants.BLUE-1);
 		else if (selectedPlayer2Color == Constants.RED)
@@ -203,20 +203,19 @@ public class SettingsWindow extends JFrame {
 		client_server_symbol_drop_down.addItem("X");
 		client_server_symbol_drop_down.addItem("O");
 		
-		int selectedClientServerSymbol = game_params.getClientServerSymbol();
 		if (selectedClientServerSymbol == Constants.X)
 			client_server_symbol_drop_down.setSelectedIndex(Constants.X - 1);
 		else if (selectedClientServerSymbol == Constants.O)
 			client_server_symbol_drop_down.setSelectedIndex(Constants.O - 1);
 		
 		server_port_text_field = new JTextField();
-		server_port_text_field.setText(game_params.getServerPort() + "");
+		server_port_text_field.setText(serverPort + "");
 		
-		client_ip_text_field = new JTextField(game_params.getClientIP());
-		client_ip_text_field.setText(game_params.getClientIP());
+		client_ip_text_field = new JTextField(GameParameters.clientIP);
+		client_ip_text_field.setText(clientIP);
 		
-		client_port_text_field = new JTextField(game_params.getClientPort());
-		client_port_text_field.setText(game_params.getClientPort() + "");
+		client_port_text_field = new JTextField(GameParameters.clientPort);
+		client_port_text_field.setText(clientPort + "");
 		
 		add(gui_style_drop_down);
 		add(game_mode_drop_down);
@@ -298,16 +297,16 @@ public class SettingsWindow extends JFrame {
 					}
 					
 					// Change game parameters based on settings.
-					game_params.setGuiStyle(guiStyle);
-					game_params.setGameMode(gameMode);
-					game_params.setMaxDepth1(maxDepth1);
-					game_params.setMaxDepth2(maxDepth2);
-					game_params.setPlayer1Color(player1Color);
-					game_params.setPlayer2Color(player2Color);
-					game_params.setClientServerSymbol(clientServerSymbol);
-					game_params.setServerPort(serverPort);
-					game_params.setClientIP(clientIP);
-					game_params.setClientPort(clientPort);
+					GameParameters.guiStyle = guiStyle;
+					GameParameters.gameMode = gameMode;
+					GameParameters.maxDepth1 = maxDepth1;
+					GameParameters.maxDepth2 = maxDepth2;
+					GameParameters.player1Color = player1Color;
+					GameParameters.player2Color = player2Color;
+					GameParameters.clientServerSymbol = clientServerSymbol;
+					GameParameters.serverPort = serverPort;
+					GameParameters.clientIP = clientIP;
+					GameParameters.clientPort = clientPort;
 					
 					JOptionPane.showMessageDialog(null,
 							"Game settings have been changed.\nThe changes will be applied in the next game.",

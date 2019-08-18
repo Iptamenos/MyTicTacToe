@@ -56,7 +56,7 @@ public class MiniMaxAi {
          */
 		if((board.isTerminal()) || (depth == maxDepth)) {
 			int value = board.evaluate();
-			System.out.println("MAX function, Depth: " + depth + ", move value: " + value);
+			// System.out.println("MAX function, Depth: " + depth + ", move value: " + value);
 			Move lastMove = new Move(board.getLastMove().getRow(), board.getLastMove().getCol(), value);
 			return lastMove;
 		}
@@ -91,7 +91,7 @@ public class MiniMaxAi {
 
 		if ((board.isTerminal()) || (depth == maxDepth)) {
 			int value = board.evaluate();
-			System.out.println("MIN function, Depth: " + depth + ", move value: " + value);
+			// System.out.println("MIN function, Depth: " + depth + ", move value: " + value);
 			Move lastMove = new Move(board.getLastMove().getRow(), board.getLastMove().getCol(), value);
 			return lastMove;
 		}

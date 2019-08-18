@@ -17,16 +17,18 @@ public class exampleClientServer2 {
 	}
 
 	public static void main(String[] args) {
-		GUI.game_params = new 
-				GameParameters(Constants.SystemStyle, Constants.BestResponse, Constants.BestResponse,
-				Constants.BLUE, Constants.RED, Constants.ClientServer,
-				clientServerSymbol, serverPort, clientIP, clientPort);
+		GameParameters.guiStyle = Constants.SystemStyle;
+		GameParameters.gameMode = Constants.ClientServer;
+		GameParameters.maxDepth1 = Constants.BestResponse;
+		GameParameters.maxDepth2 = Constants.BestResponse;
+		GameParameters.player1Color = Constants.BLUE;
+		GameParameters.player2Color = Constants.RED;
+		GameParameters.clientServerSymbol = clientServerSymbol;
+		GameParameters.serverPort = serverPort;
+		GameParameters.clientIP = clientIP;
+		GameParameters.clientPort = clientPort;
 		
 		GUI gui = new GUI("My TicTacToe 2");
-		gui.clientServerSymbol = clientServerSymbol;
-		gui.serverPort = serverPort;
-		gui.clientIP = clientIP;
-		gui.clientPort = clientPort;
 		
 		gui.createClientServerNewGame();
 	}

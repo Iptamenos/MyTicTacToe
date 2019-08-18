@@ -24,13 +24,28 @@ public class ClientServerButton extends XOButton implements Serializable {
 	GUI gui;
 	ImageIcon X;
 	ImageIcon O;
-	GameParameters game_params;
 	String serverIP;
 	int serverPort;
 	Client client;
 	int playerSymbol;
 	boolean programmaticallyPressed = false;
 	
+	public ClientServerButton(int id, GUI gui, String serverIP, int serverPort, int playerSymbol) {
+		this.id = id;
+		this.gui = gui;
+		String player1Color = Constants.getColorNameByNumber(GameParameters.player1Color);
+		String player2Color = Constants.getColorNameByNumber(GameParameters.player2Color);
+		this.X = new ImageIcon(this.getClass().getResource("/img/X/" + player1Color + ".png"));
+		this.O = new ImageIcon(this.getClass().getResource("/img/O/" + player2Color + ".png"));
+		this.addActionListener(this);
+		setIcon(null);
+		this.serverIP = serverIP;
+		this.serverPort = serverPort;
+		this.client = new Client(gui, serverIP, serverPort, playerSymbol);
+		this.playerSymbol = playerSymbol;
+	}
+	
+
 	public int getId() {
 		return id;
 	}
@@ -47,22 +62,6 @@ public class ClientServerButton extends XOButton implements Serializable {
 		this.programmaticallyPressed = programmaticallyPressed;
 	}
 
-	public ClientServerButton(int id, GUI gui, String serverIP, int serverPort, int playerSymbol) {
-		this.id = id;
-		this.game_params = GUI.game_params;
-		this.gui = gui;
-		String player1Color = Constants.getColorNameByNumber(this.game_params.getPlayer1Color());
-		String player2Color = Constants.getColorNameByNumber(this.game_params.getPlayer2Color());
-		this.X = new ImageIcon(this.getClass().getResource("/img/X/" + player1Color + ".png"));
-		this.O = new ImageIcon(this.getClass().getResource("/img/O/" + player2Color + ".png"));
-		this.addActionListener(this);
-		setIcon(null);
-		this.serverIP = serverIP;
-		this.serverPort = serverPort;
-		this.client = new Client(gui, serverIP, serverPort, playerSymbol);
-		this.playerSymbol = playerSymbol;
-	}
-	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
