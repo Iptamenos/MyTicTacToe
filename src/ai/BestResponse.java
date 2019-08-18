@@ -47,7 +47,7 @@ public class BestResponse {
 	// IMPORTANT: We assume that the player with the symbol "X" always plays first.
 	public Move findBestResponse() {
 		int number_of_empty_cells = Board.getNumberOfEmptyCells(this.givenBoard);
-		System.out.println("number of empty cells: " + number_of_empty_cells);
+		// System.out.println("number of empty cells: " + number_of_empty_cells);
 		
 		if (number_of_empty_cells == 0)
 			return null;
@@ -65,7 +65,7 @@ public class BestResponse {
 			/* |- - -|
 			 * |- X -|
 			 * |- - -| */
-			System.out.println("INSIDE CASE 1");
+			// System.out.println("INSIDE CASE 1");
 			return this.bestResponse = new Move(1, 1, Constants.X);
 		}
 		

@@ -84,6 +84,7 @@ public class HumanVsAiButton extends XOButton {
 				// check if the game is over
 				if (GUI.board.isTerminal()) {
 					gui.gameOver();
+					return;
 				} else {
 					try {
 						this.removeActionListener(this);

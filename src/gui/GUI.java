@@ -428,7 +428,7 @@ public class GUI extends JFrame {
 		panel.revalidate();
 		panel.repaint();
 		for (int i=0; i<9; i++) {
-			aiVsAiButtons[i] = new AiVsAiButton(i, ai1Player, ai2Player);
+			aiVsAiButtons[i] = new AiVsAiButton(i);
 			panel.add(aiVsAiButtons[i]);
 		}
 		
@@ -452,21 +452,16 @@ public class GUI extends JFrame {
 				// MiniMax AI Move
 				ai1Move = ai1Player.miniMax(GUI.board);
 			}
-			GUI.board.makeMove(ai1Move.getRow(), ai1Move.getCol(), Constants.X);
 			
-			int ai1MoveButtonId = GUI.getIdByBoardCell(ai1Move.getRow(), ai1Move.getCol());
+			int ai1_button_id = getIdByBoardCell(ai1Move.getRow(), ai1Move.getCol());
 			for (AiVsAiButton button: aiVsAiButtons) {
-				if (button.id == ai1MoveButtonId) {
-					button.setIcon(button.X);
-					button.removeActionListener(button);
+				if (button.id == ai1_button_id) {
+					button.player = Constants.X;
+					button.move = ai1Move;
+					button.doClick();
 				}
 			}
-	
-			Board.printBoard(board.getGameBoard());
 			
-			// change last symbol played
-			board.changeLastSymbolPlayed();
-						
 			if (!GUI.board.isTerminal()) {
 				
 				// AI 2 Move
@@ -481,18 +476,14 @@ public class GUI extends JFrame {
 				}
 				GUI.board.makeMove(ai2Move.getRow(), ai2Move.getCol(), Constants.O);
 				
-				int ai2MoveButtonId = GUI.getIdByBoardCell(ai2Move.getRow(), ai2Move.getCol());
+				int ai2_button_id = getIdByBoardCell(ai2Move.getRow(), ai2Move.getCol());
 				for (AiVsAiButton button: aiVsAiButtons) {
-					if (button.id == ai2MoveButtonId) {
-						button.setIcon(button.O);
-						button.removeActionListener(button);
+					if (button.id == ai2_button_id) {
+						button.player = Constants.O;
+						button.move = ai2Move;
+						button.doClick();
 					}
 				}
-	
-				Board.printBoard(board.getGameBoard());
-				
-				// change last symbol played
-				board.changeLastSymbolPlayed();
 				
 			}
 			

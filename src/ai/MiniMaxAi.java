@@ -7,6 +7,7 @@ public class MiniMaxAi {
 	
     // Variable that holds the maximum depth the MiniMax algorithm will reach for this player
 	private int maxDepth;
+	
 	// Variable that holds which symbol this player controls
 	private int playerSymbol;
 
