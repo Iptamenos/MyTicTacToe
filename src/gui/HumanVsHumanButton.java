@@ -23,6 +23,7 @@ public class HumanVsHumanButton extends XOButton {
 	ImageIcon X;
 	ImageIcon O;
 
+	
 	public HumanVsHumanButton(int id, GUI gui) {
 		this.id = id;
 		this.gui = gui;
@@ -34,6 +35,7 @@ public class HumanVsHumanButton extends XOButton {
 		setIcon(null);
 	}
 
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		GUI.undoItem.setEnabled(true);
@@ -56,7 +58,7 @@ public class HumanVsHumanButton extends XOButton {
 		// get cell coordinates by id
 		List<Integer> cell = GUI.getBoardCellById(id);
 		if (cell != null)
-			GUI.board.makeMove(cell.get(0), cell.get(1), turn);
+			GUI.makeMove(cell.get(0), cell.get(1), turn);
 		Board.printBoard(GUI.board.getGameBoard());
 		
 		// check if the game is over
@@ -71,5 +73,6 @@ public class HumanVsHumanButton extends XOButton {
 		
 		GUI.saveUndoMove();
 	}
+	
 	
 }

@@ -93,7 +93,7 @@ public class ClientServerButton extends XOButton implements Serializable {
 		// get cell coordinates by id
 		List<Integer> cell = GUI.getBoardCellById(id);
 		if (cell != null)
-			GUI.board.makeMove(cell.get(0), cell.get(1), turn);
+			GUI.makeMove(cell.get(0), cell.get(1), turn);
 		Board.printBoard(GUI.board.getGameBoard());
 		
 		if (!programmaticallyPressed) {

@@ -20,6 +20,7 @@ public class MiniMaxAi {
 		this.maxDepth = maxDepth;
 		this.playerSymbol = playerLetter;
 	}
+	
     public int getMaxDepth() {
 		return maxDepth;
 	}

@@ -36,6 +36,7 @@ public class AiVsAiButton extends XOButton {
 		this.player = Constants.EMPTY;
 	}
 	
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// System.out.println("Clicked button.");
@@ -48,7 +49,7 @@ public class AiVsAiButton extends XOButton {
 		// List<Integer> cell = GUI.getBoardCellById(id);
 		// System.out.println("button cell: [" + cell.get(0) + "]" + "[" + cell.get(1) + "]");
 		
-		GUI.board.makeMove(move.getRow(), move.getCol(), player);
+		GUI.makeMove(move.getRow(), move.getCol(), player);
 		
 		// int ai1MoveButtonId = GUI.getIdByBoardCell(move.getRow(), move.getCol());
 
@@ -65,5 +66,6 @@ public class AiVsAiButton extends XOButton {
 		removeActionListener(this);
 	
 	}
+	
 	
 }

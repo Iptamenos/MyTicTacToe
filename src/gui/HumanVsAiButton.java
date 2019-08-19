@@ -27,6 +27,7 @@ public class HumanVsAiButton extends XOButton {
 	ImageIcon O;
 	MiniMaxAi aiPlayer;
 	
+	
 	public HumanVsAiButton(int id, GUI gui, MiniMaxAi aiPlayer) {
 		this.id = id;
 		this.gui = gui;
@@ -39,17 +40,26 @@ public class HumanVsAiButton extends XOButton {
 		this.aiPlayer = aiPlayer;
 	}
 
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		GUI.undoItem.setEnabled(true);
-
+		
 		setIcon(X);
 		
 		// get cell coordinates by id
 		List<Integer> cell = GUI.getBoardCellById(id);
 		
 		if (cell != null) {
-			GUI.board.makeMove(cell.get(0), cell.get(1), Constants.X);
+			GUI.makeMove(cell.get(0), cell.get(1), Constants.X);
+			
+			// This fixes an "Undo" operation bug.
+			if (!gameBoardMatchesWithGUIBoard()) {
+				GUI.board.getGameBoard()[cell.get(0)][cell.get(1)] = Constants.EMPTY;
+				return;
+			}
+
+			// System.out.println(GUI.board.getLastMove());
 			// gui.getBoard().printBoard();
 			
 			GUI.saveUndoMove();
@@ -63,10 +73,12 @@ public class HumanVsAiButton extends XOButton {
 					aiMove = bestResponse.findBestResponse();
 				} else {
 					// MiniMax AI Move
+					// System.out.println(GUI.board.getLastMove());
+					GUI.board.setLastSymbolPlayed(Constants.X);
 					aiMove = this.aiPlayer.miniMax(GUI.board);
 				}
 				
-				GUI.board.makeMove(aiMove.getRow(), aiMove.getCol(), Constants.O);
+				GUI.makeMove(aiMove.getRow(), aiMove.getCol(), Constants.O);
 				
 				int aiMoveButtonId = GUI.getIdByBoardCell(aiMove.getRow(), aiMove.getCol());
 				// System.out.println("AI Move [" + aiMove.getRow() + "]" + "[" + aiMove.getCol() +"]");
@@ -92,11 +104,26 @@ public class HumanVsAiButton extends XOButton {
 						// Do nothing
 					}
 				}
+			} else {
+				gui.gameOver();
 			}
 			
 		}
-		if (GUI.board.isTerminal())
-			gui.gameOver();
 	}
+
+	
+	// It checks if the GUI board is the identical to the gameBoard 2d-array.
+	// It fixes an "Undo" operation bug.
+	private boolean gameBoardMatchesWithGUIBoard() {
+		for (HumanVsAiButton button: GUI.humanVsAiButtons) {
+			List<Integer> cell = GUI.getBoardCellById(button.id);
+			if (button.getIcon() == null
+				&& GUI.board.getGameBoard()[cell.get(0)][cell.get(1)] != Constants.EMPTY) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	
 }

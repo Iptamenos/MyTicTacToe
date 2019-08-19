@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 public class Board {
 
-    //Immediate move that lead to this board
+	
+    // Immediate move that led to this board.
     private Move lastMove;
 
     /* Variable containing who played last; whose turn resulted in this board
@@ -77,7 +78,7 @@ public class Board {
 		this.winner = winner;
 	}
 
-    // Make a move; it places a symbol in the board
+    // Make a move; it places a symbol on the board
 	public void makeMove(int row, int col, int symbol) {
 		gameBoard[row][col] = symbol;
 		lastMove = new Move(row, col);

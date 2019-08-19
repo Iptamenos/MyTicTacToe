@@ -450,6 +450,7 @@ public class GUI extends JFrame {
 				ai1Move = bestResponse.findBestResponse();
 			} else {
 				// MiniMax AI Move
+				GUI.board.setLastSymbolPlayed(Constants.O);
 				ai1Move = ai1Player.miniMax(GUI.board);
 			}
 			
@@ -472,9 +473,10 @@ public class GUI extends JFrame {
 					ai2Move = bestResponse.findBestResponse();
 				} else {
 					// MiniMax AI Move
+					GUI.board.setLastSymbolPlayed(Constants.O);
 					ai2Move = ai1Player.miniMax(GUI.board);
 				}
-				GUI.board.makeMove(ai2Move.getRow(), ai2Move.getCol(), Constants.O);
+				makeMove(ai2Move.getRow(), ai2Move.getCol(), Constants.O);
 				
 				int ai2_button_id = getIdByBoardCell(ai2Move.getRow(), ai2Move.getCol());
 				for (AiVsAiButton button: aiVsAiButtons) {
@@ -701,23 +703,34 @@ public class GUI extends JFrame {
 	};
 	
 	
+    // Make a move; it places a symbol on the board
+	public static void makeMove(int row, int col, int symbol) {
+		board.getGameBoard()[row][col] = symbol;
+		// System.out.println("previous move: " + board.getLastMove());
+		board.setLastMove(new Move(row, col));
+		// System.out.println("this move: " + board.getLastMove());
+		board.setLastSymbolPlayed(symbol);
+	}
+	
+	
 	public static void main(String[] args) {
 		
 		// These are the default values.
 		// Feel free to change them, before running.
 		// You can also change them later, from the GUI window.
-		/*
 		GameParameters.guiStyle = Constants.SystemStyle;
 		GameParameters.gameMode = Constants.HumanVsAi;
+		// GameParameters.gameMode = Constants.AiVsAi;
 		GameParameters.maxDepth1 = Constants.BestResponse;
+		// GameParameters.maxDepth1 = 3;
 		GameParameters.maxDepth2 = Constants.BestResponse;
+		// GameParameters.maxDepth2 = 1;
 		GameParameters.player1Color = Constants.BLUE;
 		GameParameters.player2Color = Constants.RED;
 		GameParameters.clientServerSymbol = Constants.X;
 		GameParameters.serverPort = 4000;
 		GameParameters.clientIP = "127.0.0.1";
 		GameParameters.clientPort = 4001;
-		*/
 		
 		GUI gui = new GUI("My TicTacToe");
 		
