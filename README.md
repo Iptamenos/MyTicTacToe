@@ -7,7 +7,7 @@ Game modes:
 3) AI Vs AI
 4) Client-Server (like Human Vs Human for different PCs, using static IPs)
 
-Video for this project: [here](https://www.youtube.com/watch?v=R1RLqiM_-SA)
+Video for this project: [here](https://www.youtube.com/watch?v=yc8WF4b1LR0&feature=youtu.be)
 
 
 ### Screenshot
