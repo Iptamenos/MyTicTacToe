@@ -55,7 +55,7 @@ public class HumanVsAiButton extends XOButton {
 			
 			// This fixes an "Undo" operation bug.
 			if (!gameBoardMatchesWithGUIBoard()) {
-				GUI.board.getGameBoard()[cell.get(0)][cell.get(1)] = Constants.EMPTY;
+				GUI.undo();
 				return;
 			}
 
