@@ -8,17 +8,17 @@ public class Board {
     // Immediate move that led to this board.
     private Move lastMove;
 
-    /* Variable containing who played last; whose turn resulted in this board
-     * Even a new Board has lastLetterPlayed value; it denotes which player will play first
+    /* Variable containing who played last; whose turn resulted in this board.
+     * Even a new Board has lastLetterPlayed value; it denotes which player will play first.
      */
-	private int lastSymbolPlayed;
+	private int lastLetterPlayed;
 
 	private int [][] gameBoard;
 	private int winner;
 
 	public Board() {
 		lastMove = new Move();
-		lastSymbolPlayed = Constants.O;
+		lastLetterPlayed = Constants.O;
 		gameBoard = new int[3][3];
 		for(int i=0; i<3; i++) {
 			for(int j=0; j<3; j++) {
@@ -30,7 +30,7 @@ public class Board {
 	
 	public Board(Board board) {
 		lastMove = board.lastMove;
-		lastSymbolPlayed = board.lastSymbolPlayed;
+		lastLetterPlayed = board.lastLetterPlayed;
 		gameBoard = new int[3][3];
 		for(int i=0; i<3; i++) {
 			for(int j=0; j<3; j++) {
@@ -45,7 +45,7 @@ public class Board {
 	}
 	
 	public int getLastSymbolPlayed() {
-		return lastSymbolPlayed;
+		return lastLetterPlayed;
 	}
 	
 	public int[][] getGameBoard() {
@@ -63,7 +63,7 @@ public class Board {
 	}
 	
 	public void setLastSymbolPlayed(int lastSymbolPlayed) {
-		this.lastSymbolPlayed = lastSymbolPlayed;
+		this.lastLetterPlayed = lastSymbolPlayed;
 	}
 	
 	public void setGameBoard(int[][] gameBoard) {
@@ -82,7 +82,7 @@ public class Board {
 	public void makeMove(int row, int col, int symbol) {
 		gameBoard[row][col] = symbol;
 		lastMove = new Move(row, col);
-		lastSymbolPlayed = symbol;
+		lastLetterPlayed = symbol;
 	}
 
     // Checks whether a move is valid; whether a square is empty
@@ -225,16 +225,16 @@ public class Board {
     }
 
 	public void changeLastSymbolPlayed() {
-		if (this.lastSymbolPlayed == Constants.X)
-			this.lastSymbolPlayed = Constants.O;
-		else if (this.lastSymbolPlayed == Constants.O)
-			this.lastSymbolPlayed = Constants.X;
+		if (this.lastLetterPlayed == Constants.X)
+			this.lastLetterPlayed = Constants.O;
+		else if (this.lastLetterPlayed == Constants.O)
+			this.lastLetterPlayed = Constants.X;
 	}
 	
 	// Makes the specified cell in the border empty.
 	public void undoMove(int row, int col, int symbol) {
 		this.gameBoard[row][col] = Constants.EMPTY;
-		this.lastSymbolPlayed = symbol;
+		this.lastLetterPlayed = symbol;
 	}
 	
     //Prints the board

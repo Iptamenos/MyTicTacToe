@@ -8,17 +8,17 @@ public class MiniMaxAi {
     // Variable that holds the maximum depth the MiniMax algorithm will reach for this player
 	private int maxDepth;
 	
-	// Variable that holds which symbol this player controls
-	private int playerSymbol;
+	// Variable that holds which letter this player controls
+	private int playerLetter;
 
 	public MiniMaxAi() {
 		maxDepth = 3;
-		playerSymbol = Constants.O;
+		playerLetter = Constants.O;
 	}
 	
 	public MiniMaxAi(int maxDepth, int playerLetter) {
 		this.maxDepth = maxDepth;
-		this.playerSymbol = playerLetter;
+		this.playerLetter = playerLetter;
 	}
 	
     public int getMaxDepth() {
@@ -30,17 +30,17 @@ public class MiniMaxAi {
 	}
 
 	public int getPlayerSymbol() {
-		return playerSymbol;
+		return playerLetter;
 	}
 
 	public void setPlayerSymbol(int playerSymbol) {
-		this.playerSymbol = playerSymbol;
+		this.playerLetter = playerSymbol;
 	}
 	
     // Initiates the MiniMax algorithm
 	public Move miniMax(Board board) {
         // If the X plays then it wants to MAXimize the heuristics value
-        if (playerSymbol == Constants.X) {
+        if (playerLetter == Constants.X) {
             return max(new Board(board), 0);
         }
         // If the O plays then it wants to MINimize the heuristics value

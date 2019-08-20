@@ -49,11 +49,11 @@ public class Server extends Thread {
 				GUI.board.setLastSymbolPlayed(oppossingPlayerSymbol);
 				
 				for (ClientServerButton button: GUI.clientServerButtons) {
-					if (button.getId() == id) {
+					if (button.id == id) {
 						// Programmatically press the button.
-						button.setProgrammaticallyPressed(true);
+						button.programmaticallyPressed = true;
 						button.doClick();
-						button.setProgrammaticallyPressed(false);
+						button.programmaticallyPressed = false;
 					}
 				}
 				// GUI.board.printBoard();

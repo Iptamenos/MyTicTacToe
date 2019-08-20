@@ -20,15 +20,16 @@ public class ClientServerButton extends XOButton implements Serializable {
 	private static final long serialVersionUID = -7433169613318480660L;
 	
 	// Empty: 0, X: 1, O: 0
-	int id;
+	public int id;
 	GUI gui;
 	ImageIcon X;
 	ImageIcon O;
 	String serverIP;
 	int serverPort;
 	Client client;
-	int playerSymbol;
-	boolean programmaticallyPressed = false;
+	int playerLetter;
+	public boolean programmaticallyPressed = false;
+	
 	
 	public ClientServerButton(int id, GUI gui, String serverIP, int serverPort, int playerSymbol) {
 		this.id = id;
@@ -42,24 +43,7 @@ public class ClientServerButton extends XOButton implements Serializable {
 		this.serverIP = serverIP;
 		this.serverPort = serverPort;
 		this.client = new Client(gui, serverIP, serverPort, playerSymbol);
-		this.playerSymbol = playerSymbol;
-	}
-	
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public boolean isProgrammaticallyPressed() {
-		return programmaticallyPressed;
-	}
-
-	public void setProgrammaticallyPressed(boolean programmaticallyPressed) {
-		this.programmaticallyPressed = programmaticallyPressed;
+		this.playerLetter = playerSymbol;
 	}
 
 	
@@ -73,7 +57,7 @@ public class ClientServerButton extends XOButton implements Serializable {
 		else if (GUI.board.getLastSymbolPlayed() == Constants.O)
 			turn = Constants.X;
 		
-		if (turn != playerSymbol)
+		if (turn != playerLetter)
 			return;
 		
 		if (programmaticallyPressed) {
@@ -97,7 +81,7 @@ public class ClientServerButton extends XOButton implements Serializable {
 		Board.printBoard(GUI.board.getGameBoard());
 		
 		if (!programmaticallyPressed) {
-			this.client = new Client(gui, serverIP, serverPort, playerSymbol);
+			this.client = new Client(gui, serverIP, serverPort, playerLetter);
 			this.client.run();
 		}
 		

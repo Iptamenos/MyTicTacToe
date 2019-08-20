@@ -154,7 +154,7 @@ public class GUI extends JFrame {
 	}
 	
 
-	private static void undo() {
+	public static void undo() {
 
 		// System.out.println("undo");
 		// This is the undo implementation for Human VS Human mode.

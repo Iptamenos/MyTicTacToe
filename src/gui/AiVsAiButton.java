@@ -25,6 +25,7 @@ public class AiVsAiButton extends XOButton {
 	int player;
 	Move move;
 	
+	
 	public AiVsAiButton(int id) {
 		this.id = id;
 		String player1Color = Constants.getColorNameByNumber(GameParameters.player1Color);
