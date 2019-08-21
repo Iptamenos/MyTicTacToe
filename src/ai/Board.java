@@ -224,7 +224,7 @@ public class Board {
         return(Board.isGameBoardFull(gameBoard));
     }
 
-	public void changeLastSymbolPlayed() {
+	public void changeLastLetterPlayed() {
 		if (this.lastLetterPlayed == Constants.X)
 			this.lastLetterPlayed = Constants.O;
 		else if (this.lastLetterPlayed == Constants.O)

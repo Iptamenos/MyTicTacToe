@@ -62,7 +62,7 @@ public class AiVsAiButton extends XOButton {
 		Board.printBoard(GUI.board.getGameBoard());
 		
 		// change last symbol played
-		GUI.board.changeLastSymbolPlayed();
+		GUI.board.changeLastLetterPlayed();
 		
 		removeActionListener(this);
 	
