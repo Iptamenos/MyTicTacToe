@@ -1,3 +1,4 @@
-:: copy the img folder from the res to the bin folder
+:: copy the "img" folder from "res\img" inside the "bin" directory
+cp res\img bin\
 java -cp .\bin gui.GUI
 pause;
