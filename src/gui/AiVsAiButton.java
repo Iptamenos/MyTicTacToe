@@ -7,7 +7,6 @@ import javax.swing.ImageIcon;
 import ai.Board;
 import ai.Constants;
 import ai.GameParameters;
-import ai.Move;
 
 
 public class AiVsAiButton extends XOButton {
@@ -21,9 +20,7 @@ public class AiVsAiButton extends XOButton {
 	int id;
 	ImageIcon X;
 	ImageIcon O;
-	int maxDepth;
 	int player;
-	Move move;
 	
 	
 	public AiVsAiButton(int id) {
@@ -41,28 +38,16 @@ public class AiVsAiButton extends XOButton {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// System.out.println("Clicked button.");
-
-		if (player == Constants.X)
-			maxDepth = GameParameters.maxDepth1;
-		else if (player == Constants.O)
-			maxDepth = GameParameters.maxDepth2;
 		
 		// List<Integer> cell = GUI.getBoardCellById(id);
 		// System.out.println("button cell: [" + cell.get(0) + "]" + "[" + cell.get(1) + "]");
 		
-		GUI.makeMove(move.getRow(), move.getCol(), player);
-		
-		// int ai1MoveButtonId = GUI.getIdByBoardCell(move.getRow(), move.getCol());
-
 		if (player == Constants.X)
 			setIcon(X);
 		else if (player == Constants.O)
 			setIcon(O);
 		
 		Board.printBoard(GUI.board.getGameBoard());
-		
-		// change last symbol played
-		GUI.board.changeLastLetterPlayed();
 		
 		removeActionListener(this);
 	

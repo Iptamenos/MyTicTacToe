@@ -10,6 +10,14 @@ Game modes:
 Video for this project: [here](https://www.youtube.com/watch?v=yc8WF4b1LR0&feature=youtu.be)
 
 
-### Screenshot
+### Screenshots
 
-![screenshot](/screenshots/screenshot3.png)
+
+#### System style
+![screenshot](/screenshots/1_system_style.png)
+
+#### Cross Platform style
+![screenshot](/screenshots/2_cross_platform_style.png)
+
+#### Nimbus style
+![screenshot](/screenshots/3_nimbus_style.png)

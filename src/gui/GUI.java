@@ -438,57 +438,39 @@ public class GUI extends JFrame {
 	}
 	
 	
+	private void aiMove(MiniMaxAi aiPlayer) {
+		Move aiMove;
+		if (aiPlayer.getMaxDepth() == Constants.BestResponse) {
+			// Best Response Move
+			BestResponse bestResponse = new BestResponse(GUI.board.getGameBoard());
+			aiMove = bestResponse.findBestResponse();
+		} else {
+			// MiniMax AI Move
+			aiMove = aiPlayer.miniMax(GUI.board);
+		}
+		makeMove(aiMove.getRow(), aiMove.getCol(), aiPlayer.getPlayerSymbol());
+		
+		int ai_button_id = getIdByBoardCell(aiMove.getRow(), aiMove.getCol());
+		for (AiVsAiButton button: aiVsAiButtons) {
+			if (button.id == ai_button_id) {
+				button.player = aiPlayer.getPlayerSymbol();
+				button.doClick();
+			}
+		}
+	}
+	
+	
 	private void playAiVsAi(MiniMaxAi ai1Player, MiniMaxAi ai2Player) {
 		
 		while (!GUI.board.isTerminal()) {
 
 			// AI 1 Move
-			Move ai1Move;
-			if (ai1Player.getMaxDepth() == Constants.BestResponse) {
-				// Best Response Move
-				BestResponse bestResponse = new BestResponse(GUI.board.getGameBoard());
-				ai1Move = bestResponse.findBestResponse();
-			} else {
-				// MiniMax AI Move
-				GUI.board.setLastSymbolPlayed(Constants.O);
-				ai1Move = ai1Player.miniMax(GUI.board);
-			}
+			aiMove(ai1Player);
 			
-			int ai1_button_id = getIdByBoardCell(ai1Move.getRow(), ai1Move.getCol());
-			for (AiVsAiButton button: aiVsAiButtons) {
-				if (button.id == ai1_button_id) {
-					button.player = Constants.X;
-					button.move = ai1Move;
-					button.doClick();
-				}
-			}
-			
-			if (!GUI.board.isTerminal()) {
-				
+			if (!GUI.board.isTerminal())
 				// AI 2 Move
-				Move ai2Move;
-				if (ai2Player.getMaxDepth() == Constants.BestResponse) {
-					// Best Response Move
-					BestResponse bestResponse = new BestResponse(GUI.board.getGameBoard());
-					ai2Move = bestResponse.findBestResponse();
-				} else {
-					// MiniMax AI Move
-					GUI.board.setLastSymbolPlayed(Constants.O);
-					ai2Move = ai1Player.miniMax(GUI.board);
-				}
-				makeMove(ai2Move.getRow(), ai2Move.getCol(), Constants.O);
+				aiMove(ai2Player);
 				
-				int ai2_button_id = getIdByBoardCell(ai2Move.getRow(), ai2Move.getCol());
-				for (AiVsAiButton button: aiVsAiButtons) {
-					if (button.id == ai2_button_id) {
-						button.player = Constants.O;
-						button.move = ai2Move;
-						button.doClick();
-					}
-				}
-				
-			}
-			
 		}
 		
 		gameOver();
@@ -721,10 +703,10 @@ public class GUI extends JFrame {
 		GameParameters.guiStyle = Constants.SystemStyle;
 		GameParameters.gameMode = Constants.HumanVsAi;
 		// GameParameters.gameMode = Constants.AiVsAi;
-		GameParameters.maxDepth1 = Constants.BestResponse;
-		// GameParameters.maxDepth1 = 3;
-		GameParameters.maxDepth2 = Constants.BestResponse;
-		// GameParameters.maxDepth2 = 1;
+//		GameParameters.maxDepth1 = Constants.BestResponse;
+		 GameParameters.maxDepth1 = 4;
+//		GameParameters.maxDepth2 = Constants.BestResponse;
+		 GameParameters.maxDepth2 = 1;
 		GameParameters.player1Color = Constants.BLUE;
 		GameParameters.player2Color = Constants.RED;
 		GameParameters.clientServerSymbol = Constants.X;

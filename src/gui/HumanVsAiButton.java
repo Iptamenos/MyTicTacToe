@@ -74,7 +74,6 @@ public class HumanVsAiButton extends XOButton {
 				} else {
 					// MiniMax AI Move
 					// System.out.println(GUI.board.getLastMove());
-					GUI.board.setLastSymbolPlayed(Constants.X);
 					aiMove = this.aiPlayer.miniMax(GUI.board);
 				}
 				
@@ -124,6 +123,5 @@ public class HumanVsAiButton extends XOButton {
 		}
 		return true;
 	}
-	
 	
 }

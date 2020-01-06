@@ -279,8 +279,8 @@ public class Board {
         return true;
     }
     
-	// Checking if the board is full.
-	// Checking if there is at least one empty tile.
+	// Checking if the board is full,
+	// by checking if there is at least one empty tile.
     public static boolean isGameBoardFull(int[][] gameBoard) {
         for (int row=0; row<3; row++) {
 			for (int col=0; col<3; col++) {
@@ -292,6 +292,7 @@ public class Board {
     	// System.out.println("Game board is full!");
         return true;
     }
+    
     
 	public static int getNumberOfEmptyCells(int[][] gameBoard) {
 		int number_of_empty_cells = 0;

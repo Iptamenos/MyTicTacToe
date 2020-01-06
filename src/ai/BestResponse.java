@@ -54,6 +54,7 @@ public class BestResponse {
 		
 		Random r = new Random();
 
+		
 		/* Number of Empty Cells: 9 */
 		
 		// Cases: 1
@@ -68,6 +69,7 @@ public class BestResponse {
 			// System.out.println("INSIDE CASE 1");
 			return this.bestResponse = new Move(1, 1, Constants.X);
 		}
+		
 		
 		/* Number of Empty Cells: 8 */
 		
@@ -85,9 +87,13 @@ public class BestResponse {
 			 || this.givenBoard[1][2] == Constants.X || this.givenBoard[2][0] == Constants.X
 			 || this.givenBoard[2][1] == Constants.X ||	this.givenBoard[2][2] == Constants.X))
 			 && this.givenBoard[1][1] == Constants.EMPTY && number_of_empty_cells == 8) {
-			/* |- - -|
-			 * |- O -|
-			 * |- - -| */
+			/* |X - -| |- X -| |- - X| |- - -| 
+			 * |- O -| |- O -| |- O -| |X O -|
+			 * |- - -| |- - -| |- - -| |- - -|                                
+			 * 
+			 * |- - -| |- - -| |- - -| |- - -|
+			 * |- O X| |- O -| |- O -| |- O -|
+			 * |- - -| |X - -| |- X -| |- - X| */
 //			System.out.println("INSIDE CASE 2-9");
 			return this.bestResponse = new Move(1, 1, Constants.O);
 		}
@@ -113,6 +119,7 @@ public class BestResponse {
 				return this.bestResponse = new Move(2, 2, Constants.O);
 		}
 		
+		
 		/* Number of Empty Cells: 7 */
 
 		// Case: 11-14
@@ -125,9 +132,9 @@ public class BestResponse {
 			|| (this.givenBoard[1][2] == Constants.O && this.givenBoard[1][1] == Constants.X)
 			|| (this.givenBoard[2][1] == Constants.O && this.givenBoard[1][1] == Constants.X))
 			&& number_of_empty_cells == 7) {
-			/* |X * -| |- * X| |- * -| |- * -| 
-			 * |* X *| |* X *| |* X *| |* X *|
-			 * |- * -| |- * -| |X * -| |- * X| */
+			/* |X O -| |- - X| |- - -| |- - -|
+			 * |- X -| |O X -| |- X O| |- X -|
+			 * |- - -| |- - -| |X - -| |- O X| */
 			// System.out.println("INSIDE CASE 11-14");
 			int random_number = r.nextInt(4) + 1;
 			if (random_number == 1)
@@ -148,13 +155,18 @@ public class BestResponse {
 		 * */
 		if ((this.givenBoard[0][0] == Constants.O && this.givenBoard[1][1] == Constants.X)
 			&& number_of_empty_cells == 7) {
-			/* |O - -|
-			 * |- X -|
-			 * |- - X| */
+			/* |O - X| |O - -| |O - -| 
+			 * |- X -| |X X -| |- X -| 
+			 * |- - -| |- - -| |- - X| */
 			// System.out.println("INSIDE CASE 15");
-			return this.bestResponse = new Move(2, 2, Constants.X);
+			int random_number = r.nextInt(3) + 1;
+			if (random_number == 1)
+				return this.bestResponse = new Move(0, 2, Constants.X);
+			if (random_number == 2)
+				return this.bestResponse = new Move(2, 0, Constants.X);
+			if (random_number == 3)
+				return this.bestResponse = new Move(2, 2, Constants.X);
 		}
-		
 		
 		// Case: 16
 		/* Given board:
@@ -163,13 +175,18 @@ public class BestResponse {
 		 * |- - -| */
 		if ((this.givenBoard[0][2] == Constants.O && this.givenBoard[1][1] == Constants.X)
 			&& number_of_empty_cells == 7) {
-			/* |- - O|
-			 * |- X -|
-			 * |X - -| */
+			/* |X - O| |- - O| |- - O| 
+			 * |- X -| |- X -| |- X -| 
+			 * |- - -| |X - -| |- - X| */
 			// System.out.println("INSIDE CASE 16");
-			return this.bestResponse = new Move(2, 0, Constants.X);
+			int random_number = r.nextInt(3) + 1;
+			if (random_number == 1)
+				return this.bestResponse = new Move(0, 0, Constants.X);
+			if (random_number == 2)
+				return this.bestResponse = new Move(2, 0, Constants.X);
+			if (random_number == 3)
+				return this.bestResponse = new Move(2, 2, Constants.X);
 		}
-		
 		
 		// Case: 17
 		/* Given board:
@@ -178,11 +195,17 @@ public class BestResponse {
 		 * |O - -| */
 		if ((this.givenBoard[2][0] == Constants.O && this.givenBoard[1][1] == Constants.X)
 			&& number_of_empty_cells == 7) {
-			/* |- - X|
-			 * |- X -|
-			 * |O - -| */
+			/* |X - -| |- - X| |- - -| 
+			 * |- X -| |- X -| |- X -| 
+			 * |O - -| |O - -| |O - X| */
 			// System.out.println("INSIDE CASE 17");
-			return this.bestResponse = new Move(0, 2, Constants.X);
+			int random_number = r.nextInt(3) + 1;
+			if (random_number == 1)
+				return this.bestResponse = new Move(0, 0, Constants.X);
+			if (random_number == 2)
+				return this.bestResponse = new Move(0, 2, Constants.X);
+			if (random_number == 3)
+				return this.bestResponse = new Move(2, 2, Constants.X);
 		}
 		
 		// Case: 18
@@ -192,16 +215,23 @@ public class BestResponse {
 		 * |- - O| */
 		if ((this.givenBoard[2][2] == Constants.O && this.givenBoard[1][1] == Constants.X)
 			&& number_of_empty_cells == 7) {
-			/* |X - -|
-			 * |- X -|
-			 * |- - O| */
+			/* |X - -| |- - X| |- - -| 
+			 * |- X -| |- X -| |- X -| 
+			 * |- - O| |- - O| |X - O| */
 			// System.out.println("INSIDE CASE 18");
-			return this.bestResponse = new Move(0, 0, Constants.X);
+			int random_number = r.nextInt(3) + 1;
+			if (random_number == 1)
+				return this.bestResponse = new Move(0, 0, Constants.X);
+			if (random_number == 2)
+				return this.bestResponse = new Move(0, 2, Constants.X);
+			if (random_number == 3)
+				return this.bestResponse = new Move(2, 0, Constants.X);
 		}
+		
 		
 		/* Number of Empty Cells: 6 */
 		
-		Move br = casesThatSuggestWinOrLose(number_of_empty_cells, 6);
+		Move br = casesThatSuggestWinOrNoLose(number_of_empty_cells, 6);
 		if (br != null) return br;
 
 		/* Given boards:
@@ -280,7 +310,6 @@ public class BestResponse {
 				return this.bestResponse = new Move(2, 0, Constants.O);
 		}
 		
-
 		/* Given boards:
 		/* |- - X|   |- - O|
 		 * |- X -| - |- X -|
@@ -301,7 +330,6 @@ public class BestResponse {
 			if (random_number == 2)
 				return this.bestResponse = new Move(2, 2, Constants.O);
 		}
-		
 		
 		/* Given board:
 		/* |- O -|
@@ -325,7 +353,7 @@ public class BestResponse {
 		
 		/* Number of Empty Cells: 5 */
 		
-		br = casesThatSuggestWinOrLose(number_of_empty_cells, 5);
+		br = casesThatSuggestWinOrNoLose(number_of_empty_cells, 5);
 		if (br != null) return br;
 		
 		/* Non-winning and non-losing case, that suggests the move [0][0] (for 5 empty cells). */
@@ -384,8 +412,9 @@ public class BestResponse {
 			return this.bestResponse = new Move(2, 2, Constants.X);
 		}
 		 
+		
 		/* Number of Empty Cells: 4 */
-		br = casesThatSuggestWinOrLose(number_of_empty_cells, 4);
+		br = casesThatSuggestWinOrNoLose(number_of_empty_cells, 4);
 		if (br != null) return br;
 		
 		/* Non-winning and non-losing case, that suggests the move [2][2] (for 4 empty cells). */
@@ -444,17 +473,21 @@ public class BestResponse {
 			return this.bestResponse = new Move(0, 0, Constants.X);
 		}
 		
+		
 		/* Number of Empty Cells: 3 */
-		br = casesThatSuggestWinOrLose(number_of_empty_cells, 3);
+		br = casesThatSuggestWinOrNoLose(number_of_empty_cells, 3);
 		if (br != null) return br;
+		
 		
 		/* Number of Empty Cells: 2 */
-		br = casesThatSuggestWinOrLose(number_of_empty_cells, 2);
+		br = casesThatSuggestWinOrNoLose(number_of_empty_cells, 2);
 		if (br != null) return br;
 		
+		
 		/* Number of Empty Cells: 1 */
-		br = casesThatSuggestWinOrLose(number_of_empty_cells, 1);
+		br = casesThatSuggestWinOrNoLose(number_of_empty_cells, 1);
 		if (br != null) return br;
+		
 		
 		/* For the rest of the cases, we simply make a random move, among the empty cells. */
 		List<List<Integer>> emptyCells = new ArrayList<List<Integer>>();
@@ -469,6 +502,7 @@ public class BestResponse {
 				}
 			}
 		}
+		
 		
 		if (emptyCells.size() > 0) {
 			int random_number = r.nextInt(emptyCells.size()) + 1;
@@ -488,7 +522,7 @@ public class BestResponse {
 	}
 	
 	
-	private Move casesThatSuggestWinOrLose(int number_of_empty_cells, int given_number_of_empty_cells) {
+	private Move casesThatSuggestWinOrNoLose(int number_of_empty_cells, int given_number_of_empty_cells) {
 		// System.out.println("Inside cases that suggest win or lose, empty cells: " + number_of_empty_cells);
 		int currentPlayer, otherPlayer = Constants.EMPTY;
 		
@@ -499,6 +533,7 @@ public class BestResponse {
 			currentPlayer = Constants.O;
 			otherPlayer = Constants.X;
 		}
+		
 		
 		/* Cases that suggest a win condition! */
 
@@ -642,6 +677,7 @@ public class BestResponse {
 			// System.out.println("INSIDE CASE A9");
 			return this.bestResponse = new Move(2, 2, currentPlayer);
 		}
+		
 		
 		/* Cases that suggest a no-lose condition! */
 		

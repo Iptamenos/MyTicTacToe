@@ -147,7 +147,7 @@ public class SettingsWindow extends JFrame {
 		max_depth2_drop_down.addItem("3");
 		max_depth2_drop_down.addItem("4");
 		max_depth2_drop_down.addItem("Best Response");
-
+		
 		maxDepth2 = (maxDepth2 == Constants.BestResponse) ? 4 : maxDepth2-1; 
 		max_depth2_drop_down.setSelectedIndex(maxDepth2);
 		
