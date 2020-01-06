@@ -691,7 +691,7 @@ public class GUI extends JFrame {
 		// System.out.println("previous move: " + board.getLastMove());
 		board.setLastMove(new Move(row, col));
 		// System.out.println("this move: " + board.getLastMove());
-		board.setLastSymbolPlayed(symbol);
+		board.setLastLetterPlayed(symbol);
 	}
 	
 	

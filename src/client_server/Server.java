@@ -46,7 +46,7 @@ public class Server extends Thread {
 				
 				int oppossingPlayerSymbol = in.readInt();
 				
-				GUI.board.setLastSymbolPlayed(oppossingPlayerSymbol);
+				GUI.board.setLastLetterPlayed(oppossingPlayerSymbol);
 				
 				for (ClientServerButton button: GUI.clientServerButtons) {
 					if (button.id == id) {

@@ -52,17 +52,17 @@ public class ClientServerButton extends XOButton implements Serializable {
 		// GUI.undoItem.setEnabled(false);  // uncomment only if needed
 		
 		int turn = Constants.EMPTY;
-		if (GUI.board.getLastSymbolPlayed() == Constants.X)
+		if (GUI.board.getLastLetterPlayed() == Constants.X)
 			turn = Constants.O;
-		else if (GUI.board.getLastSymbolPlayed() == Constants.O)
+		else if (GUI.board.getLastLetterPlayed() == Constants.O)
 			turn = Constants.X;
 		
 		if (turn != playerLetter)
 			return;
 		
 		if (programmaticallyPressed) {
-			turn = GUI.board.getLastSymbolPlayed(); 
-			GUI.board.changeLastLetterPlayed();
+			turn = GUI.board.getLastLetterPlayed(); 
+			GUI.board.changeLastSymbolPlayed();
 		}
 		
 		// add X or O on the board GUI

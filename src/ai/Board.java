@@ -44,7 +44,7 @@ public class Board {
 		return lastMove;
 	}
 	
-	public int getLastSymbolPlayed() {
+	public int getLastLetterPlayed() {
 		return lastLetterPlayed;
 	}
 	
@@ -62,8 +62,8 @@ public class Board {
 		this.lastMove.setValue(lastMove.getValue());
 	}
 	
-	public void setLastSymbolPlayed(int lastSymbolPlayed) {
-		this.lastLetterPlayed = lastSymbolPlayed;
+	public void setLastLetterPlayed(int lastLetterPlayed) {
+		this.lastLetterPlayed = lastLetterPlayed;
 	}
 	
 	public void setGameBoard(int[][] gameBoard) {
@@ -224,7 +224,7 @@ public class Board {
         return(Board.isGameBoardFull(gameBoard));
     }
 
-	public void changeLastLetterPlayed() {
+	public void changeLastSymbolPlayed() {
 		if (this.lastLetterPlayed == Constants.X)
 			this.lastLetterPlayed = Constants.O;
 		else if (this.lastLetterPlayed == Constants.O)

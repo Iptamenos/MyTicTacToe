@@ -41,9 +41,9 @@ public class HumanVsHumanButton extends XOButton {
 		GUI.undoItem.setEnabled(true);
 		
 		int turn = Constants.EMPTY;
-		if (GUI.board.getLastSymbolPlayed() == Constants.X)
+		if (GUI.board.getLastLetterPlayed() == Constants.X)
 			turn = Constants.O;
-		else if (GUI.board.getLastSymbolPlayed() == Constants.O)
+		else if (GUI.board.getLastLetterPlayed() == Constants.O)
 			turn = Constants.X;
 		
 		// add X or O on the board GUI
