@@ -16,7 +16,7 @@ Video for this project: [here](https://www.youtube.com/watch?v=yc8WF4b1LR0&featu
 #### System style
 ![screenshot](/screenshots/1_system_style.png)
 
-#### Cross Platform style
+#### Cross platform style
 ![screenshot](/screenshots/2_cross_platform_style.png)
 
 #### Nimbus style
