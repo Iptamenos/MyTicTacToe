@@ -1,7 +1,6 @@
-package gui;
+package buttons;
 
 import java.awt.event.ActionEvent;
-import java.io.Serializable;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -9,10 +8,10 @@ import javax.swing.ImageIcon;
 import ai.Board;
 import ai.Constants;
 import ai.GameParameters;
-import client_server.Client;
+import gui.GUI;
 
 
-public class ClientServerButton extends XOButton implements Serializable {
+public class HumanVsHumanButton extends XOButton {
 
 	/**
 	 * 
@@ -24,14 +23,9 @@ public class ClientServerButton extends XOButton implements Serializable {
 	GUI gui;
 	ImageIcon X;
 	ImageIcon O;
-	String serverIP;
-	int serverPort;
-	Client client;
-	int playerLetter;
-	public boolean programmaticallyPressed = false;
+
 	
-	
-	public ClientServerButton(int id, GUI gui, String serverIP, int serverPort, int playerSymbol) {
+	public HumanVsHumanButton(int id, GUI gui) {
 		this.id = id;
 		this.gui = gui;
 		String player1Color = Constants.getColorNameByNumber(GameParameters.player1Color);
@@ -40,30 +34,18 @@ public class ClientServerButton extends XOButton implements Serializable {
 		this.O = new ImageIcon(this.getClass().getResource("/img/O/" + player2Color + ".png"));
 		this.addActionListener(this);
 		setIcon(null);
-		this.serverIP = serverIP;
-		this.serverPort = serverPort;
-		this.client = new Client(gui, serverIP, serverPort, playerSymbol);
-		this.playerLetter = playerSymbol;
 	}
 
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// GUI.undoItem.setEnabled(false);  // uncomment only if needed
+		GUI.undoItem.setEnabled(true);
 		
 		int turn = Constants.EMPTY;
 		if (GUI.board.getLastLetterPlayed() == Constants.X)
 			turn = Constants.O;
 		else if (GUI.board.getLastLetterPlayed() == Constants.O)
 			turn = Constants.X;
-		
-		if (turn != playerLetter)
-			return;
-		
-		if (programmaticallyPressed) {
-			turn = GUI.board.getLastLetterPlayed(); 
-			GUI.board.changeLastSymbolPlayed();
-		}
 		
 		// add X or O on the board GUI
 		if (turn == Constants.EMPTY) {
@@ -80,23 +62,17 @@ public class ClientServerButton extends XOButton implements Serializable {
 			GUI.makeMove(cell.get(0), cell.get(1), turn);
 		Board.printBoard(GUI.board.getGameBoard());
 		
-		if (!programmaticallyPressed) {
-			this.client = new Client(gui, serverIP, serverPort, playerLetter);
-			this.client.run();
-		}
+		// check if the game is over
+		if (GUI.board.isTerminal())
+			gui.gameOver();
 		
-		if (!programmaticallyPressed) {
-			// check if the game is over
-			if (GUI.board.isTerminal()) {
-				gui.gameOver();
-			}
-		}
 		try {
 			this.removeActionListener(this);
 		} catch (NullPointerException ex) {
 			// Do nothing
 		}
-		GUI.clientServerButtons[id] = this;
+		
+		GUI.saveUndoMove();
 	}
 	
 	

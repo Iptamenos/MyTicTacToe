@@ -1,8 +1,7 @@
-package client_server;
+package gui;
 
 import ai.Constants;
 import ai.GameParameters;
-import gui.GUI;
 
 public class exampleClientServer {
 

@@ -1,4 +1,4 @@
-package gui;
+package buttons;
 
 import java.awt.event.ActionEvent;
 
@@ -7,6 +7,7 @@ import javax.swing.ImageIcon;
 import ai.Board;
 import ai.Constants;
 import ai.GameParameters;
+import gui.GUI;
 
 
 public class AiVsAiButton extends XOButton {
@@ -17,10 +18,10 @@ public class AiVsAiButton extends XOButton {
 	private static final long serialVersionUID = 1970641473917018979L;
 
 	// Empty: 0, X: 1, O: 0
-	int id;
+	public int id;
 	ImageIcon X;
 	ImageIcon O;
-	int player;
+	public int player;
 	
 	
 	public AiVsAiButton(int id) {

@@ -2,11 +2,12 @@ package client_server;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 import ai.Move;
-import gui.ClientServerButton;
+import buttons.ClientServerButton;
 import gui.GUI;
 
 public class Server extends Thread {
@@ -71,6 +72,8 @@ public class Server extends Thread {
 				in.close();
 				connection.close();
 				serverSocket.close();
+			} catch (BindException e) {
+				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

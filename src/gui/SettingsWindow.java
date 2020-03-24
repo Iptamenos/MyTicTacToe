@@ -47,14 +47,17 @@ public class SettingsWindow extends JFrame {
 	private JButton cancel;
 	
 	private EventHandler handler;
-		
+	
+	public static int width = 460;
+	public static int height = 450;
+	
 	
 	public SettingsWindow() {
 		super("Settings");
 				
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLayout(null);
-		setSize(460, 650);
+		setSize(width, height);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		
@@ -73,8 +76,8 @@ public class SettingsWindow extends JFrame {
 
 		guiStyleLabel = new JLabel("GUI style: ");
 		gameModeLabel = new JLabel("Game mode: ");
-		maxDepth1Label = new JLabel("Minimax AI 1 search depth: ");
-		maxDepth2Label = new JLabel("Minimax AI 2 search depth (AiVsAi mode): ");
+		maxDepth1Label = new JLabel("Minimax AI1 max depth: ");
+		maxDepth2Label = new JLabel("Minimax AI2 max depth (AiVsAi): ");
 		player1ColorLabel = new JLabel("Player 1 \"X\" symbol color: ");
 		player2ColorLabel = new JLabel("Player 2 \"O\" symbol color: ");
 		clientServerSymbolLabel = new JLabel("Client-Server symbol: ");
@@ -92,17 +95,6 @@ public class SettingsWindow extends JFrame {
 		add(serverPortLabel);
 		add(clientIpLabel);
 		add(clientPortLabel);
-		
-		guiStyleLabel.setBounds(20, 25, 250, 20);
-		gameModeLabel.setBounds(20, 75, 250, 20);
-		maxDepth1Label.setBounds(20, 125, 250, 20);
-		maxDepth2Label.setBounds(20, 175, 250, 20);
-		player1ColorLabel.setBounds(20, 225, 250, 20);
-		player2ColorLabel.setBounds(20, 275, 250, 20);
-		clientServerSymbolLabel.setBounds(20, 325, 250, 20);
-		serverPortLabel.setBounds(20, 375, 250, 20);
-		clientIpLabel.setBounds(20, 425, 250, 20);
-		clientPortLabel.setBounds(20, 475, 250, 20);
 		
 		gui_style_drop_down = new JComboBox<String>();
 		gui_style_drop_down.addItem("System style");
@@ -227,25 +219,38 @@ public class SettingsWindow extends JFrame {
 		add(server_port_text_field);
 		add(client_ip_text_field);
 		add(client_port_text_field);
+
+		guiStyleLabel.setBounds(20, 25, 250, 20);
+		gameModeLabel.setBounds(20, 55, 250, 20);
+		maxDepth1Label.setBounds(20, 85, 250, 20);
+		maxDepth2Label.setBounds(20, 115, 250, 20);
+		player1ColorLabel.setBounds(20, 145, 250, 20);
+		player2ColorLabel.setBounds(20, 175, 250, 20);
+		clientServerSymbolLabel.setBounds(20, 205, 250, 20);
+		serverPortLabel.setBounds(20, 235, 250, 20);
+		clientIpLabel.setBounds(20, 265, 250, 20);
+		clientPortLabel.setBounds(20, 295, 250, 20);
 		
 		gui_style_drop_down.setBounds(260, 25, 160, 20);
-		game_mode_drop_down.setBounds(260, 75, 160, 20);
-		max_depth1_drop_down.setBounds(260, 125, 160, 20);
-		max_depth2_drop_down.setBounds(260, 175, 160, 20);
-		player1_color_drop_down.setBounds(260, 225, 160, 20);
-		player2_color_drop_down.setBounds(260, 275, 160, 20);
-		client_server_symbol_drop_down.setBounds(260, 325, 160, 25);
-		server_port_text_field.setBounds(260, 375, 160, 25);
-		client_ip_text_field.setBounds(260, 425, 160, 25);
-		client_port_text_field.setBounds(260, 475, 160, 25);
+		game_mode_drop_down.setBounds(260, 55, 160, 20);
+		max_depth1_drop_down.setBounds(260, 85, 160, 20);
+		max_depth2_drop_down.setBounds(260, 115, 160, 20);
+		player1_color_drop_down.setBounds(260, 145, 160, 20);
+		player2_color_drop_down.setBounds(260, 175, 160, 20);
+		client_server_symbol_drop_down.setBounds(260, 205, 160, 20);
+		server_port_text_field.setBounds(260, 235, 160, 20);
+		client_ip_text_field.setBounds(260, 265, 160, 20);
+		client_port_text_field.setBounds(260, 295, 160, 20);
 				
 		apply = new JButton("Apply");
 		cancel = new JButton("Cancel");
 		add(apply);
 		add(cancel);
-		apply.setBounds(80, 550, 100, 30);
+		
+		int distance = 10;
+		apply.setBounds((int) (width / 2) - 110 - (int) (distance / 2), 350, 100, 30);
 		apply.addActionListener(handler);
-		cancel.setBounds(220, 550, 100, 30);
+		cancel.setBounds((int) (width / 2) - 10 + (int) (distance / 2), 350, 100, 30);
 		cancel.addActionListener(handler);
 	}
 
@@ -309,7 +314,7 @@ public class SettingsWindow extends JFrame {
 					GameParameters.clientPort = clientPort;
 					
 					JOptionPane.showMessageDialog(null,
-							"Game settings have been changed.\nThe changes will be applied in the next game.",
+							"Game settings have been changed.\nThe changes will be applied in the next new game.",
 							"", JOptionPane.INFORMATION_MESSAGE);
 					dispose();
 				}
@@ -318,11 +323,11 @@ public class SettingsWindow extends JFrame {
 					System.err.println("ERROR : " + e.getMessage());
 				}
 				
-			} // else if.
+			}  // else if.
 			
-		} // action performed.
+		}  // action performed.
 		
-	} // inner class.
+	}  // inner class.
 	
 	
-} // class end.
+}  // class end.

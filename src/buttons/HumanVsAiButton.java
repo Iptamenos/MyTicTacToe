@@ -1,4 +1,4 @@
-package gui;
+package buttons;
 
 import java.awt.event.ActionEvent;
 import java.util.List;
@@ -11,6 +11,7 @@ import ai.Constants;
 import ai.GameParameters;
 import ai.MiniMaxAi;
 import ai.Move;
+import gui.GUI;
 
 
 public class HumanVsAiButton extends XOButton {
@@ -21,7 +22,7 @@ public class HumanVsAiButton extends XOButton {
 	private static final long serialVersionUID = 5023834302644965957L;
 	
 	// Empty: 0, X: 1, O: 0
-	int id;
+	public int id;
 	GUI gui;
 	ImageIcon X;
 	ImageIcon O;

@@ -25,6 +25,10 @@ import ai.Constants;
 import ai.GameParameters;
 import ai.MiniMaxAi;
 import ai.Move;
+import buttons.AiVsAiButton;
+import buttons.ClientServerButton;
+import buttons.HumanVsAiButton;
+import buttons.HumanVsHumanButton;
 import client_server.Server;
 
 
@@ -37,12 +41,12 @@ public class GUI extends JFrame {
 	
 	public static JPanel panel;
 	public static GridLayout layout;
-
+	
 	public static HumanVsHumanButton[] humanVsHumanButtons;
 	public static HumanVsAiButton[] humanVsAiButtons;
 	public static AiVsAiButton[] aiVsAiButtons;
 	public static ClientServerButton[] clientServerButtons;
-
+	
 	public static Board board;
 	
 	// Menu bars and items
@@ -145,7 +149,7 @@ public class GUI extends JFrame {
 		aboutItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null,
-						"© Created by: Christos Kormaris",
+						"© Created by: Christos Kormaris\nVersion " + Constants.version,
 						"About", JOptionPane.INFORMATION_MESSAGE);			
 				}
 		});
@@ -299,7 +303,7 @@ public class GUI extends JFrame {
 		
 		panel = new JPanel();
 		add(panel);
-
+		
 		layout = new GridLayout(3, 3);
 		panel.setLayout(layout);
 		
@@ -464,11 +468,11 @@ public class GUI extends JFrame {
 		
 		while (!GUI.board.isTerminal()) {
 
-			// AI 1 Move
+			// AI1 Move
 			aiMove(ai1Player);
 			
 			if (!GUI.board.isTerminal())
-				// AI 2 Move
+				// AI2 Move
 				aiMove(ai2Player);
 				
 		}
@@ -703,10 +707,10 @@ public class GUI extends JFrame {
 		GameParameters.guiStyle = Constants.SystemStyle;
 		GameParameters.gameMode = Constants.HumanVsAi;
 		// GameParameters.gameMode = Constants.AiVsAi;
-//		GameParameters.maxDepth1 = Constants.BestResponse;
-		 GameParameters.maxDepth1 = 4;
-//		GameParameters.maxDepth2 = Constants.BestResponse;
-		 GameParameters.maxDepth2 = 1;
+		// GameParameters.maxDepth1 = Constants.BestResponse;
+		GameParameters.maxDepth1 = 4;
+		// GameParameters.maxDepth2 = Constants.BestResponse;
+		GameParameters.maxDepth2 = 1;
 		GameParameters.player1Color = Constants.BLUE;
 		GameParameters.player2Color = Constants.RED;
 		GameParameters.clientServerSymbol = Constants.X;

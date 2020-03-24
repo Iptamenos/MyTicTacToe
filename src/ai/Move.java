@@ -18,20 +18,19 @@ public class Move implements Serializable {
 	private int value;
 	
 	public Move() {
-		row = -1;
-		col = -1;
-		value = 0;
+		this.row = 0;
+		this.col = 0;
 	}
 	
 	public Move(int row, int col) {
 		this.row = row;
 		this.col = col;
-		this.value = -1;
+		this.value = 0;
 	}
 	
 	public Move(int value) {
-		this.row = -1;
-		this.col = -1;
+		this.row = 0;
+		this.col = 0;
 		this.value = value;
 	}
 	
