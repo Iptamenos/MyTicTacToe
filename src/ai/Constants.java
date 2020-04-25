@@ -2,7 +2,7 @@ package ai;
 
 public class Constants {
 	
-	public static final double version = 1.1;
+	public static final double version = 1.2;
 
     // Variables for the board values
 	public static final int X = 1;
@@ -50,6 +50,14 @@ public class Constants {
 				return "Yellow";
 			default:
 				return "Blue";
+		}
+	}
+	
+	public static String getIconPath(int player, String color) {
+		if (player == X) {
+			return "img/X/" + color + ".png";
+		} else {
+			return "img/O/" + color + ".png";
 		}
 	}
 	

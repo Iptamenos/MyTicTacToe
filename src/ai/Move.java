@@ -14,38 +14,44 @@ public class Move implements Serializable {
 	private static final long serialVersionUID = 3166547244121566931L;
 	
 	private int row;
-	private int col;
+	private int column;
 	private int value;
 	
 	public Move() {
 		this.row = 0;
-		this.col = 0;
+		this.column = 0;
 	}
 	
 	public Move(int row, int col) {
 		this.row = row;
-		this.col = col;
+		this.column = col;
 		this.value = 0;
 	}
 	
 	public Move(int value) {
 		this.row = 0;
-		this.col = 0;
+		this.column = 0;
 		this.value = value;
 	}
 	
 	public Move(int row, int col, int value) {
 		this.row = row;
-		this.col = col;
+		this.column = col;
 		this.value = value;
+	}
+	
+	public Move(Move otherMove) {
+		this.row = otherMove.getRow();
+		this.column = otherMove.getColumn();
+		this.value = otherMove.getValue();
 	}
 	
 	public int getRow() {
 		return row;
 	}
 	
-	public int getCol() {
-		return col;
+	public int getColumn() {
+		return column;
 	}
 	
 	public int getValue() {
@@ -56,8 +62,8 @@ public class Move implements Serializable {
 		this.row = row;
 	}
 	
-	public void setCol(int col) {
-		this.col = col;
+	public void setColumn(int column) {
+		this.column = column;
 	}
 	
 	public void setValue(int value) {
@@ -66,7 +72,7 @@ public class Move implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "move [" + row + "][" + col + "]: " + value; 
+		return "move [" + row + "][" + column + "]: " + value; 
 	}
 	
 }

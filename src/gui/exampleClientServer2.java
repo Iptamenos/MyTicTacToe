@@ -5,7 +5,6 @@ import ai.GameParameters;
 
 public class exampleClientServer2 {
 
-	GUI gui;
 	static int clientServerSymbol = Constants.O;
 	static int serverPort = 4001;
 	static String clientIP = "127.0.0.1";
@@ -27,9 +26,10 @@ public class exampleClientServer2 {
 		GameParameters.clientIP = clientIP;
 		GameParameters.clientPort = clientPort;
 		
-		GUI gui = new GUI("My TicTacToe 2");
-		
-		gui.createClientServerNewGame();
+		@SuppressWarnings("unused")
+		GUI gui = new GUI("My TicTacToe ClientServer 2");
+
+		GUI.createClientServerNewGame();
 	}
 
 }

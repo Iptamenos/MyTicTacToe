@@ -10,7 +10,6 @@ import gui.GUI;
 
 public class Client extends Thread {
 	
-	GUI gui;
 	String serverIP;
 	int serverPort;
 	int playerSymbol;
@@ -19,8 +18,7 @@ public class Client extends Thread {
 			
 	}
 	
-	public Client(GUI gui, String IP, int port, int playerSymbol) {
-		this.gui = gui;
+	public Client(String IP, int port, int playerSymbol) {
 		this.serverIP = IP;
 		this.serverPort = port;
 		this.playerSymbol = playerSymbol;

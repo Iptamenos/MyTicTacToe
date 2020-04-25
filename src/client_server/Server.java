@@ -12,15 +12,13 @@ import gui.GUI;
 
 public class Server extends Thread {
 	
-	GUI gui;
 	int serverPort;
 	
 	public Server() {
 		
 	}
 	
-	public Server(GUI gui, int port) {
-		this.gui = gui;
+	public Server(int port) {
 		this.serverPort = port;
 	}
 	
@@ -42,12 +40,12 @@ public class Server extends Thread {
 				in = new ObjectInputStream(connection.getInputStream());
 				
 				Move lastMove = (Move) in.readObject();
-				int id = GUI.getIdByBoardCell(lastMove.getRow(), lastMove.getCol());
+				int id = GUI.getIdByBoardCell(lastMove.getRow(), lastMove.getColumn());
 				// System.out.println(id);
 				
 				int oppossingPlayerSymbol = in.readInt();
 				
-				GUI.board.setLastLetterPlayed(oppossingPlayerSymbol);
+				GUI.board.setLastPlayer(oppossingPlayerSymbol);
 				
 				for (ClientServerButton button: GUI.clientServerButtons) {
 					if (button.id == id) {
@@ -78,7 +76,7 @@ public class Server extends Thread {
 				e.printStackTrace();
 			}
 		}
-		gui.gameOver();
+		GUI.gameOver();
 
 	}
 

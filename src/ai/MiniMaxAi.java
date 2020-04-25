@@ -59,7 +59,7 @@ public class MiniMaxAi {
 		if((board.isTerminal()) || (depth == maxDepth)) {
 			int value = board.evaluate();
 			// System.out.println("MAX function, Depth: " + depth + ", move value: " + value);
-			Move lastMove = new Move(board.getLastMove().getRow(), board.getLastMove().getCol(), value);
+			Move lastMove = new Move(board.getLastMove().getRow(), board.getLastMove().getColumn(), value);
 			return lastMove;
 		}
         // The children-moves of the state are calculated
@@ -74,12 +74,12 @@ public class MiniMaxAi {
                     // If the heuristic has the same value then we randomly choose one of the two moves
                     if (r.nextInt(2) == 0) {
                         maxMove.setRow(child.getLastMove().getRow());
-                        maxMove.setCol(child.getLastMove().getCol());
+                        maxMove.setColumn(child.getLastMove().getColumn());
                         maxMove.setValue(move.getValue());
                     }
                 } else {
                     maxMove.setRow(child.getLastMove().getRow());
-                    maxMove.setCol(child.getLastMove().getCol());
+                    maxMove.setColumn(child.getLastMove().getColumn());
                     maxMove.setValue(move.getValue());
                 }
 			}
@@ -94,7 +94,7 @@ public class MiniMaxAi {
 		if ((board.isTerminal()) || (depth == maxDepth)) {
 			int value = board.evaluate();
 			// System.out.println("MIN function, Depth: " + depth + ", move value: " + value);
-			Move lastMove = new Move(board.getLastMove().getRow(), board.getLastMove().getCol(), value);
+			Move lastMove = new Move(board.getLastMove().getRow(), board.getLastMove().getColumn(), value);
 			return lastMove;
 		}
 		ArrayList<Board> children = new ArrayList<Board>(board.getChildren(Constants.O));
@@ -105,13 +105,13 @@ public class MiniMaxAi {
                 if ((move.getValue() == minMove.getValue())) {
                     if (r.nextInt(2) == 0) {
                         minMove.setRow(child.getLastMove().getRow());
-                        minMove.setCol(child.getLastMove().getCol());
+                        minMove.setColumn(child.getLastMove().getColumn());
                         minMove.setValue(move.getValue());
                     }
                 }
                 else {
                         minMove.setRow(child.getLastMove().getRow());
-                        minMove.setCol(child.getLastMove().getCol());
+                        minMove.setColumn(child.getLastMove().getColumn());
                         minMove.setValue(move.getValue());
                 }
             }

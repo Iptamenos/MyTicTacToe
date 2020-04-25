@@ -74,16 +74,16 @@ public class SettingsWindow extends JFrame {
 		String clientIP = GameParameters.clientIP;
 		int clientPort = GameParameters.clientPort;
 
-		guiStyleLabel = new JLabel("GUI style: ");
-		gameModeLabel = new JLabel("Game mode: ");
-		maxDepth1Label = new JLabel("Minimax AI1 max depth: ");
-		maxDepth2Label = new JLabel("Minimax AI2 max depth (AiVsAi): ");
-		player1ColorLabel = new JLabel("Player 1 \"X\" symbol color: ");
-		player2ColorLabel = new JLabel("Player 2 \"O\" symbol color: ");
-		clientServerSymbolLabel = new JLabel("Client-Server symbol: ");
-		serverPortLabel = new JLabel("Server port: ");
-		clientIpLabel = new JLabel("Client IP: ");
-		clientPortLabel = new JLabel("Client port: ");
+		guiStyleLabel = new JLabel("GUI style");
+		gameModeLabel = new JLabel("Game mode");
+		maxDepth1Label = new JLabel("AI 1 depth");
+		maxDepth2Label = new JLabel("AI 2 depth (AiVsAi)");
+		player1ColorLabel = new JLabel("Player 1 \"X\" color");
+		player2ColorLabel = new JLabel("Player 2 \"O\" color");
+		clientServerSymbolLabel = new JLabel("Client-Server symbol");
+		serverPortLabel = new JLabel("Server port");
+		clientIpLabel = new JLabel("Client IP");
+		clientPortLabel = new JLabel("Client port");
 		
 		add(guiStyleLabel);
 		add(gameModeLabel);

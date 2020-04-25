@@ -11,41 +11,41 @@ public class Board {
     /* Variable containing who played last; whose turn resulted in this board.
      * Even a new Board has lastLetterPlayed value; it denotes which player will play first.
      */
-	private int lastLetterPlayed;
+	private int lastPlayer;
 
 	private int [][] gameBoard;
 	private int winner;
 
 	public Board() {
-		lastMove = new Move();
-		lastLetterPlayed = Constants.O;
-		gameBoard = new int[3][3];
+		this.lastMove = new Move();
+		this.lastPlayer = Constants.O;
+		this.gameBoard = new int[3][3];
 		for(int i=0; i<3; i++) {
 			for(int j=0; j<3; j++) {
-				gameBoard[i][j] = Constants.EMPTY;
+				this.gameBoard[i][j] = Constants.EMPTY;
 			}
 		}
-		winner = Constants.EMPTY;
+		this.winner = Constants.EMPTY;
 	}
 	
 	public Board(Board board) {
-		lastMove = board.lastMove;
-		lastLetterPlayed = board.lastLetterPlayed;
-		gameBoard = new int[3][3];
+		this.lastMove = new Move(board.lastMove);
+		this.lastPlayer = board.lastPlayer;
+		this.gameBoard = new int[3][3];
 		for(int i=0; i<3; i++) {
 			for(int j=0; j<3; j++) {
-				gameBoard[i][j] = board.gameBoard[i][j];
+				this.gameBoard[i][j] = board.gameBoard[i][j];
 			}
 		}
-		winner = Constants.EMPTY;
+		this.winner = Constants.EMPTY;
 	}
 		
 	public Move getLastMove() {
 		return lastMove;
 	}
 	
-	public int getLastLetterPlayed() {
-		return lastLetterPlayed;
+	public int getLastPlayer() {
+		return lastPlayer;
 	}
 	
 	public int[][] getGameBoard() {
@@ -57,13 +57,11 @@ public class Board {
 	}
 
 	public void setLastMove(Move lastMove) {
-		this.lastMove.setRow(lastMove.getRow());
-		this.lastMove.setCol(lastMove.getCol());
-		this.lastMove.setValue(lastMove.getValue());
+		this.lastMove = new Move(lastMove);
 	}
 	
-	public void setLastLetterPlayed(int lastLetterPlayed) {
-		this.lastLetterPlayed = lastLetterPlayed;
+	public void setLastPlayer(int lastPlayer) {
+		this.lastPlayer = lastPlayer;
 	}
 	
 	public void setGameBoard(int[][] gameBoard) {
@@ -79,18 +77,18 @@ public class Board {
 	}
 
     // Make a move; it places a symbol on the board
-	public void makeMove(int row, int col, int symbol) {
-		gameBoard[row][col] = symbol;
-		lastMove = new Move(row, col);
-		lastLetterPlayed = symbol;
+	public void makeMove(int row, int column, int player) {
+		this.gameBoard[row][column] = player;
+		this.lastMove = new Move(row, column);
+		this.lastPlayer = player;
 	}
 
     // Checks whether a move is valid; whether a square is empty
-	public boolean isValidMove(int row, int col) {
-		if ((row == -1) || (col == -1) || (row > 2) || (col > 2)) {
+	public boolean isValidMove(int row, int column) {
+		if ((row == -1) || (column == -1) || (row > 2) || (column > 2)) {
 			return false;
 		}
-		if (gameBoard[row][col] != Constants.EMPTY) {
+		if (this.gameBoard[row][column] != Constants.EMPTY) {
 			return false;
 		}
 		return true;
@@ -102,10 +100,10 @@ public class Board {
 	public ArrayList<Board> getChildren(int symbol) {
 		ArrayList<Board> children = new ArrayList<Board>();
 		for(int row=0; row<3; row++) {
-			for(int col=0; col<3; col++) {
-				if(isValidMove(row, col)) {
+			for(int column=0; column<3; column++) {
+				if(isValidMove(row, column)) {
 					Board child = new Board(this);
-					child.makeMove(row, col, symbol);
+					child.makeMove(row, column, symbol);
 					children.add(child);
 				}
 			}
@@ -123,7 +121,7 @@ public class Board {
 		int Xlines = 0;
 		int Olines = 0;
         int sum;
-
+        
         // Checking rows
 		for (int row=0; row<3; row++) {
             sum = gameBoard[row][0] + gameBoard[row][1] + gameBoard[row][2];
@@ -142,8 +140,8 @@ public class Board {
 		}
 
         // Checking columns
-		for(int col=0; col<3; col++) {
-            sum = gameBoard[0][col] + gameBoard[1][col] + gameBoard[2][col];
+		for(int column=0; column<3; column++) {
+            sum = gameBoard[0][column] + gameBoard[1][column] + gameBoard[2][column];
             if(sum == 3) {
                 Xlines = Xlines + 10;
 			}
@@ -203,9 +201,9 @@ public class Board {
 		}
 
         // Checking if there is a vertical TicTacToe
-		for (int col=0; col<3; col++) {
-    		if((gameBoard[0][col] == gameBoard[1][col]) && (gameBoard[1][col] == gameBoard[2][col]) && (gameBoard[0][col] != Constants.EMPTY)) {
-    			setWinner(gameBoard[0][col]);
+		for (int column=0; column<3; column++) {
+    		if((gameBoard[0][column] == gameBoard[1][column]) && (gameBoard[1][column] == gameBoard[2][column]) && (gameBoard[0][column] != Constants.EMPTY)) {
+    			setWinner(gameBoard[0][column]);
                 return true;
 			}
 		}
@@ -225,16 +223,10 @@ public class Board {
     }
 
 	public void changeLastSymbolPlayed() {
-		if (this.lastLetterPlayed == Constants.X)
-			this.lastLetterPlayed = Constants.O;
-		else if (this.lastLetterPlayed == Constants.O)
-			this.lastLetterPlayed = Constants.X;
-	}
-	
-	// Makes the specified cell in the border empty.
-	public void undoMove(int row, int col, int symbol) {
-		this.gameBoard[row][col] = Constants.EMPTY;
-		this.lastLetterPlayed = symbol;
+		if (this.lastPlayer == Constants.X)
+			this.lastPlayer = Constants.O;
+		else if (this.lastPlayer == Constants.O)
+			this.lastPlayer = Constants.X;
 	}
 	
     //Prints the board
@@ -244,8 +236,8 @@ public class Board {
 		int counter = 1;
 		for(int row=0; row<3; row++) {
 			System.out.print("* ");
-			for(int col=0; col<3; col++) {
-				switch (gameBoard[row][col]) {
+			for(int column=0; column<3; column++) {
+				switch (gameBoard[row][column]) {
 					case Constants.X:
 						System.out.print("X ");
 						break;
@@ -269,8 +261,8 @@ public class Board {
 	// Checking if the board is empty.
     public static boolean isGameBoardEmpty(int[][] gameBoard) {
         for (int row=0; row<3; row++) {
-			for (int col=0; col<3; col++) {
-				if (gameBoard[row][col] != Constants.EMPTY) {
+			for (int column=0; column<3; column++) {
+				if (gameBoard[row][column] != Constants.EMPTY) {
                     return false;
                 }
             }
@@ -283,8 +275,8 @@ public class Board {
 	// by checking if there is at least one empty tile.
     public static boolean isGameBoardFull(int[][] gameBoard) {
         for (int row=0; row<3; row++) {
-			for (int col=0; col<3; col++) {
-				if (gameBoard[row][col] == Constants.EMPTY) {
+			for (int column=0; column<3; column++) {
+				if (gameBoard[row][column] == Constants.EMPTY) {
                     return false;
                 }
             }
@@ -297,8 +289,8 @@ public class Board {
 	public static int getNumberOfEmptyCells(int[][] gameBoard) {
 		int number_of_empty_cells = 0;
 		for (int row=0; row<3; row++) {
-			for (int col=0; col<3; col++) {
-				if (gameBoard[row][col] == Constants.EMPTY) {
+			for (int column=0; column<3; column++) {
+				if (gameBoard[row][column] == Constants.EMPTY) {
 					number_of_empty_cells++;
                 }
             }
@@ -313,8 +305,8 @@ public class Board {
 		int counter = 1;
 		for(int row=0; row<3; row++) {
 			System.out.print("* ");
-			for(int col=0; col<3; col++) {
-				switch (gameBoard[row][col]) {
+			for(int column=0; column<3; column++) {
+				switch (gameBoard[row][column]) {
 					case Constants.X:
 						System.out.print("X ");
 						break;

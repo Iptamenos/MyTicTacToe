@@ -8,6 +8,7 @@ import ai.Board;
 import ai.Constants;
 import ai.GameParameters;
 import gui.GUI;
+import gui.ResourceLoader;
 
 
 public class AiVsAiButton extends XOButton {
@@ -25,11 +26,12 @@ public class AiVsAiButton extends XOButton {
 	
 	
 	public AiVsAiButton(int id) {
+		setFocusable(false);
 		this.id = id;
 		String player1Color = Constants.getColorNameByNumber(GameParameters.player1Color);
 		String player2Color = Constants.getColorNameByNumber(GameParameters.player2Color);
-		X = new ImageIcon(this.getClass().getResource("/img/X/" + player1Color + ".png"));
-		O = new ImageIcon(this.getClass().getResource("/img/O/" + player2Color + ".png"));
+		this.X = new ImageIcon(ResourceLoader.load(Constants.getIconPath(Constants.X, player1Color)));
+		this.O = new ImageIcon(ResourceLoader.load(Constants.getIconPath(Constants.O, player2Color)));
 		this.addActionListener(this);
 		setIcon(null);
 		this.player = Constants.EMPTY;

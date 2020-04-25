@@ -11,6 +11,7 @@ import ai.Constants;
 import ai.GameParameters;
 import client_server.Client;
 import gui.GUI;
+import gui.ResourceLoader;
 
 
 public class ClientServerButton extends XOButton implements Serializable {
@@ -22,7 +23,6 @@ public class ClientServerButton extends XOButton implements Serializable {
 	
 	// Empty: 0, X: 1, O: 0
 	public int id;
-	GUI gui;
 	ImageIcon X;
 	ImageIcon O;
 	String serverIP;
@@ -32,18 +32,18 @@ public class ClientServerButton extends XOButton implements Serializable {
 	public boolean programmaticallyPressed = false;
 	
 	
-	public ClientServerButton(int id, GUI gui, String serverIP, int serverPort, int playerSymbol) {
+	public ClientServerButton(int id, String serverIP, int serverPort, int playerSymbol) {
+		setFocusable(false);
 		this.id = id;
-		this.gui = gui;
 		String player1Color = Constants.getColorNameByNumber(GameParameters.player1Color);
 		String player2Color = Constants.getColorNameByNumber(GameParameters.player2Color);
-		this.X = new ImageIcon(this.getClass().getResource("/img/X/" + player1Color + ".png"));
-		this.O = new ImageIcon(this.getClass().getResource("/img/O/" + player2Color + ".png"));
+		this.X = new ImageIcon(ResourceLoader.load(Constants.getIconPath(Constants.X, player1Color)));
+		this.O = new ImageIcon(ResourceLoader.load(Constants.getIconPath(Constants.O, player2Color)));
 		this.addActionListener(this);
 		setIcon(null);
 		this.serverIP = serverIP;
 		this.serverPort = serverPort;
-		this.client = new Client(gui, serverIP, serverPort, playerSymbol);
+		this.client = new Client(serverIP, serverPort, playerSymbol);
 		this.playerLetter = playerSymbol;
 	}
 
@@ -53,16 +53,16 @@ public class ClientServerButton extends XOButton implements Serializable {
 		// GUI.undoItem.setEnabled(false);  // uncomment only if needed
 		
 		int turn = Constants.EMPTY;
-		if (GUI.board.getLastLetterPlayed() == Constants.X)
+		if (GUI.board.getLastPlayer() == Constants.X)
 			turn = Constants.O;
-		else if (GUI.board.getLastLetterPlayed() == Constants.O)
+		else if (GUI.board.getLastPlayer() == Constants.O)
 			turn = Constants.X;
 		
 		if (turn != playerLetter)
 			return;
 		
 		if (programmaticallyPressed) {
-			turn = GUI.board.getLastLetterPlayed(); 
+			turn = GUI.board.getLastPlayer(); 
 			GUI.board.changeLastSymbolPlayed();
 		}
 		
@@ -82,12 +82,12 @@ public class ClientServerButton extends XOButton implements Serializable {
 		Board.printBoard(GUI.board.getGameBoard());
 		
 		if (!programmaticallyPressed) {
-			this.client = new Client(gui, serverIP, serverPort, playerLetter);
+			this.client = new Client(serverIP, serverPort, playerLetter);
 			this.client.run();
 			
 			// check if the game is over
 			if (GUI.board.isTerminal()) {
-				gui.gameOver();
+				GUI.gameOver();
 			}
 		}
 		try {
