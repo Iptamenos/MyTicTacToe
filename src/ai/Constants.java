@@ -2,6 +2,8 @@ package ai;
 
 public class Constants {
 	
+	private Constants() { }  // Prevents instantiation.
+
 	public static final double version = 1.2;
 
     // Variables for the board values
