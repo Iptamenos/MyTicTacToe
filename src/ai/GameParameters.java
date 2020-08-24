@@ -8,6 +8,8 @@ public class GameParameters implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -302611744838922290L;
+
+	private GameParameters() { }  // Prevents instantiation.
 	
 	/* Default values */
 	public static int guiStyle = Constants.SystemStyle;
