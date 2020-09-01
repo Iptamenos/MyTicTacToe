@@ -66,7 +66,7 @@ public class HumanVsAiButton extends XOButton {
 			if (!GUI.board.isTerminal()) {
 				
 				Move aiMove;
-				if (this.aiPlayer.getMaxDepth() == Constants.BestResponse) {
+				if (this.aiPlayer.getMaxDepth() == Constants.BEST_RESPONSE) {
 					// Best Response Move
 					BestResponse bestResponse = new BestResponse(GUI.board.getGameBoard());
 					aiMove = bestResponse.findBestResponse();

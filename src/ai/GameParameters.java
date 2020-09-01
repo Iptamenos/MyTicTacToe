@@ -13,9 +13,9 @@ public class GameParameters implements Serializable {
 	
 	/* Default values */
 	public static int guiStyle = Constants.SystemStyle;
-	public static int gameMode = Constants.HumanVsAi;
-	public static int maxDepth1 = Constants.BestResponse;
-	public static int maxDepth2 = Constants.BestResponse;
+	public static GameMode gameMode = GameMode.HUMAN_VS_AI;
+	public static int maxDepth1 = Constants.BEST_RESPONSE;
+	public static int maxDepth2 = Constants.BEST_RESPONSE;
 	public static int player1Color = Constants.BLUE;
 	public static int player2Color = Constants.RED;
 	public static int clientServerSymbol = Constants.X;

@@ -4,7 +4,7 @@ public class Constants {
 	
 	private Constants() { }  // Prevents instantiation.
 
-	public static final double version = 1.2;
+	public static final double VERSION = 1.2;
 
     // Variables for the board values
 	public static final int X = 1;
@@ -25,14 +25,8 @@ public class Constants {
 	public static final int PURPLE = 6;
 	public static final int YELLOW = 7;
 	
-	// Game mode
-	public static final int HumanVsAi = 1;
-	public static final int HumanVsHuman = 2;
-	public static final int AiVsAi = 3;
-	public static final int ClientServer = 4;
-	
 	// AI BestResponse mode
-	public static final int BestResponse = -1;
+	public static final int BEST_RESPONSE = -1;
 
 	public static final String getColorNameByNumber(int number) {
 		switch (number) {

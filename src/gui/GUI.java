@@ -24,6 +24,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import ai.BestResponse;
 import ai.Board;
 import ai.Constants;
+import ai.GameMode;
 import ai.GameParameters;
 import ai.MiniMaxAi;
 import ai.Move;
@@ -106,13 +107,13 @@ public class GUI {
 		newGameItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (GameParameters.gameMode == Constants.HumanVsAi)
+				if (GameParameters.gameMode == GameMode.HUMAN_VS_AI)
 					createHumanVsAiNewGame();
-				else if (GameParameters.gameMode == Constants.HumanVsHuman)
+				else if (GameParameters.gameMode == GameMode.HUMAN_VS_HUMAN)
 					createHumanVsHumanNewGame();
-				else if (GameParameters.gameMode == Constants.AiVsAi)
+				else if (GameParameters.gameMode == GameMode.AI_VS_AI)
 					createAiVsAiNewGame();
-				else if (GameParameters.gameMode == Constants.ClientServer)
+				else if (GameParameters.gameMode == GameMode.CLIENT_SERVER)
 					createClientServerNewGame();
 				
 				undoBoards.clear();
@@ -162,7 +163,7 @@ public class GUI {
 		aboutItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null,
-						"© Created by: Christos Kormaris\nVersion " + Constants.version,
+						"ï¿½ Created by: Christos Kormaris\nVersion " + Constants.VERSION,
 						"About", JOptionPane.INFORMATION_MESSAGE);			
 				}
 		});
@@ -183,7 +184,7 @@ public class GUI {
 			
 			// System.out.println("undo");
 			// This is the undo implementation for Human VS Human mode.
-			if (GameParameters.gameMode == Constants.HumanVsHuman) {
+			if (GameParameters.gameMode == GameMode.HUMAN_VS_HUMAN) {
 				try {
 					redoBoards.push(new Board(board));
 					board = undoBoards.pop(); 
@@ -220,7 +221,7 @@ public class GUI {
 			}
 			
 			// This is the undo implementation for Human VS AI mode.
-			else if (GameParameters.gameMode == Constants.HumanVsAi) {
+			else if (GameParameters.gameMode == GameMode.HUMAN_VS_AI) {
 				
 				try {
 					
@@ -267,7 +268,7 @@ public class GUI {
 
 			// System.out.println("undo");
 			// This is the undo implementation for Human VS Human mode.
-			if (GameParameters.gameMode == Constants.HumanVsHuman) {
+			if (GameParameters.gameMode == GameMode.HUMAN_VS_HUMAN) {
 				try {
 					
 					undoBoards.push(new Board(board));
@@ -313,7 +314,7 @@ public class GUI {
 				}
 			}
 			
-			else if (GameParameters.gameMode == Constants.HumanVsAi) {
+			else if (GameParameters.gameMode == GameMode.HUMAN_VS_AI) {
 				
 				try {
 					undoBoards.push(new Board(board));
@@ -564,7 +565,7 @@ public class GUI {
 	
 	private static void aiMove(MiniMaxAi aiPlayer) {
 		Move aiMove;
-		if (aiPlayer.getMaxDepth() == Constants.BestResponse) {
+		if (aiPlayer.getMaxDepth() == Constants.BEST_RESPONSE) {
 			// Best Response Move
 			BestResponse bestResponse = new BestResponse(board.getGameBoard());
 			aiMove = bestResponse.findBestResponse();
@@ -656,26 +657,26 @@ public class GUI {
 					"Player 1 \"X\" wins!\nPlay again?",
 					"Game Over", JOptionPane.YES_NO_OPTION);
 			if (input == JOptionPane.OK_OPTION) {
-				if (GameParameters.gameMode == Constants.HumanVsAi) {
+				if (GameParameters.gameMode == GameMode.HUMAN_VS_AI) {
 					createHumanVsAiNewGame();
-				} else if (GameParameters.gameMode == Constants.HumanVsHuman) {
+				} else if (GameParameters.gameMode == GameMode.HUMAN_VS_HUMAN) {
 					createHumanVsHumanNewGame();
-				} else if (GameParameters.gameMode == Constants.AiVsAi) {
+				} else if (GameParameters.gameMode == GameMode.AI_VS_AI) {
 					createAiVsAiNewGame();
-				} else if (GameParameters.gameMode == Constants.ClientServer) {
+				} else if (GameParameters.gameMode == GameMode.CLIENT_SERVER) {
 					createClientServerNewGame();
 				}
 			} else if (input == JOptionPane.NO_OPTION 
 					|| input == JOptionPane.CLOSED_OPTION) {
-				if (GameParameters.gameMode == Constants.HumanVsAi) {
+				if (GameParameters.gameMode == GameMode.HUMAN_VS_AI) {
 					for (HumanVsAiButton button: humanVsAiButtons) {
 						button.removeActionListener(button);
 					}
-				} else if (GameParameters.gameMode == Constants.HumanVsHuman) {
+				} else if (GameParameters.gameMode == GameMode.HUMAN_VS_HUMAN) {
 					for (HumanVsHumanButton button: humanVsHumanButtons) {
 						button.removeActionListener(button);
 					}
-				} else if (GameParameters.gameMode == Constants.ClientServer) {
+				} else if (GameParameters.gameMode == GameMode.CLIENT_SERVER) {
 					for (ClientServerButton button: clientServerButtons) {
 						button.removeActionListener(button);
 					}
@@ -687,26 +688,26 @@ public class GUI {
 					"Player 2 \"O\" wins!\nPlay again?",
 					"Game Over", JOptionPane.YES_NO_OPTION);
 			if (input == JOptionPane.OK_OPTION) {
-				if (GameParameters.gameMode == Constants.HumanVsAi) {
+				if (GameParameters.gameMode == GameMode.HUMAN_VS_AI) {
 					createHumanVsAiNewGame();
-				} else if (GameParameters.gameMode == Constants.HumanVsHuman) {
+				} else if (GameParameters.gameMode == GameMode.HUMAN_VS_HUMAN) {
 					createHumanVsHumanNewGame();
-				} else if (GameParameters.gameMode == Constants.AiVsAi) {
+				} else if (GameParameters.gameMode == GameMode.AI_VS_AI) {
 					createAiVsAiNewGame();
-				} else if (GameParameters.gameMode == Constants.ClientServer) {
+				} else if (GameParameters.gameMode == GameMode.CLIENT_SERVER) {
 					createClientServerNewGame();
 				}
 			} else if (input == JOptionPane.NO_OPTION 
 					|| input == JOptionPane.CLOSED_OPTION) {
-				if (GameParameters.gameMode == Constants.HumanVsAi) {
+				if (GameParameters.gameMode == GameMode.HUMAN_VS_AI) {
 					for (HumanVsAiButton button: humanVsAiButtons) {
 						button.removeActionListener(button);
 					}
-				} else if (GameParameters.gameMode == Constants.HumanVsHuman) {
+				} else if (GameParameters.gameMode == GameMode.HUMAN_VS_HUMAN) {
 					for (HumanVsHumanButton button: humanVsHumanButtons) {
 						button.removeActionListener(button);
 					}
-				} else if (GameParameters.gameMode == Constants.ClientServer) {
+				} else if (GameParameters.gameMode == GameMode.CLIENT_SERVER) {
 					for (ClientServerButton button: clientServerButtons) {
 						button.removeActionListener(button);
 					}
@@ -718,26 +719,26 @@ public class GUI {
 					"It is a draw!\nPlay again?",
 					"Game Over", JOptionPane.YES_NO_OPTION);
 			if (input == JOptionPane.OK_OPTION) {
-				if (GameParameters.gameMode == Constants.HumanVsAi) {
+				if (GameParameters.gameMode == GameMode.HUMAN_VS_AI) {
 					createHumanVsAiNewGame();
-				} else if (GameParameters.gameMode == Constants.HumanVsHuman) {
+				} else if (GameParameters.gameMode == GameMode.HUMAN_VS_HUMAN) {
 					createHumanVsHumanNewGame();
-				} else if (GameParameters.gameMode == Constants.AiVsAi) {
+				} else if (GameParameters.gameMode == GameMode.AI_VS_AI) {
 					createAiVsAiNewGame();
-				} else if (GameParameters.gameMode == Constants.ClientServer) {
+				} else if (GameParameters.gameMode == GameMode.CLIENT_SERVER) {
 					createClientServerNewGame();
 				}
 			} else if (input == JOptionPane.NO_OPTION 
 					|| input == JOptionPane.CLOSED_OPTION) {
-				if (GameParameters.gameMode == Constants.HumanVsAi) {
+				if (GameParameters.gameMode == GameMode.HUMAN_VS_AI) {
 					for (HumanVsAiButton button: humanVsAiButtons) {
 						button.removeActionListener(button);
 					}
-				} else if (GameParameters.gameMode == Constants.HumanVsHuman) {
+				} else if (GameParameters.gameMode == GameMode.HUMAN_VS_HUMAN) {
 					for (HumanVsHumanButton button: humanVsHumanButtons) {
 						button.removeActionListener(button);
 					}
-				} else if (GameParameters.gameMode == Constants.ClientServer) {
+				} else if (GameParameters.gameMode == GameMode.CLIENT_SERVER) {
 					for (ClientServerButton button: clientServerButtons) {
 						button.removeActionListener(button);
 					}
@@ -759,11 +760,11 @@ public class GUI {
 			
 			for (int i=0; i<9; i++) {
 				if (button.equals(i+1+"")) {
-					if (GameParameters.gameMode == Constants.HumanVsAi)
+					if (GameParameters.gameMode == GameMode.HUMAN_VS_AI)
 						humanVsAiButtons[i].doClick();
-					if (GameParameters.gameMode == Constants.HumanVsHuman)
+					if (GameParameters.gameMode == GameMode.HUMAN_VS_HUMAN)
 						humanVsHumanButtons[i].doClick();
-					if (GameParameters.gameMode == Constants.ClientServer)
+					if (GameParameters.gameMode == GameMode.CLIENT_SERVER)
 						clientServerButtons[i].doClick();
 					break;
 				} 
@@ -788,8 +789,8 @@ public class GUI {
 	
     // Make a move; it places a symbol on the board
 	public static void makeMove(int row, int col, int player) {
-		if ((player == Constants.X && GameParameters.gameMode == Constants.HumanVsAi)
-			|| (GameParameters.gameMode == Constants.HumanVsHuman)) {
+		if ((player == Constants.X && GameParameters.gameMode == GameMode.HUMAN_VS_AI)
+			|| (GameParameters.gameMode == GameMode.HUMAN_VS_HUMAN)) {
 			undoBoards.push(new Board(board));
 		}
 		
@@ -828,13 +829,13 @@ public class GUI {
 		@SuppressWarnings("unused")
 		GUI gui = new GUI("My TicTacToe");
 		
-		if (GameParameters.gameMode == Constants.HumanVsAi)
+		if (GameParameters.gameMode == GameMode.HUMAN_VS_AI)
 			GUI.createHumanVsAiNewGame();
-		else if (GameParameters.gameMode == Constants.HumanVsHuman)
+		else if (GameParameters.gameMode == GameMode.HUMAN_VS_HUMAN)
 			GUI.createHumanVsHumanNewGame();
-		else if (GameParameters.gameMode == Constants.AiVsAi)
+		else if (GameParameters.gameMode == GameMode.AI_VS_AI)
 			GUI.createAiVsAiNewGame();
-		else if (GameParameters.gameMode == Constants.ClientServer)
+		else if (GameParameters.gameMode == GameMode.CLIENT_SERVER)
 			GUI.createClientServerNewGame();
 	}
 	
