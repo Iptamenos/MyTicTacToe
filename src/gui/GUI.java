@@ -164,7 +164,7 @@ public class GUI {
 		aboutItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null,
-						"� Created by: Christos Kormaris\nVersion " + Constants.VERSION,
+						"© Created by: Christos Kormaris\nVersion" + Constants.VERSION,
 						"About", JOptionPane.INFORMATION_MESSAGE);			
 				}
 		});
