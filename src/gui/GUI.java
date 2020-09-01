@@ -24,7 +24,6 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import ai.BestResponse;
 import ai.Board;
 import ai.Constants;
-import ai.GameMode;
 import ai.GameParameters;
 import ai.MiniMaxAi;
 import ai.Move;
@@ -33,6 +32,8 @@ import buttons.ClientServerButton;
 import buttons.HumanVsAiButton;
 import buttons.HumanVsHumanButton;
 import client_server.Server;
+import enumerations.GameMode;
+import enumerations.GuiStyle;
 
 
 public class GUI {
@@ -107,11 +108,11 @@ public class GUI {
 		newGameItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (GameParameters.gameMode == GameMode.HUMAN_VS_AI)
+				if (GameParameters.gameMode == GameMode.HUMAN_VS_MINIMAX_AI)
 					createHumanVsAiNewGame();
 				else if (GameParameters.gameMode == GameMode.HUMAN_VS_HUMAN)
 					createHumanVsHumanNewGame();
-				else if (GameParameters.gameMode == GameMode.AI_VS_AI)
+				else if (GameParameters.gameMode == GameMode.MINIMAX_AI_VS_MINIMAX_AI)
 					createAiVsAiNewGame();
 				else if (GameParameters.gameMode == GameMode.CLIENT_SERVER)
 					createClientServerNewGame();
@@ -192,12 +193,14 @@ public class GUI {
 					for (HumanVsHumanButton button: humanVsHumanButtons) {
 						List<Integer> cell = GUI.getBoardCellById(button.id);
 						if (board.getGameBoard()[cell.get(0)][cell.get(1)] == Constants.X) {
-							String player1Color = Constants.getColorNameByNumber(GameParameters.player1Color);
+							String player1Color = String.valueOf(GameParameters.player1Color).charAt(0) 
+									+ String.valueOf(GameParameters.player1Color).toLowerCase().substring(1);
 							button.setIcon(new ImageIcon(ResourceLoader.load(Constants.getIconPath(Constants.X, player1Color))));
 							button.doClick();
 						}
 						else if (board.getGameBoard()[cell.get(0)][cell.get(1)] == Constants.O) {
-							String player2Color = Constants.getColorNameByNumber(GameParameters.player2Color);
+							String player2Color = String.valueOf(GameParameters.player2Color).charAt(0) 
+									+ String.valueOf(GameParameters.player2Color).toLowerCase().substring(1);
 							button.setIcon(new ImageIcon(ResourceLoader.load(Constants.getIconPath(Constants.O, player2Color))));
 							button.doClick();
 						} else {
@@ -221,7 +224,7 @@ public class GUI {
 			}
 			
 			// This is the undo implementation for Human VS AI mode.
-			else if (GameParameters.gameMode == GameMode.HUMAN_VS_AI) {
+			else if (GameParameters.gameMode == GameMode.HUMAN_VS_MINIMAX_AI) {
 				
 				try {
 					
@@ -231,12 +234,14 @@ public class GUI {
 					for (HumanVsAiButton button: humanVsAiButtons) {
 						List<Integer> cell = GUI.getBoardCellById(button.id);
 						if (board.getGameBoard()[cell.get(0)][cell.get(1)] == Constants.X) {
-							String player1Color = Constants.getColorNameByNumber(GameParameters.player1Color);
+							String player1Color = String.valueOf(GameParameters.player1Color).charAt(0) 
+									+ String.valueOf(GameParameters.player1Color).toLowerCase().substring(1);
 							button.setIcon(new ImageIcon(ResourceLoader.load(Constants.getIconPath(Constants.X, player1Color))));
 							button.doClick();
 						}
 						else if (board.getGameBoard()[cell.get(0)][cell.get(1)] == Constants.O) {
-							String player2Color = Constants.getColorNameByNumber(GameParameters.player2Color);
+							String player2Color = String.valueOf(GameParameters.player2Color).charAt(0) 
+									+ String.valueOf(GameParameters.player2Color).toLowerCase().substring(1);
 							button.setIcon(new ImageIcon(ResourceLoader.load(Constants.getIconPath(Constants.O, player2Color))));
 							button.doClick();
 						} else {
@@ -277,14 +282,16 @@ public class GUI {
 					for (HumanVsHumanButton button: humanVsHumanButtons) {
 						List<Integer> cell = GUI.getBoardCellById(button.id);
 						if (board.getGameBoard()[cell.get(0)][cell.get(1)] == Constants.X) {
-							String player1Color = Constants.getColorNameByNumber(GameParameters.player1Color);
+							String player1Color = String.valueOf(GameParameters.player1Color).charAt(0) 
+									+ String.valueOf(GameParameters.player1Color).toLowerCase().substring(1);
 							button.setIcon(new ImageIcon(ResourceLoader.load(Constants.getIconPath(Constants.X, player1Color))));
 							for (ActionListener actionListener: button.getActionListeners()) {
 								button.removeActionListener(actionListener);
 							}
 						}
 						else if (board.getGameBoard()[cell.get(0)][cell.get(1)] == Constants.O) {
-							String player2Color = Constants.getColorNameByNumber(GameParameters.player2Color);
+							String player2Color = String.valueOf(GameParameters.player2Color).charAt(0) 
+									+ String.valueOf(GameParameters.player2Color).toLowerCase().substring(1);
 							button.setIcon(new ImageIcon(ResourceLoader.load(Constants.getIconPath(Constants.O, player2Color))));
 							for (ActionListener actionListener: button.getActionListeners()) {
 								button.removeActionListener(actionListener);
@@ -314,7 +321,7 @@ public class GUI {
 				}
 			}
 			
-			else if (GameParameters.gameMode == GameMode.HUMAN_VS_AI) {
+			else if (GameParameters.gameMode == GameMode.HUMAN_VS_MINIMAX_AI) {
 				
 				try {
 					undoBoards.push(new Board(board));
@@ -323,14 +330,16 @@ public class GUI {
 					for (HumanVsAiButton button: humanVsAiButtons) {
 						List<Integer> cell = GUI.getBoardCellById(button.id);
 						if (board.getGameBoard()[cell.get(0)][cell.get(1)] == Constants.X) {
-							String player1Color = Constants.getColorNameByNumber(GameParameters.player1Color);
+							String player1Color = String.valueOf(GameParameters.player1Color).charAt(0) 
+									+ String.valueOf(GameParameters.player1Color).toLowerCase().substring(1);
 							button.setIcon(new ImageIcon(ResourceLoader.load(Constants.getIconPath(Constants.X, player1Color))));
 							for (ActionListener actionListener: button.getActionListeners()) {
 								button.removeActionListener(actionListener);
 							}
 						}
 						else if (board.getGameBoard()[cell.get(0)][cell.get(1)] == Constants.O) {
-							String player2Color = Constants.getColorNameByNumber(GameParameters.player2Color);
+							String player2Color = String.valueOf(GameParameters.player2Color).charAt(0) 
+									+ String.valueOf(GameParameters.player2Color).toLowerCase().substring(1);
 							button.setIcon(new ImageIcon(ResourceLoader.load(Constants.getIconPath(Constants.O, player2Color))));
 							for (ActionListener actionListener: button.getActionListeners()) {
 								button.removeActionListener(actionListener);
@@ -623,13 +632,13 @@ public class GUI {
 	
 	private static void configureGuiStyle() {
 		try {
-			if (GameParameters.guiStyle == Constants.SystemStyle) {
+			if (GameParameters.guiStyle == GuiStyle.SYSTEM_STYLE) {
 				// Option 1
 				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-			} else if (GameParameters.guiStyle == Constants.CrossPlatformStyle) {
+			} else if (GameParameters.guiStyle == GuiStyle.CROSS_PLATFORM_STYLE) {
 				// Option 2
 				UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-			} else if (GameParameters.guiStyle == Constants.NimbusStyle) {
+			} else if (GameParameters.guiStyle == GuiStyle.NIMBUS_STYLE) {
 				// Option 3
 			    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 			        if ("Nimbus".equals(info.getName())) {
@@ -657,18 +666,18 @@ public class GUI {
 					"Player 1 \"X\" wins!\nPlay again?",
 					"Game Over", JOptionPane.YES_NO_OPTION);
 			if (input == JOptionPane.OK_OPTION) {
-				if (GameParameters.gameMode == GameMode.HUMAN_VS_AI) {
+				if (GameParameters.gameMode == GameMode.HUMAN_VS_MINIMAX_AI) {
 					createHumanVsAiNewGame();
 				} else if (GameParameters.gameMode == GameMode.HUMAN_VS_HUMAN) {
 					createHumanVsHumanNewGame();
-				} else if (GameParameters.gameMode == GameMode.AI_VS_AI) {
+				} else if (GameParameters.gameMode == GameMode.MINIMAX_AI_VS_MINIMAX_AI) {
 					createAiVsAiNewGame();
 				} else if (GameParameters.gameMode == GameMode.CLIENT_SERVER) {
 					createClientServerNewGame();
 				}
 			} else if (input == JOptionPane.NO_OPTION 
 					|| input == JOptionPane.CLOSED_OPTION) {
-				if (GameParameters.gameMode == GameMode.HUMAN_VS_AI) {
+				if (GameParameters.gameMode == GameMode.HUMAN_VS_MINIMAX_AI) {
 					for (HumanVsAiButton button: humanVsAiButtons) {
 						button.removeActionListener(button);
 					}
@@ -688,18 +697,18 @@ public class GUI {
 					"Player 2 \"O\" wins!\nPlay again?",
 					"Game Over", JOptionPane.YES_NO_OPTION);
 			if (input == JOptionPane.OK_OPTION) {
-				if (GameParameters.gameMode == GameMode.HUMAN_VS_AI) {
+				if (GameParameters.gameMode == GameMode.HUMAN_VS_MINIMAX_AI) {
 					createHumanVsAiNewGame();
 				} else if (GameParameters.gameMode == GameMode.HUMAN_VS_HUMAN) {
 					createHumanVsHumanNewGame();
-				} else if (GameParameters.gameMode == GameMode.AI_VS_AI) {
+				} else if (GameParameters.gameMode == GameMode.MINIMAX_AI_VS_MINIMAX_AI) {
 					createAiVsAiNewGame();
 				} else if (GameParameters.gameMode == GameMode.CLIENT_SERVER) {
 					createClientServerNewGame();
 				}
 			} else if (input == JOptionPane.NO_OPTION 
 					|| input == JOptionPane.CLOSED_OPTION) {
-				if (GameParameters.gameMode == GameMode.HUMAN_VS_AI) {
+				if (GameParameters.gameMode == GameMode.HUMAN_VS_MINIMAX_AI) {
 					for (HumanVsAiButton button: humanVsAiButtons) {
 						button.removeActionListener(button);
 					}
@@ -719,18 +728,18 @@ public class GUI {
 					"It is a draw!\nPlay again?",
 					"Game Over", JOptionPane.YES_NO_OPTION);
 			if (input == JOptionPane.OK_OPTION) {
-				if (GameParameters.gameMode == GameMode.HUMAN_VS_AI) {
+				if (GameParameters.gameMode == GameMode.HUMAN_VS_MINIMAX_AI) {
 					createHumanVsAiNewGame();
 				} else if (GameParameters.gameMode == GameMode.HUMAN_VS_HUMAN) {
 					createHumanVsHumanNewGame();
-				} else if (GameParameters.gameMode == GameMode.AI_VS_AI) {
+				} else if (GameParameters.gameMode == GameMode.MINIMAX_AI_VS_MINIMAX_AI) {
 					createAiVsAiNewGame();
 				} else if (GameParameters.gameMode == GameMode.CLIENT_SERVER) {
 					createClientServerNewGame();
 				}
 			} else if (input == JOptionPane.NO_OPTION 
 					|| input == JOptionPane.CLOSED_OPTION) {
-				if (GameParameters.gameMode == GameMode.HUMAN_VS_AI) {
+				if (GameParameters.gameMode == GameMode.HUMAN_VS_MINIMAX_AI) {
 					for (HumanVsAiButton button: humanVsAiButtons) {
 						button.removeActionListener(button);
 					}
@@ -760,7 +769,7 @@ public class GUI {
 			
 			for (int i=0; i<9; i++) {
 				if (button.equals(i+1+"")) {
-					if (GameParameters.gameMode == GameMode.HUMAN_VS_AI)
+					if (GameParameters.gameMode == GameMode.HUMAN_VS_MINIMAX_AI)
 						humanVsAiButtons[i].doClick();
 					if (GameParameters.gameMode == GameMode.HUMAN_VS_HUMAN)
 						humanVsHumanButtons[i].doClick();
@@ -789,7 +798,7 @@ public class GUI {
 	
     // Make a move; it places a symbol on the board
 	public static void makeMove(int row, int col, int player) {
-		if ((player == Constants.X && GameParameters.gameMode == GameMode.HUMAN_VS_AI)
+		if ((player == Constants.X && GameParameters.gameMode == GameMode.HUMAN_VS_MINIMAX_AI)
 			|| (GameParameters.gameMode == GameMode.HUMAN_VS_HUMAN)) {
 			undoBoards.push(new Board(board));
 		}
@@ -829,11 +838,11 @@ public class GUI {
 		@SuppressWarnings("unused")
 		GUI gui = new GUI("My TicTacToe");
 		
-		if (GameParameters.gameMode == GameMode.HUMAN_VS_AI)
+		if (GameParameters.gameMode == GameMode.HUMAN_VS_MINIMAX_AI)
 			GUI.createHumanVsAiNewGame();
 		else if (GameParameters.gameMode == GameMode.HUMAN_VS_HUMAN)
 			GUI.createHumanVsHumanNewGame();
-		else if (GameParameters.gameMode == GameMode.AI_VS_AI)
+		else if (GameParameters.gameMode == GameMode.MINIMAX_AI_VS_MINIMAX_AI)
 			GUI.createAiVsAiNewGame();
 		else if (GameParameters.gameMode == GameMode.CLIENT_SERVER)
 			GUI.createClientServerNewGame();

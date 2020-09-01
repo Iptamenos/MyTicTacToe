@@ -1,8 +1,10 @@
 package gui;
 
 import ai.Constants;
-import ai.GameMode;
 import ai.GameParameters;
+import enumerations.Color;
+import enumerations.GameMode;
+import enumerations.GuiStyle;
 
 public class exampleClientServer {
 
@@ -16,12 +18,12 @@ public class exampleClientServer {
 	}
 
 	public static void main(String[] args) {
-		GameParameters.guiStyle = Constants.SystemStyle;
+		GameParameters.guiStyle = GuiStyle.SYSTEM_STYLE;
 		GameParameters.gameMode = GameMode.CLIENT_SERVER;
 		GameParameters.maxDepth1 = Constants.BEST_RESPONSE;
 		GameParameters.maxDepth2 = Constants.BEST_RESPONSE;
-		GameParameters.player1Color = Constants.BLUE;
-		GameParameters.player2Color = Constants.RED;
+		GameParameters.player1Color = Color.BLUE;
+		GameParameters.player2Color = Color.RED;
 		GameParameters.clientServerSymbol = clientServerSymbol;
 		GameParameters.serverPort = serverPort;
 		GameParameters.clientIP = clientIP;

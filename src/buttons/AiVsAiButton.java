@@ -28,8 +28,10 @@ public class AiVsAiButton extends XOButton {
 	public AiVsAiButton(int id) {
 		setFocusable(false);
 		this.id = id;
-		String player1Color = Constants.getColorNameByNumber(GameParameters.player1Color);
-		String player2Color = Constants.getColorNameByNumber(GameParameters.player2Color);
+		String player1Color = String.valueOf(GameParameters.player1Color).charAt(0) 
+				+ String.valueOf(GameParameters.player1Color).toLowerCase().substring(1);
+		String player2Color = String.valueOf(GameParameters.player2Color).charAt(0) 
+				+ String.valueOf(GameParameters.player2Color).toLowerCase().substring(1);
 		this.X = new ImageIcon(ResourceLoader.load(Constants.getIconPath(Constants.X, player1Color)));
 		this.O = new ImageIcon(ResourceLoader.load(Constants.getIconPath(Constants.O, player2Color)));
 		this.addActionListener(this);
