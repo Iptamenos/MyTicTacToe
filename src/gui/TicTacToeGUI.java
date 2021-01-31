@@ -605,7 +605,7 @@ public class TicTacToeGUI {
 			
 			// Sleep for 200 ms
 			try {
-				Thread.sleep(200);
+				Thread.sleep(Constants.AI_MOVE_MILLISECONDS);
 				frame.paint(frame.getGraphics());
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -618,7 +618,7 @@ public class TicTacToeGUI {
 			
 			// Sleep for 200 ms
 			try {
-				Thread.sleep(200);
+				Thread.sleep(Constants.AI_MOVE_MILLISECONDS);
 				frame.paint(frame.getGraphics());
 			} catch (Exception e) {
 				e.printStackTrace();

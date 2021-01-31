@@ -11,6 +11,8 @@ public class Constants {
 	public static final int O = -1;
 	public static final int EMPTY = 0;
 	
+	public static final int AI_MOVE_MILLISECONDS = 250;
+	
 	// AI BestResponse mode
 	public static final int BEST_RESPONSE = -1;
 	
