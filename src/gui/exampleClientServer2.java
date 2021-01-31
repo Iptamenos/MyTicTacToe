@@ -1,10 +1,10 @@
 package gui;
 
-import ai.Constants;
-import ai.GameParameters;
 import enumerations.Color;
 import enumerations.GameMode;
 import enumerations.GuiStyle;
+import utilities.Constants;
+import utilities.GameParameters;
 
 public class exampleClientServer2 {
 
@@ -30,9 +30,9 @@ public class exampleClientServer2 {
 		GameParameters.clientPort = clientPort;
 		
 		@SuppressWarnings("unused")
-		GUI gui = new GUI("My TicTacToe ClientServer 2");
+		TicTacToeGUI gui = new TicTacToeGUI("My TicTacToe ClientServer 2");
 
-		GUI.createClientServerNewGame();
+		TicTacToeGUI.createClientServerNewGame();
 	}
 
 }

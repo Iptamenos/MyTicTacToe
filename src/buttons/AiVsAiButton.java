@@ -5,10 +5,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 
 import ai.Board;
-import ai.Constants;
-import ai.GameParameters;
-import gui.GUI;
-import gui.ResourceLoader;
+import gui.TicTacToeGUI;
+import utilities.Constants;
+import utilities.GameParameters;
+import utilities.ResourceLoader;
 
 
 public class AiVsAiButton extends XOButton {
@@ -52,7 +52,7 @@ public class AiVsAiButton extends XOButton {
 		else if (player == Constants.O)
 			setIcon(O);
 		
-		Board.printBoard(GUI.board.getGameBoard());
+		Board.printBoard(TicTacToeGUI.board.getGameBoard());
 		
 		removeActionListener(this);
 	

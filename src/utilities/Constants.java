@@ -1,4 +1,4 @@
-package ai;
+package utilities;
 
 public class Constants {
 	

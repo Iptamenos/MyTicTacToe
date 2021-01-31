@@ -6,10 +6,10 @@ import java.util.List;
 import javax.swing.ImageIcon;
 
 import ai.Board;
-import ai.Constants;
-import ai.GameParameters;
-import gui.GUI;
-import gui.ResourceLoader;
+import gui.TicTacToeGUI;
+import utilities.Constants;
+import utilities.GameParameters;
+import utilities.ResourceLoader;
 
 
 public class HumanVsHumanButton extends XOButton {
@@ -41,12 +41,12 @@ public class HumanVsHumanButton extends XOButton {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		GUI.undoItem.setEnabled(true);
+		TicTacToeGUI.undoItem.setEnabled(true);
 		
 		int turn = Constants.EMPTY;
-		if (GUI.board.getLastPlayer() == Constants.X)
+		if (TicTacToeGUI.board.getLastPlayer() == Constants.X)
 			turn = Constants.O;
-		else if (GUI.board.getLastPlayer() == Constants.O)
+		else if (TicTacToeGUI.board.getLastPlayer() == Constants.O)
 			turn = Constants.X;
 		
 		// add X or O on the board GUI
@@ -59,14 +59,14 @@ public class HumanVsHumanButton extends XOButton {
 		}
 			
 		// get cell coordinates by id
-		List<Integer> cell = GUI.getBoardCellById(id);
+		List<Integer> cell = TicTacToeGUI.getBoardCellById(id);
 		if (cell != null)
-			GUI.makeMove(cell.get(0), cell.get(1), turn);
-		Board.printBoard(GUI.board.getGameBoard());
+			TicTacToeGUI.makeMove(cell.get(0), cell.get(1), turn);
+		Board.printBoard(TicTacToeGUI.board.getGameBoard());
 		
 		// check if the game is over
-		if (GUI.board.isTerminal())
-			GUI.gameOver();
+		if (TicTacToeGUI.board.isTerminal())
+			TicTacToeGUI.gameOver();
 		
 		try {
 			this.removeActionListener(this);

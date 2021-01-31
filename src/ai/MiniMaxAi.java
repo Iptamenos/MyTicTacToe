@@ -3,6 +3,8 @@ package ai;
 import java.util.ArrayList;
 import java.util.Random;
 
+import utilities.Constants;
+
 public class MiniMaxAi {
 	
     // Variable that holds the maximum depth the MiniMax algorithm will reach for this player

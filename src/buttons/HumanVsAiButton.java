@@ -7,12 +7,12 @@ import javax.swing.ImageIcon;
 
 import ai.BestResponse;
 import ai.Board;
-import ai.Constants;
-import ai.GameParameters;
 import ai.MiniMaxAi;
 import ai.Move;
-import gui.GUI;
-import gui.ResourceLoader;
+import gui.TicTacToeGUI;
+import utilities.Constants;
+import utilities.GameParameters;
+import utilities.ResourceLoader;
 
 
 public class HumanVsAiButton extends XOButton {
@@ -46,44 +46,44 @@ public class HumanVsAiButton extends XOButton {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		GUI.undoItem.setEnabled(true);
+		TicTacToeGUI.undoItem.setEnabled(true);
 		
 		setIcon(X);
 		
 		// get cell coordinates by id
-		List<Integer> cell = GUI.getBoardCellById(id);
+		List<Integer> cell = TicTacToeGUI.getBoardCellById(id);
 		
 		if (cell != null) {
-			GUI.makeMove(cell.get(0), cell.get(1), Constants.X);
+			TicTacToeGUI.makeMove(cell.get(0), cell.get(1), Constants.X);
 			
 			// This fixes an "Undo" operation bug.
 			if (!gameBoardMatchesWithGUIBoard()) {
-				GUI.undo();
+				TicTacToeGUI.undo();
 				return;
 			}
 			
 			// System.out.println(GUI.board.getLastMove());
 			// Board.printBoard(GUI.board.getGameBoard());
 						
-			if (!GUI.board.isTerminal()) {
+			if (!TicTacToeGUI.board.isTerminal()) {
 				
 				Move aiMove;
 				if (this.aiPlayer.getMaxDepth() == Constants.BEST_RESPONSE) {
 					// Best Response Move
-					BestResponse bestResponse = new BestResponse(GUI.board.getGameBoard());
+					BestResponse bestResponse = new BestResponse(TicTacToeGUI.board.getGameBoard());
 					aiMove = bestResponse.findBestResponse();
 				} else {
 					// MiniMax AI Move
 					// System.out.println(GUI.board.getLastMove());
-					aiMove = this.aiPlayer.miniMax(GUI.board);
+					aiMove = this.aiPlayer.miniMax(TicTacToeGUI.board);
 				}
 				
-				GUI.makeMove(aiMove.getRow(), aiMove.getColumn(), Constants.O);
+				TicTacToeGUI.makeMove(aiMove.getRow(), aiMove.getColumn(), Constants.O);
 				
-				int aiMoveButtonId = GUI.getIdByBoardCell(aiMove.getRow(), aiMove.getColumn());
+				int aiMoveButtonId = TicTacToeGUI.getIdByBoardCell(aiMove.getRow(), aiMove.getColumn());
 				// System.out.println("AI Move [" + aiMove.getRow() + "]" + "[" + aiMove.getCol() +"]");
 
-				for (HumanVsAiButton button: GUI.humanVsAiButtons) {
+				for (HumanVsAiButton button: TicTacToeGUI.humanVsAiButtons) {
 					button.aiPlayer = this.aiPlayer;
 					if (button.id == aiMoveButtonId) {
 						button.setIcon(O);
@@ -91,11 +91,11 @@ public class HumanVsAiButton extends XOButton {
 					}
 				}
 
-				Board.printBoard(GUI.board.getGameBoard());
+				Board.printBoard(TicTacToeGUI.board.getGameBoard());
 				
 				// check if the game is over
-				if (GUI.board.isTerminal()) {
-					GUI.gameOver();
+				if (TicTacToeGUI.board.isTerminal()) {
+					TicTacToeGUI.gameOver();
 					return;
 				} else {
 					try {
@@ -105,7 +105,7 @@ public class HumanVsAiButton extends XOButton {
 					}
 				}
 			} else {
-				GUI.gameOver();
+				TicTacToeGUI.gameOver();
 			}
 			
 		}
@@ -115,10 +115,10 @@ public class HumanVsAiButton extends XOButton {
 	// It checks if the GUI board is the identical to the gameBoard 2d-array.
 	// It fixes an "Undo" operation bug.
 	private boolean gameBoardMatchesWithGUIBoard() {
-		for (HumanVsAiButton button: GUI.humanVsAiButtons) {
-			List<Integer> cell = GUI.getBoardCellById(button.id);
+		for (HumanVsAiButton button: TicTacToeGUI.humanVsAiButtons) {
+			List<Integer> cell = TicTacToeGUI.getBoardCellById(button.id);
 			if (button.getIcon() == null
-				&& GUI.board.getGameBoard()[cell.get(0)][cell.get(1)] != Constants.EMPTY) {
+				&& TicTacToeGUI.board.getGameBoard()[cell.get(0)][cell.get(1)] != Constants.EMPTY) {
 				return false;
 			}
 		}

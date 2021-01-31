@@ -7,11 +7,11 @@ import java.util.List;
 import javax.swing.ImageIcon;
 
 import ai.Board;
-import ai.Constants;
-import ai.GameParameters;
 import client_server.Client;
-import gui.GUI;
-import gui.ResourceLoader;
+import gui.TicTacToeGUI;
+import utilities.Constants;
+import utilities.GameParameters;
+import utilities.ResourceLoader;
 
 
 public class ClientServerButton extends XOButton implements Serializable {
@@ -55,17 +55,17 @@ public class ClientServerButton extends XOButton implements Serializable {
 		// GUI.undoItem.setEnabled(false);  // uncomment only if needed
 		
 		int turn = Constants.EMPTY;
-		if (GUI.board.getLastPlayer() == Constants.X)
+		if (TicTacToeGUI.board.getLastPlayer() == Constants.X)
 			turn = Constants.O;
-		else if (GUI.board.getLastPlayer() == Constants.O)
+		else if (TicTacToeGUI.board.getLastPlayer() == Constants.O)
 			turn = Constants.X;
 		
 		if (turn != playerLetter)
 			return;
 		
 		if (programmaticallyPressed) {
-			turn = GUI.board.getLastPlayer(); 
-			GUI.board.changeLastSymbolPlayed();
+			turn = TicTacToeGUI.board.getLastPlayer(); 
+			TicTacToeGUI.board.changeLastSymbolPlayed();
 		}
 		
 		// add X or O on the board GUI
@@ -78,18 +78,18 @@ public class ClientServerButton extends XOButton implements Serializable {
 		}
 			
 		// get cell coordinates by id
-		List<Integer> cell = GUI.getBoardCellById(id);
+		List<Integer> cell = TicTacToeGUI.getBoardCellById(id);
 		if (cell != null)
-			GUI.makeMove(cell.get(0), cell.get(1), turn);
-		Board.printBoard(GUI.board.getGameBoard());
+			TicTacToeGUI.makeMove(cell.get(0), cell.get(1), turn);
+		Board.printBoard(TicTacToeGUI.board.getGameBoard());
 		
 		if (!programmaticallyPressed) {
 			this.client = new Client(serverIP, serverPort, playerLetter);
 			this.client.run();
 			
 			// check if the game is over
-			if (GUI.board.isTerminal()) {
-				GUI.gameOver();
+			if (TicTacToeGUI.board.isTerminal()) {
+				TicTacToeGUI.gameOver();
 			}
 		}
 		try {
@@ -97,7 +97,7 @@ public class ClientServerButton extends XOButton implements Serializable {
 		} catch (NullPointerException ex) {
 			// Do nothing
 		}
-		GUI.clientServerButtons[id] = this;
+		TicTacToeGUI.clientServerButtons[id] = this;
 	}
 	
 	

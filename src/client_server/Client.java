@@ -6,7 +6,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 
 import ai.Move;
-import gui.GUI;
+import gui.TicTacToeGUI;
 
 public class Client extends Thread {
 	
@@ -35,7 +35,7 @@ public class Client extends Thread {
 			System.out.println("Client has started! Established connection with server at port: " + serverPort + "...");
 			out = new ObjectOutputStream(requestSocket.getOutputStream());
 			
-			Move lastMove = GUI.board.getLastMove();
+			Move lastMove = TicTacToeGUI.board.getLastMove();
 			out.writeObject(lastMove);
 			out.flush();
 			

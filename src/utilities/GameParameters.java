@@ -1,18 +1,11 @@
-package ai;
-
-import java.io.Serializable;
+package utilities;
 
 import enumerations.Color;
 import enumerations.GameMode;
 import enumerations.GuiStyle;
 
-public class GameParameters implements Serializable {
+public class GameParameters {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -302611744838922290L;
-
 	private GameParameters() { }  // Prevents instantiation.
 	
 	/* Default values */

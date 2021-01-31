@@ -23,8 +23,6 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 import ai.BestResponse;
 import ai.Board;
-import ai.Constants;
-import ai.GameParameters;
 import ai.MiniMaxAi;
 import ai.Move;
 import buttons.AiVsAiButton;
@@ -34,9 +32,12 @@ import buttons.HumanVsHumanButton;
 import client_server.Server;
 import enumerations.GameMode;
 import enumerations.GuiStyle;
+import utilities.Constants;
+import utilities.GameParameters;
+import utilities.ResourceLoader;
 
 
-public class GUI {
+public class TicTacToeGUI {
 	
 	public static JFrame frame;
 	
@@ -67,7 +68,7 @@ public class GUI {
 	static Stack<Board> undoBoards = new Stack<Board>();
 	static Stack<Board> redoBoards = new Stack<Board>();
 	
-	public GUI(String title) {
+	public TicTacToeGUI(String title) {
 		
 		configureGuiStyle();
 		
@@ -191,7 +192,7 @@ public class GUI {
 					board = undoBoards.pop(); 
 					
 					for (HumanVsHumanButton button: humanVsHumanButtons) {
-						List<Integer> cell = GUI.getBoardCellById(button.id);
+						List<Integer> cell = TicTacToeGUI.getBoardCellById(button.id);
 						if (board.getGameBoard()[cell.get(0)][cell.get(1)] == Constants.X) {
 							String player1Color = String.valueOf(GameParameters.player1Color).charAt(0) 
 									+ String.valueOf(GameParameters.player1Color).toLowerCase().substring(1);
@@ -232,7 +233,7 @@ public class GUI {
 					board = undoBoards.pop();
 
 					for (HumanVsAiButton button: humanVsAiButtons) {
-						List<Integer> cell = GUI.getBoardCellById(button.id);
+						List<Integer> cell = TicTacToeGUI.getBoardCellById(button.id);
 						if (board.getGameBoard()[cell.get(0)][cell.get(1)] == Constants.X) {
 							String player1Color = String.valueOf(GameParameters.player1Color).charAt(0) 
 									+ String.valueOf(GameParameters.player1Color).toLowerCase().substring(1);
@@ -280,7 +281,7 @@ public class GUI {
 					board = new Board(redoBoards.pop());
 					
 					for (HumanVsHumanButton button: humanVsHumanButtons) {
-						List<Integer> cell = GUI.getBoardCellById(button.id);
+						List<Integer> cell = TicTacToeGUI.getBoardCellById(button.id);
 						if (board.getGameBoard()[cell.get(0)][cell.get(1)] == Constants.X) {
 							String player1Color = String.valueOf(GameParameters.player1Color).charAt(0) 
 									+ String.valueOf(GameParameters.player1Color).toLowerCase().substring(1);
@@ -328,7 +329,7 @@ public class GUI {
 					board = new Board(redoBoards.pop());
 
 					for (HumanVsAiButton button: humanVsAiButtons) {
-						List<Integer> cell = GUI.getBoardCellById(button.id);
+						List<Integer> cell = TicTacToeGUI.getBoardCellById(button.id);
 						if (board.getGameBoard()[cell.get(0)][cell.get(1)] == Constants.X) {
 							String player1Color = String.valueOf(GameParameters.player1Color).charAt(0) 
 									+ String.valueOf(GameParameters.player1Color).toLowerCase().substring(1);
@@ -597,7 +598,7 @@ public class GUI {
 	
 	private static void playAiVsAi(MiniMaxAi ai1Player, MiniMaxAi ai2Player) {
 		
-		while (!GUI.board.isTerminal()) {
+		while (!TicTacToeGUI.board.isTerminal()) {
 
 			// AI 1 Move
 			aiMove(ai1Player);
@@ -610,7 +611,7 @@ public class GUI {
 				e.printStackTrace();
 			}
 			
-			if (!GUI.board.isTerminal()) {
+			if (!TicTacToeGUI.board.isTerminal()) {
 				// AI 2 Move
 				aiMove(ai2Player);
 			}
@@ -836,16 +837,16 @@ public class GUI {
 		*/
 		
 		@SuppressWarnings("unused")
-		GUI gui = new GUI("My TicTacToe");
+		TicTacToeGUI gui = new TicTacToeGUI("My TicTacToe");
 		
 		if (GameParameters.gameMode == GameMode.HUMAN_VS_MINIMAX_AI)
-			GUI.createHumanVsAiNewGame();
+			TicTacToeGUI.createHumanVsAiNewGame();
 		else if (GameParameters.gameMode == GameMode.HUMAN_VS_HUMAN)
-			GUI.createHumanVsHumanNewGame();
+			TicTacToeGUI.createHumanVsHumanNewGame();
 		else if (GameParameters.gameMode == GameMode.MINIMAX_AI_VS_MINIMAX_AI)
-			GUI.createAiVsAiNewGame();
+			TicTacToeGUI.createAiVsAiNewGame();
 		else if (GameParameters.gameMode == GameMode.CLIENT_SERVER)
-			GUI.createClientServerNewGame();
+			TicTacToeGUI.createClientServerNewGame();
 	}
 	
 }

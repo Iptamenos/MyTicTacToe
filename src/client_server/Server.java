@@ -8,7 +8,7 @@ import java.net.Socket;
 
 import ai.Move;
 import buttons.ClientServerButton;
-import gui.GUI;
+import gui.TicTacToeGUI;
 
 public class Server extends Thread {
 	
@@ -40,14 +40,14 @@ public class Server extends Thread {
 				in = new ObjectInputStream(connection.getInputStream());
 				
 				Move lastMove = (Move) in.readObject();
-				int id = GUI.getIdByBoardCell(lastMove.getRow(), lastMove.getColumn());
+				int id = TicTacToeGUI.getIdByBoardCell(lastMove.getRow(), lastMove.getColumn());
 				// System.out.println(id);
 				
 				int oppossingPlayerSymbol = in.readInt();
 				
-				GUI.board.setLastPlayer(oppossingPlayerSymbol);
+				TicTacToeGUI.board.setLastPlayer(oppossingPlayerSymbol);
 				
-				for (ClientServerButton button: GUI.clientServerButtons) {
+				for (ClientServerButton button: TicTacToeGUI.clientServerButtons) {
 					if (button.id == id) {
 						// Programmatically press the button.
 						button.programmaticallyPressed = true;
@@ -57,7 +57,7 @@ public class Server extends Thread {
 				}
 				// GUI.board.printBoard();
 
-				if (GUI.board.isTerminal()) {
+				if (TicTacToeGUI.board.isTerminal()) {
 					break;
 				}
 			}
@@ -76,7 +76,7 @@ public class Server extends Thread {
 				e.printStackTrace();
 			}
 		}
-		GUI.gameOver();
+		TicTacToeGUI.gameOver();
 
 	}
 
