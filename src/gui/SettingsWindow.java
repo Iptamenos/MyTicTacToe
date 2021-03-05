@@ -52,7 +52,7 @@ public class SettingsWindow extends JFrame {
 	private EventHandler handler;
 	
 	public static int width = 460;
-	public static int height = 450;
+	public static int height = 480;
 	
 	
 	public SettingsWindow() {
@@ -223,27 +223,27 @@ public class SettingsWindow extends JFrame {
 		add(client_ip_text_field);
 		add(client_port_text_field);
 
-		guiStyleLabel.setBounds(20, 25, 250, 20);
-		gameModeLabel.setBounds(20, 55, 250, 20);
-		maxDepth1Label.setBounds(20, 85, 250, 20);
-		maxDepth2Label.setBounds(20, 115, 250, 20);
-		player1ColorLabel.setBounds(20, 145, 250, 20);
-		player2ColorLabel.setBounds(20, 175, 250, 20);
-		clientServerSymbolLabel.setBounds(20, 205, 250, 20);
-		serverPortLabel.setBounds(20, 235, 250, 20);
-		clientIpLabel.setBounds(20, 265, 250, 20);
-		clientPortLabel.setBounds(20, 295, 250, 20);
+		guiStyleLabel.setBounds(20, 25, 250, 25);
+		gameModeLabel.setBounds(20, 60, 250, 25);
+		maxDepth1Label.setBounds(20, 95, 250, 25);
+		maxDepth2Label.setBounds(20, 130, 250, 25);
+		player1ColorLabel.setBounds(20, 165, 250, 25);
+		player2ColorLabel.setBounds(20, 200, 250, 25);
+		clientServerSymbolLabel.setBounds(20, 235, 250, 25);
+		serverPortLabel.setBounds(20, 270, 250, 25);
+		clientIpLabel.setBounds(20, 305, 250, 25);
+		clientPortLabel.setBounds(20, 340, 250, 25);
 		
-		gui_style_drop_down.setBounds(260, 25, 160, 20);
-		game_mode_drop_down.setBounds(260, 55, 160, 20);
-		max_depth1_drop_down.setBounds(260, 85, 160, 20);
-		max_depth2_drop_down.setBounds(260, 115, 160, 20);
-		player1_color_drop_down.setBounds(260, 145, 160, 20);
-		player2_color_drop_down.setBounds(260, 175, 160, 20);
-		client_server_symbol_drop_down.setBounds(260, 205, 160, 20);
-		server_port_text_field.setBounds(260, 235, 160, 20);
-		client_ip_text_field.setBounds(260, 265, 160, 20);
-		client_port_text_field.setBounds(260, 295, 160, 20);
+		gui_style_drop_down.setBounds(260, 25, 160, 25);
+		game_mode_drop_down.setBounds(260, 60, 160, 25);
+		max_depth1_drop_down.setBounds(260, 95, 160, 25);
+		max_depth2_drop_down.setBounds(260, 130, 160, 25);
+		player1_color_drop_down.setBounds(260, 165, 160, 25);
+		player2_color_drop_down.setBounds(260, 200, 160, 25);
+		client_server_symbol_drop_down.setBounds(260, 235, 160, 25);
+		server_port_text_field.setBounds(260, 270, 160, 25);
+		client_ip_text_field.setBounds(260, 305, 160, 25);
+		client_port_text_field.setBounds(260, 340, 160, 25);
 				
 		apply = new JButton("Apply");
 		cancel = new JButton("Cancel");
@@ -251,9 +251,9 @@ public class SettingsWindow extends JFrame {
 		add(cancel);
 		
 		int distance = 10;
-		apply.setBounds((int) (width / 2) - 110 - (int) (distance / 2), 350, 100, 30);
+		apply.setBounds((int) (width / 2) - 110 - (int) (distance / 2), 380, 100, 30);
 		apply.addActionListener(handler);
-		cancel.setBounds((int) (width / 2) - 10 + (int) (distance / 2), 350, 100, 30);
+		cancel.setBounds((int) (width / 2) - 10 + (int) (distance / 2), 380, 100, 30);
 		cancel.addActionListener(handler);
 	}
 
