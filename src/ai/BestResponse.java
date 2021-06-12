@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import utilities.Constants;
+import utility.Constants;
 
 
 public class BestResponse {

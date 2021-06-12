@@ -1,4 +1,4 @@
-package buttons;
+package button;
 
 import java.awt.event.ActionEvent;
 import java.util.List;
@@ -10,9 +10,9 @@ import ai.Board;
 import ai.MiniMaxAi;
 import ai.Move;
 import gui.TicTacToeGUI;
-import utilities.Constants;
-import utilities.GameParameters;
-import utilities.ResourceLoader;
+import utility.Constants;
+import utility.GameParameters;
+import utility.ResourceLoader;
 
 
 public class HumanVsAiButton extends XOButton {

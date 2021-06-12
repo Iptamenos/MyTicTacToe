@@ -1,18 +1,20 @@
-package buttons;
+package button;
 
 import java.awt.event.ActionEvent;
+import java.io.Serializable;
 import java.util.List;
 
 import javax.swing.ImageIcon;
 
 import ai.Board;
+import client_server.Client;
 import gui.TicTacToeGUI;
-import utilities.Constants;
-import utilities.GameParameters;
-import utilities.ResourceLoader;
+import utility.Constants;
+import utility.GameParameters;
+import utility.ResourceLoader;
 
 
-public class HumanVsHumanButton extends XOButton {
+public class ClientServerButton extends XOButton implements Serializable {
 
 	/**
 	 * 
@@ -23,9 +25,14 @@ public class HumanVsHumanButton extends XOButton {
 	public int id;
 	ImageIcon X;
 	ImageIcon O;
-
+	String serverIP;
+	int serverPort;
+	Client client;
+	int playerLetter;
+	public boolean programmaticallyPressed = false;
 	
-	public HumanVsHumanButton(int id) {
+	
+	public ClientServerButton(int id, String serverIP, int serverPort, int playerSymbol) {
 		setFocusable(false);
 		this.id = id;
 		String player1Color = String.valueOf(GameParameters.player1Color).charAt(0) 
@@ -36,18 +43,30 @@ public class HumanVsHumanButton extends XOButton {
 		this.O = new ImageIcon(ResourceLoader.load(Constants.getIconPath(Constants.O, player2Color)));
 		this.addActionListener(this);
 		setIcon(null);
+		this.serverIP = serverIP;
+		this.serverPort = serverPort;
+		this.client = new Client(serverIP, serverPort, playerSymbol);
+		this.playerLetter = playerSymbol;
 	}
 
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		TicTacToeGUI.undoItem.setEnabled(true);
+		// GUI.undoItem.setEnabled(false);  // uncomment only if needed
 		
 		int turn = Constants.EMPTY;
 		if (TicTacToeGUI.board.getLastPlayer() == Constants.X)
 			turn = Constants.O;
 		else if (TicTacToeGUI.board.getLastPlayer() == Constants.O)
 			turn = Constants.X;
+		
+		if (turn != playerLetter)
+			return;
+		
+		if (programmaticallyPressed) {
+			turn = TicTacToeGUI.board.getLastPlayer(); 
+			TicTacToeGUI.board.changeLastSymbolPlayed();
+		}
 		
 		// add X or O on the board GUI
 		if (turn == Constants.EMPTY) {
@@ -64,16 +83,22 @@ public class HumanVsHumanButton extends XOButton {
 			TicTacToeGUI.makeMove(cell.get(0), cell.get(1), turn);
 		Board.printBoard(TicTacToeGUI.board.getGameBoard());
 		
-		// check if the game is over
-		if (TicTacToeGUI.board.isTerminal())
-			TicTacToeGUI.gameOver();
-		
+		if (!programmaticallyPressed) {
+			this.client = new Client(serverIP, serverPort, playerLetter);
+			this.client.run();
+			
+			// check if the game is over
+			if (TicTacToeGUI.board.isTerminal()) {
+				TicTacToeGUI.gameOver();
+			}
+		}
 		try {
 			this.removeActionListener(this);
 		} catch (NullPointerException ex) {
 			// Do nothing
 		}
-		
+		TicTacToeGUI.clientServerButtons[id] = this;
 	}
+	
 	
 }

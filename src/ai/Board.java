@@ -2,7 +2,7 @@ package ai;
 
 import java.util.ArrayList;
 
-import utilities.Constants;
+import utility.Constants;
 
 public class Board {
 

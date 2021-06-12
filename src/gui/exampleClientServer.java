@@ -1,10 +1,10 @@
 package gui;
 
-import enumerations.Color;
-import enumerations.GameMode;
-import enumerations.GuiStyle;
-import utilities.Constants;
-import utilities.GameParameters;
+import enumeration.Color;
+import enumeration.GameMode;
+import enumeration.GuiStyle;
+import utility.Constants;
+import utility.GameParameters;
 
 public class exampleClientServer {
 

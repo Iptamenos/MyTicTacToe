@@ -7,7 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import ai.Move;
-import buttons.ClientServerButton;
+import button.ClientServerButton;
 import gui.TicTacToeGUI;
 
 public class Server extends Thread {

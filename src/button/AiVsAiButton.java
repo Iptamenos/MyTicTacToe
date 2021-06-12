@@ -1,4 +1,4 @@
-package buttons;
+package button;
 
 import java.awt.event.ActionEvent;
 
@@ -6,9 +6,9 @@ import javax.swing.ImageIcon;
 
 import ai.Board;
 import gui.TicTacToeGUI;
-import utilities.Constants;
-import utilities.GameParameters;
-import utilities.ResourceLoader;
+import utility.Constants;
+import utility.GameParameters;
+import utility.ResourceLoader;
 
 
 public class AiVsAiButton extends XOButton {

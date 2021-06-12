@@ -25,16 +25,16 @@ import ai.BestResponse;
 import ai.Board;
 import ai.MiniMaxAi;
 import ai.Move;
-import buttons.AiVsAiButton;
-import buttons.ClientServerButton;
-import buttons.HumanVsAiButton;
-import buttons.HumanVsHumanButton;
+import button.AiVsAiButton;
+import button.ClientServerButton;
+import button.HumanVsAiButton;
+import button.HumanVsHumanButton;
 import client_server.Server;
-import enumerations.GameMode;
-import enumerations.GuiStyle;
-import utilities.Constants;
-import utilities.GameParameters;
-import utilities.ResourceLoader;
+import enumeration.GameMode;
+import enumeration.GuiStyle;
+import utility.Constants;
+import utility.GameParameters;
+import utility.ResourceLoader;
 
 
 public class TicTacToeGUI {
